@@ -1,0 +1,437 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Web</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Web.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/main.css?v=5.6" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <header class="header-area header-style-1 header-height-2">
+        <div class="header-middle header-middle-ptb-1 d-none d-lg-block">
+            <div class="container">
+                <div class="header-wrap">
+                    <div class="logo logo-width-1">
+                        <a href="index.html"><img src="~/imgs/theme/logo.svg" alt="logo"
+                                style="border-radius: 4px;" /></a>
+                    </div>
+                    <div class="header-right">
+                        <div class="search-style-2">
+                            <form action="#">
+                                <input type="text" placeholder="Search for items..." />
+                            </form>
+                        </div>
+                        <div class="header-action-right">
+                            <div class="header-action-2">
+                                <div class="search-location">
+                                    <form action="#">
+                                        <select class="select-active">
+                                            <option>Your Location</option>
+                                            <option>Alabama</option>
+                                            <option>Alaska</option>
+                                            <option>Arizona</option>
+                                            <option>Delaware</option>
+                                            <option>Florida</option>
+                                            <option>Georgia</option>
+                                            <option>Hawaii</option>
+                                            <option>Indiana</option>
+                                            <option>Maryland</option>
+                                            <option>Nevada</option>
+                                            <option>New Jersey</option>
+                                            <option>New Mexico</option>
+                                            <option>New York</option>
+                                        </select>
+                                    </form>
+                                </div>
+                                <div class="header-action-icon-2">
+                                    <a href="page-account.html">
+                                        <img class="svgInject" alt="GreenMile" src="~/imgs/theme/icons/icon-user.svg" />
+                                    </a>
+                                    <a href="page-account.html"><span class="lable ml-0">Account</span></a>
+                                    <div class="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
+                                        <ul>
+                                            <li>
+                                                <a href="page-account.html">
+                                                    <i class="fa-solid fa-user"></i>
+                                                    My Account
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="page-account.html">
+                                                    <i class="fa-solid fa-gear"></i>
+                                                    Setting
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="page-login.html">
+                                                    <i class="fa-solid fa-right-from-bracket"></i>
+                                                    Sign out
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header-bottom header-bottom-bg-color sticky-bar">
+            <div class="container">
+                <div class="header-wrap header-space-between position-relative">
+                    <div class="logo logo-width-1 d-block d-lg-none">
+                        <a href="index.html"><img src="~/imgs/theme/logo.svg" alt="logo"
+                                style="border-radius: 4px;" /></a>
+                    </div>
+                    <div class="header-nav d-none d-lg-flex">
+                        <div class="main-menu main-menu-padding-1 main-menu-lh-2 d-none d-lg-block font-heading">
+                            <nav>
+                                <ul>
+                                    <li>
+                                        <a href="page-about.html">Home</a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#">Food Sharing <i class="fa-solid fa-chevron-down"></i></a>
+                                        <ul class="sub-menu">
+                                            <li><a href="page-about.html">About Us</a></li>
+                                            <li><a href="page-contact.html">Contact</a></li>
+                                            <li><a href="page-account.html">My Account</a></li>
+                                            <li><a href="page-login.html">Login</a></li>
+                                            <li><a href="page-register.html">Register</a></li>
+                                            <li><a href="page-forgot-password.html">Forgot password</a></li>
+                                            <li><a href="page-reset-password.html">Reset password</a></li>
+                                            <li><a href="page-purchase-guide.html">Purchase Guide</a></li>
+                                            <li><a href="page-privacy-policy.html">Privacy Policy</a></li>
+                                            <li><a href="page-terms.html">Terms of Service</a></li>
+                                            <li><a href="page-404.html">404 Page</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#">Food Tracker <i class="fa-solid fa-chevron-down"></i></a>
+                                        <ul class="sub-menu">
+                                            <li><a href="page-about.html">About Us</a></li>
+                                            <li><a href="page-contact.html">Contact</a></li>
+                                            <li><a href="page-account.html">My Account</a></li>
+                                            <li><a href="page-login.html">Login</a></li>
+                                            <li><a href="page-register.html">Register</a></li>
+                                            <li><a href="page-forgot-password.html">Forgot password</a></li>
+                                            <li><a href="page-reset-password.html">Reset password</a></li>
+                                            <li><a href="page-purchase-guide.html">Purchase Guide</a></li>
+                                            <li><a href="page-privacy-policy.html">Privacy Policy</a></li>
+                                            <li><a href="page-terms.html">Terms of Service</a></li>
+                                            <li><a href="page-404.html">404 Page</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#">Grocery List <i class="fa-solid fa-chevron-down"></i></a>
+                                        <ul class="sub-menu">
+                                            <li><a href="page-about.html">About Us</a></li>
+                                            <li><a href="page-contact.html">Contact</a></li>
+                                            <li><a href="page-account.html">My Account</a></li>
+                                            <li><a href="page-login.html">Login</a></li>
+                                            <li><a href="page-register.html">Register</a></li>
+                                            <li><a href="page-forgot-password.html">Forgot password</a></li>
+                                            <li><a href="page-reset-password.html">Reset password</a></li>
+                                            <li><a href="page-purchase-guide.html">Purchase Guide</a></li>
+                                            <li><a href="page-privacy-policy.html">Privacy Policy</a></li>
+                                            <li><a href="page-terms.html">Terms of Service</a></li>
+                                            <li><a href="page-404.html">404 Page</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#">Smart Recipe <i class="fa-solid fa-chevron-down"></i></a>
+                                        <ul class="sub-menu">
+                                            <li><a href="page-about.html">About Us</a></li>
+                                            <li><a href="page-contact.html">Contact</a></li>
+                                            <li><a href="page-account.html">My Account</a></li>
+                                            <li><a href="page-login.html">Login</a></li>
+                                            <li><a href="page-register.html">Register</a></li>
+                                            <li><a href="page-forgot-password.html">Forgot password</a></li>
+                                            <li><a href="page-reset-password.html">Reset password</a></li>
+                                            <li><a href="page-purchase-guide.html">Purchase Guide</a></li>
+                                            <li><a href="page-privacy-policy.html">Privacy Policy</a></li>
+                                            <li><a href="page-terms.html">Terms of Service</a></li>
+                                            <li><a href="page-404.html">404 Page</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="page-contact.html">Contact</a>
+                                    </li>
+                                    <li>
+                                        <a href="page-about.html">About</a>
+                                    </li>
+                                    <li>
+                                        <a href="page-about.html">Blog</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    <div class="header-action-icon-2 d-block d-lg-none">
+                        <div class="burger-icon burger-icon-white">
+                            <span class="burger-icon-top"></span>
+                            <span class="burger-icon-mid"></span>
+                            <span class="burger-icon-bottom"></span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="mobile-header-active mobile-header-wrapper-style">
+        <div class="mobile-header-wrapper-inner">
+            <div class="mobile-header-top">
+                <div class="mobile-header-logo">
+                    <a href="index.html"><img src="~/imgs/theme/logo.svg" alt="logo" style="border-radius: 4px;" /></a>
+                </div>
+                <div class="mobile-menu-close close-style-wrap close-style-position-inherit">
+                    <button class="close-style search-close">
+                        <i class="icon-top"></i>
+                        <i class="icon-bottom"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="mobile-header-content-area">
+                <div class="mobile-search search-style-3 mobile-header-border">
+                    <form action="#">
+                        <input type="text" placeholder="Search for items…" />
+                        <button type="submit"><i class="fa-solid fa-search"></i></button>
+                    </form>
+                </div>
+                <div class="mobile-menu-wrap mobile-header-border">
+                    <!-- mobile menu start -->
+                    <nav>
+                        <ul class="mobile-menu font-heading">
+                            <li class="menu-item-has-children">
+                                <a href="index.html">Food Sharing</a>
+                                <ul class="dropdown">
+                                    <li><a href="index.html">Home 1</a></li>
+                                    <li><a href="index-2.html">Home 2</a></li>
+                                    <li><a href="index-3.html">Home 3</a></li>
+                                    <li><a href="index-4.html">Home 4</a></li>
+                                    <li><a href="index-5.html">Home 5</a></li>
+                                    <li><a href="index-6.html">Home 6</a></li>
+                                </ul>
+                            </li>
+                            <li class="menu-item-has-children">
+                                <a href="shop-grid-right.html">Food Tracker</a>
+                                <ul class="dropdown">
+                                    <li><a href="shop-grid-right.html">Shop Grid – Right Sidebar</a></li>
+                                    <li><a href="shop-grid-left.html">Shop Grid – Left Sidebar</a></li>
+                                    <li><a href="shop-list-right.html">Shop List – Right Sidebar</a></li>
+                                    <li><a href="shop-list-left.html">Shop List – Left Sidebar</a></li>
+                                    <li><a href="shop-fullwidth.html">Shop - Wide</a></li>
+                                    <li class="menu-item-has-children">
+                                        <a href="#">Single Product</a>
+                                        <ul class="dropdown">
+                                            <li><a href="shop-product-right.html">Product – Right Sidebar</a></li>
+                                            <li><a href="shop-product-left.html">Product – Left Sidebar</a></li>
+                                            <li><a href="shop-product-full.html">Product – No sidebar</a></li>
+                                            <li><a href="shop-product-vendor.html">Product – Vendor Infor</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="shop-filter.html">Shop – Filter</a></li>
+                                    <li><a href="shop-wishlist.html">Shop – Wishlist</a></li>
+                                    <li><a href="shop-cart.html">Shop – Cart</a></li>
+                                    <li><a href="shop-checkout.html">Shop – Checkout</a></li>
+                                    <li><a href="shop-compare.html">Shop – Compare</a></li>
+                                    <li class="menu-item-has-children">
+                                        <a href="#">Shop Invoice</a>
+                                        <ul class="dropdown">
+                                            <li><a href="shop-invoice-1.html">Shop Invoice 1</a></li>
+                                            <li><a href="shop-invoice-2.html">Shop Invoice 2</a></li>
+                                            <li><a href="shop-invoice-3.html">Shop Invoice 3</a></li>
+                                            <li><a href="shop-invoice-4.html">Shop Invoice 4</a></li>
+                                            <li><a href="shop-invoice-5.html">Shop Invoice 5</a></li>
+                                            <li><a href="shop-invoice-6.html">Shop Invoice 6</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="menu-item-has-children">
+                                <a href="#">Grocery List</a>
+                                <ul class="dropdown">
+                                    <li><a href="vendors-grid.html">Vendors Grid</a></li>
+                                    <li><a href="vendors-list.html">Vendors List</a></li>
+                                    <li><a href="vendor-details-1.html">Vendor Details 01</a></li>
+                                    <li><a href="vendor-details-2.html">Vendor Details 02</a></li>
+                                    <li><a href="vendor-dashboard.html">Vendor Dashboard</a></li>
+                                    <li><a href="vendor-guide.html">Vendor Guide</a></li>
+                                </ul>
+                            </li>
+                            <li class="menu-item-has-children">
+                                <a href="#">Smart Recipe</a>
+                                <ul class="dropdown">
+                                    <li class="menu-item-has-children">
+                                        <a href="#">Women's Fashion</a>
+                                        <ul class="dropdown">
+                                            <li><a href="shop-product-right.html">Dresses</a></li>
+                                            <li><a href="shop-product-right.html">Blouses & Shirts</a></li>
+                                            <li><a href="shop-product-right.html">Hoodies & Sweatshirts</a></li>
+                                            <li><a href="shop-product-right.html">Women's Sets</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="menu-item-has-children">
+                                        <a href="#">Men's Fashion</a>
+                                        <ul class="dropdown">
+                                            <li><a href="shop-product-right.html">Jackets</a></li>
+                                            <li><a href="shop-product-right.html">Casual Faux Leather</a></li>
+                                            <li><a href="shop-product-right.html">Genuine Leather</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="menu-item-has-children">
+                                        <a href="#">Technology</a>
+                                        <ul class="dropdown">
+                                            <li><a href="shop-product-right.html">Gaming Laptops</a></li>
+                                            <li><a href="shop-product-right.html">Ultraslim Laptops</a></li>
+                                            <li><a href="shop-product-right.html">Tablets</a></li>
+                                            <li><a href="shop-product-right.html">Laptop Accessories</a></li>
+                                            <li><a href="shop-product-right.html">Tablet Accessories</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                    <!-- mobile menu end -->
+                </div>
+                <div class="mobile-header-info-wrap">
+                    <div class="single-mobile-header-info">
+                        <a href="page-contact.html">
+                            <i class="fa-solid fa-location-pin"></i>
+                            Our location </a>
+                    </div>
+                    <div class="single-mobile-header-info">
+                        <a href="page-login.html">
+                            <i class="fa-solid fa-user"></i>Log In / Sign Up
+                        </a>
+                    </div>
+                </div>
+                <div class="mobile-social-icon mb-50">
+                    <h6 class="mb-15">Follow Us</h6>
+                    <a href="#"><img src="~/imgs/theme/icons/icon-twitter-white.svg" alt="" /></a>
+                </div>
+                <div class="site-copyright">Copyright 2022 © GreenMile. All rights reserved.</div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <hr>
+
+    <footer class="main">
+        <section class="section-padding footer-mid">
+            <div class="container pt-15 pb-20">
+                <div class="row">
+                    <div class="col">
+                        <div class="widget-about font-md mb-md-3 mb-lg-3 mb-xl-0">
+                            <div class="logo mb-30">
+                                <a href="index.html" class="mb-15"><img src="~/imgs/theme/logo.svg" alt="logo"
+                                        style="border-radius: 4px;" /></a>
+                                <p class="font-lg text-heading">Connecting people and their communities to waste less
+                                </p>
+                            </div>
+                            <ul class="contact-infor">
+                                <li><img src="~/imgs/theme/icons/icon-location.svg" alt="" /><strong>Address:
+                                    </strong> <span>Singapore</span></li>
+                                <li><img src="~/imgs/theme/icons/icon-email-2.svg" alt="" /><strong>Email:</strong>
+                                    <span>greenmile.bullstack@gmail.com</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="footer-link-widget col">
+                        <h4 class="widget-title">GreenMile</h4>
+                        <ul class="footer-list mb-sm-5 mb-md-0">
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Delivery Information</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Terms &amp; Conditions</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                            <li><a href="#">Careers</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-link-widget col">
+                        <h4 class="widget-title">Account</h4>
+                        <ul class="footer-list mb-sm-5 mb-md-0">
+                            <li><a href="#">Sign In</a></li>
+                            <li><a href="#">Sign Up</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-link-widget col">
+                        <h4 class="widget-title">Services</h4>
+                        <ul class="footer-list mb-sm-5 mb-md-0">
+                            <li><a href="#">Food Sharing</a></li>
+                            <li><a href="#">Food Tracker</a></li>
+                            <li><a href="#">Grocery List</a></li>
+                            <li><a href="#">Smart Recipe</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="container pb-30">
+            <div class="row align-items-center">
+                <div class="col-12 mb-30">
+                    <div class="footer-bottom"></div>
+                </div>
+                <div class="col-xl-4 col-lg-6 col-md-6">
+                    <p class="font-sm mb-0">&copy; 2022, <strong class="text-brand">GreenMile</strong> <br />All rights
+                        reserved</p>
+                </div>
+                <div class="col-xl-4 col-lg-6 col-md-6 text-end d-none d-md-block">
+                    <div class="mobile-social-icon">
+                        <h6>Follow Us</h6>
+                        <a href="#"><img src="~/imgs/theme/icons/icon-twitter-white.svg" alt="" /></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+    <script src="~/js/vendor/modernizr-3.6.0.min.js"></script>
+    <script src="~/js/vendor/jquery-3.6.0.min.js"></script>
+    <script src="~/js/vendor/jquery-migrate-3.3.0.min.js"></script>
+    <script src="~/js/vendor/bootstrap.bundle.min.js"></script>
+    <script src="~/js/plugins/slick.js"></script>
+    <script src="~/js/plugins/jquery.syotimer.min.js"></script>
+    <script src="~/js/plugins/wow.js"></script>
+    <script src="~/js/plugins/perfect-scrollbar.js"></script>
+    <script src="~/js/plugins/magnific-popup.js"></script>
+    <script src="~/js/plugins/select2.min.js"></script>
+    <script src="~/js/plugins/waypoints.js"></script>
+    <script src="~/js/plugins/counterup.js"></script>
+    <script src="~/js/plugins/jquery.countdown.min.js"></script>
+    <script src="~/js/plugins/images-loaded.js"></script>
+    <script src="~/js/plugins/isotope.js"></script>
+    <script src="~/js/plugins/scrollup.js"></script>
+    <script src="~/js/plugins/jquery.vticker-min.js"></script>
+    <script src="~/js/plugins/jquery.theia.sticky.js"></script>
+    <script src="~/js/plugins/jquery.elevatezoom.js"></script>
+    <!-- Template  JS -->
+    <script src="~/js/main.js?v=5.6"></script>
+    <script src="~/js/shop.js?v=5.6"></script>
+</body>
+
+</html>
