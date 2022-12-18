@@ -1,7 +1,55 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+
+using Web.Data;
+using Web.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+builder.Services.AddDbContext<AuthDbContext>(options =>
+{
+    if (builder.Environment.IsDevelopment())
+    {
+        // Setup SQLite Connection
+        var devConnectionString = builder.Configuration.GetConnectionString("dev");
+        options.UseSqlite(connectionString: devConnectionString);
+    }
+    else if (builder.Environment.IsProduction())
+    {
+        // Setup MySQL Connection
+        var prodConnectionString = builder.Configuration.GetConnectionString("prod");
+        var serverVersion = ServerVersion.AutoDetect(prodConnectionString);
+        options.UseMySql(connectionString: prodConnectionString, serverVersion);
+    }
+    else
+    {
+        Console.WriteLine("[WARNING]: Environment is neither Development or Production.");
+        Console.WriteLine("[WARNING]: System will default to using SQLite database provider.");
+        var devConnectionString = builder.Configuration.GetConnectionString("dev");
+        options.UseSqlite(connectionString: devConnectionString);
+    }
+});
+builder.Services.AddIdentity<User, IdentityRole>()
+    .AddEntityFrameworkStores<AuthDbContext>();
+// Configure Identity Options
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromSeconds(30);
+    options.Lockout.MaxFailedAccessAttempts = 5;
+    options.Lockout.AllowedForNewUsers = true;
+});
+
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+// NOTE: Stores to server memory
+// TODO: Change to externals stores to allow horizontal scalling
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(3);
+});
 
 var app = builder.Build();
 
@@ -16,7 +64,11 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+app.UseSession();
+
 app.UseRouting();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
