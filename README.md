@@ -6,7 +6,7 @@
 
 # Green Mile
 
-Green Mile is `insert text here`
+Green Mile is the one stop solution to an everlasting change.
 
 ## Why
 
