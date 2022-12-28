@@ -4,7 +4,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
+using Web.Lib;
 using Web.Models;
+
+using static System.Net.WebRequestMethods;
 
 namespace Web.Pages;
 
@@ -12,7 +15,7 @@ public class RegisterModel : PageModel
 {
     private UserManager<User> _userManager { get; }
     private SignInManager<User> _signInManager { get; }
-
+    private HttpContextAccessor _contextAccessor { get; set; }
     [BindProperty, Required]
     public string UserName { get; set; }
     [BindProperty, Required]
@@ -30,10 +33,11 @@ public class RegisterModel : PageModel
     [Compare(nameof(Password), ErrorMessage = "Passwords doesn't match.")]
     public string ConfirmPassword { get; set; }
 
-    public RegisterModel(UserManager<User> userManager, SignInManager<User> signInManager)
+    public RegisterModel(UserManager<User> userManager, SignInManager<User> signInManager, HttpContextAccessor contextAccessor)
     {
         _userManager = userManager;
         _signInManager = signInManager;
+        _contextAccessor = contextAccessor;
     }
 
     public void OnGetAsync()
@@ -64,6 +68,9 @@ public class RegisterModel : PageModel
             if (result.Succeeded)
             {
                 await _signInManager.SignInAsync(user, false);
+                var userId = (await _userManager.FindByNameAsync(UserName)).Id;
+                _contextAccessor.HttpContext.Session.SetString(SessionVariable.UserName, UserName);
+                _contextAccessor.HttpContext.Session.SetString(SessionVariable.UserId, userId);
                 return RedirectToPage("/Index");
             }
 
