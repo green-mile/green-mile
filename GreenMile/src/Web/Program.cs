@@ -3,12 +3,13 @@ using Microsoft.EntityFrameworkCore;
 
 using Web.Data;
 using Web.Models;
+using Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-
+builder.Services.AddScoped<IHouseholdService, HouseholdService>();
 builder.Services.AddDbContext<AuthDbContext>(options =>
 {
     if (builder.Environment.IsDevelopment())
