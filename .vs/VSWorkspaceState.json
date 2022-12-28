@@ -11,6 +11,6 @@
     "\\GreenMile\\src\\Web\\wwwroot",
     "\\GreenMile\\src\\Web\\wwwroot\\js"
   ],
-  "SelectedNode": "\\GreenMile\\GreenMile.sln",
+  "SelectedNode": "\\GreenMile\\src\\Web\\appsettings.Development.json",
   "PreviewInSolutionExplorer": false
 }

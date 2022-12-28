@@ -1,14 +1,29 @@
 @page
+@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims
+@using Web.Models
+@using Web.Services
+@inject SignInManager<User> signInManager
+@inject UserManager<User> userManager
+@inject IHouseholdService householdService
 @model WhoamiModel
 @{
     ViewData["Title"] = "Who am I?";
 }
 
 <main>
+
     <div class="h1">
         UserId: @Model.UserId
     </div>
     <div class="h1">
         UserName: @Model.UserName
+    </div>
+    <div class="h1">
+        User household: 
+        @foreach(var x in householdService.retrieveHouseholdDetailsByName("household").Result.Value.Users) {
+            <div>@x</div>
+        }
+  
     </div>
 </main>

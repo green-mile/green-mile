@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 using Web.Data;
 using Web.Models;
@@ -21,19 +22,20 @@ namespace Web.Services
        async Task<Result<Tuple<User, Household>>> IHouseholdService.addUserToHousehold(string userId, int householdId)
         {
            Household? household = await _authDbContext.Household.FindAsync(householdId);
-           User? user = await _userManager.FindByIdAsync(userId.ToString());
+           User? user = await _userManager.FindByIdAsync(userId);
            if (household is null)
            {
+                Result<Tuple<User, Household>>.Failure("Household was not found").Print();
                 return Result<Tuple<User, Household>>.Failure("Household was not found");
            }
            if (user is null)
            {
+                Result<Tuple<User, Household>>.Failure("User was not found").Print();
                 return Result<Tuple<User, Household>>.Failure("User was not found");  
            }
           
             household.Users.Add(user);
             await _authDbContext.SaveChangesAsync();
-           
             return Result<Tuple<User, Household>>.Success("User has been added to the household!", new Tuple<User, Household> (user, household));
            
 
@@ -41,11 +43,20 @@ namespace Web.Services
 
 
 
-        async Task<Result<Household>> IHouseholdService.createHousehold(Household household)
+        async Task<Result<Household>> IHouseholdService.createHousehold(string household)
         {
-            await _authDbContext.Household.AddAsync(household);
-            await _authDbContext.SaveChangesAsync();
-            return Result<Household>.Success("Household has been created!", household);
+            if((await _authDbContext.Household.Where(x => x.Name == household).FirstOrDefaultAsync()) is null)
+            {
+                Household householdObj =new Household() {
+                    Name= household
+                };
+
+                await _authDbContext.Household.AddAsync(householdObj);
+                await _authDbContext.SaveChangesAsync();
+                return Result<Household>.Success("Household has been created!", householdObj);
+            }
+            return Result<Household>.Failure("Household exists!");
+           
         }
 
       
@@ -69,12 +80,17 @@ namespace Web.Services
         async Task<Result<Household>> IHouseholdService.retrieveHouseholdDetails(int householdId)
         {
             Household? household = await _authDbContext.Household.FindAsync(householdId);
-            if(household is null)
-            {
-                return Result<Household>.Failure("Household was not found");
-            }
-            return Result<Household>.Success("Household was found!", household);
-           
+            return household is null
+                ? Result<Household>.Failure("Household was not found")
+                : Result<Household>.Success("Household exists!", household);
+        }
+
+        async Task<Result<Household>> IHouseholdService.retrieveHouseholdDetailsByName(string householdName)
+        {
+            Household? household = await _authDbContext.Household.Where(x => x.Name == householdName).FirstOrDefaultAsync();
+            return household is null
+                ? Result<Household>.Failure("Household was not found")
+                : Result<Household>.Success("Household exists!", household);
         }
     }
 }
