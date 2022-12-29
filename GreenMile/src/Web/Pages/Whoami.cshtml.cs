@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 using Web.Lib;
 
+namespace Web.Pages;
+
 public class WhoamiModel : PageModel
 {
     private readonly IHttpContextAccessor _http;
