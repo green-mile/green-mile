@@ -68,7 +68,7 @@ public class RegisterModel : PageModel
         {
             if ((bool)HouseholdUiState.JoinHousehold)
             {
-                Result<Household> householdResult = (await _householdService.retrieveHouseholdDetailsByName(HouseholdUiState.JoinHouseholdName));
+                Result<Household> householdResult = (await _householdService.RetrieveHouseholdDetailsByName(HouseholdUiState.JoinHouseholdName));
                 if (householdResult.Status == Status.FAILURE)
                 {
                     ModelState.AddModelError("HouseholdUiState.JoinHouseholdName", householdResult.Message);
@@ -78,7 +78,7 @@ public class RegisterModel : PageModel
             }
             else if ((bool)!HouseholdUiState.JoinHousehold)
             {
-                Result<Household> createHouseholdResult = (await _householdService.retrieveHouseholdDetailsByName(HouseholdUiState.CreateHouseholdName));
+                Result<Household> createHouseholdResult = (await _householdService.RetrieveHouseholdDetailsByName(HouseholdUiState.CreateHouseholdName));
                 if (createHouseholdResult.Status == Status.SUCCESS)
                 {
                     ModelState.AddModelError("HouseholdUiState.CreateHouseholdName", createHouseholdResult.Message);
@@ -107,12 +107,12 @@ public class RegisterModel : PageModel
 
                 if ((bool)!HouseholdUiState.JoinHousehold)
                 {
-                    await _householdService.createHousehold(HouseholdUiState.CreateHouseholdName);
-                    await _householdService.addUserToHousehold(userId, (await _householdService.retrieveHouseholdDetailsByName(HouseholdUiState.CreateHouseholdName)).Value.HouseholdId);
+                    await _householdService.CreateHousehold(HouseholdUiState.CreateHouseholdName);
+                    await _householdService.AddUserToHousehold(userId, (await _householdService.RetrieveHouseholdDetailsByName(HouseholdUiState.CreateHouseholdName)).Value.HouseholdId);
                 }
                 else
                 {
-                    await _householdService.addUserToHousehold(userId, (await _householdService.retrieveHouseholdDetailsByName(HouseholdUiState.JoinHouseholdName)).Value.HouseholdId);
+                    await _householdService.AddUserToHousehold(userId, (await _householdService.RetrieveHouseholdDetailsByName(HouseholdUiState.JoinHouseholdName)).Value.HouseholdId);
                 }
 
                 return RedirectToPage("/Index");

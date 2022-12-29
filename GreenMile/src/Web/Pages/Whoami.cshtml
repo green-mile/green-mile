@@ -20,10 +20,10 @@
         UserName: @Model.UserName
     </div>
     <div class="h1">
-        User household: 
-        @foreach(var x in householdService.retrieveHouseholdDetailsByName("household").Result.Value.Users) {
+        User household:
+        @foreach (var x in householdService.RetrieveHouseholdDetailsByName("household").Result.Value.Users)
+        {
             <div>@x</div>
         }
-  
     </div>
 </main>
