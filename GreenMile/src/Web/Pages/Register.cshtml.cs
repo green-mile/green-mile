@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Web.Lib;
 using Web.Models;
 using Web.Services;
-using Web.Utils;
 using Web.UiState;
+using Web.Utils;
 
 namespace Web.Pages;
 
@@ -68,7 +68,7 @@ public class RegisterModel : PageModel
         {
             if ((bool)HouseholdUiState.JoinHousehold)
             {
-                Result<Household> householdResult = (await _householdService.RetrieveHouseholdDetailsByName(HouseholdUiState.JoinHouseholdName));
+                Result<Household> householdResult = await _householdService.RetrieveHouseholdDetailsByName(HouseholdUiState.JoinHouseholdName);
                 if (householdResult.Status == Status.FAILURE)
                 {
                     ModelState.AddModelError("HouseholdUiState.JoinHouseholdName", householdResult.Message);
@@ -78,7 +78,7 @@ public class RegisterModel : PageModel
             }
             else if ((bool)!HouseholdUiState.JoinHousehold)
             {
-                Result<Household> createHouseholdResult = (await _householdService.RetrieveHouseholdDetailsByName(HouseholdUiState.CreateHouseholdName));
+                Result<Household> createHouseholdResult = await _householdService.RetrieveHouseholdDetailsByName(HouseholdUiState.CreateHouseholdName);
                 if (createHouseholdResult.Status == Status.SUCCESS)
                 {
                     ModelState.AddModelError("HouseholdUiState.CreateHouseholdName", createHouseholdResult.Message);
