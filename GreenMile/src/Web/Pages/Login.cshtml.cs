@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 using Web.Lib;
 using Web.Models;
@@ -39,9 +40,16 @@ public class LoginModel : PageModel
             var identityResult = await _signInManager.PasswordSignInAsync(UserName, Password, RememberMe, true);
             if (identityResult.Succeeded)
             {
-                var userId = (await _userManager.FindByNameAsync(UserName)).Id;
-                _http.HttpContext.Session.SetString(SessionVariable.UserName, UserName);
-                _http.HttpContext.Session.SetString(SessionVariable.UserId, userId);
+                var user = await _userManager.Users
+                    .Include(u => u.Household)
+                    // Using First(...) is more efficient because Users are
+                    // guaranteed to have a unique Username (registration check).
+                    // This avoids the overhead of Single(...)'s uniqueness
+                    // check and improves performance.
+                    .FirstAsync(u => u.UserName == UserName);
+                _http.HttpContext.Session.SetString(SessionVariable.UserName, user.UserName);
+                _http.HttpContext.Session.SetString(SessionVariable.UserId, user.Id);
+                _http.HttpContext.Session.SetString(SessionVariable.HousholdName, user.Household.Name);
                 return RedirectToPage("/Index");
             }
             ModelState.AddModelError("", "Username or Password incorrect.");
