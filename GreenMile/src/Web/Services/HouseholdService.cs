@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 using Web.Data;
@@ -17,9 +17,8 @@ namespace Web.Services
             _authDbContext = authDbContext;
         }
 
-    
 
-       async Task<Result<Tuple<User, Household>>> IHouseholdService.addUserToHousehold(string userId, int householdId)
+       async Task<Result<Tuple<User, Household>>> IHouseholdService.AddUserToHousehold(string userId, int householdId)
         {
            Household? household = await _authDbContext.Household.FindAsync(householdId);
            User? user = await _userManager.FindByIdAsync(userId.ToString());
@@ -42,7 +41,7 @@ namespace Web.Services
 
 
 
-        async Task<Result<Household>> IHouseholdService.createHousehold(string householdName)
+        async Task<Result<Household>> IHouseholdService.CreateHousehold(string householdName)
         {
             if((await _authDbContext.Household.FirstOrDefaultAsync(x => x.Name == householdName)) is null)
             {
@@ -60,7 +59,7 @@ namespace Web.Services
 
       
 
-        async Task<Result<User>> IHouseholdService.removeUserFromHousehold(string userId)
+        async Task<Result<User>> IHouseholdService.RemoveUserFromHousehold(string userId)
         {
             User? user = await _userManager.FindByIdAsync(userId);
             if(user is null)
@@ -70,23 +69,26 @@ namespace Web.Services
             user.Household = null;
             
              return Result<User>.Success("User was found and household as been removed!", user);
-            
            
         }
 
-    
-
-        async Task<Result<Household>> IHouseholdService.retrieveHouseholdDetails(int householdId)
+        public async Task<Result<Household>> RetrieveHouseholdDetails(int householdId)
         {
-            Household? household = await _authDbContext.Household.FindAsync(householdId);
+            Household? household = await _authDbContext.Household
+                .Include(h => h.Users)
+                .FirstOrDefaultAsync(h => h.HouseholdId == householdId);
             return household is null
                 ? Result<Household>.Failure("Household was not found")
                 : Result<Household>.Success("Household exists!", household);
         }
 
-        async Task<Result<Household>> IHouseholdService.retrieveHouseholdDetailsByName(string householdName)
+        public async Task<Result<Household>> RetrieveHouseholdDetailsByName(string householdName)
         {
-            Household? household = await _authDbContext.Household.FirstOrDefaultAsync(x => x.Name == householdName);
+
+            Household? household = await _authDbContext.Household
+                .Include(h => h.Users)
+                .FirstOrDefaultAsync(x => x.Name == householdName);
+
             return household is null
                 ? Result<Household>.Failure("Household was not found")
                 : Result<Household>.Success("Household exists!", household);

@@ -2,12 +2,11 @@
 
 namespace Web.Utils
 {
-    
     public sealed class Result<T>
     {
-        public Status Status { get; private set; }
-        public String Message { get; private set; }
-        public T? Value { get ;private set; }
+        public Status Status { get; }
+        public string Message { get; }
+        public T? Value { get; private set; }
 
         private Result(Status status, string message, T value)
         {
@@ -26,7 +25,6 @@ namespace Web.Utils
             return new Result<T>(Status.SUCCESS, message, value);
         }
 
-
         public void Print()
         {
             if (Status == Status.SUCCESS)
@@ -36,7 +34,6 @@ namespace Web.Utils
             else if (Status == Status.FAILURE)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-          
             }
             Console.WriteLine(ToString());
             Console.ResetColor();
@@ -65,15 +62,5 @@ namespace Web.Utils
 
             return sb.ToString();
         }
-
-      
-
-
     }
-
-
-
 }
-
-
-

@@ -1,14 +1,12 @@
 @page
-@using Microsoft.AspNetCore.Identity
-@using System.Security.Claims
-@using Web.Models
-@using Web.Services
-@inject SignInManager<User> signInManager
-@inject UserManager<User> userManager
-@inject IHouseholdService householdService
 @model WhoamiModel
 @{
     ViewData["Title"] = "Who am I?";
+
+    // Default values for null variables
+    Model.UserId ??= "Not found in session";
+    Model.UserName ??= "Not found in session";
+    Model.HouseholdName ??= "Not found in session";
 }
 
 <main>
@@ -20,10 +18,12 @@
         UserName: @Model.UserName
     </div>
     <div class="h1">
-        User household Id: 
-
-       @userManager.GetUserAsync(User).Result.HouseholdId
-       
-  
+        User household:
     </div>
+    <ul class="h3">
+        @foreach (var user in @Model.HouseholdMembers)
+        {
+            <li>@user.UserName</li>
+        }
+    </ul>
 </main>

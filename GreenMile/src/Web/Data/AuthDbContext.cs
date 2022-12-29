@@ -17,8 +17,5 @@ public class AuthDbContext : IdentityDbContext<User>
 
     public AuthDbContext(DbContextOptions options) : base(options)
     {
-      
     }
-
-   
 }
