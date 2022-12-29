@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 using Web.Models;
 
+namespace Web.Pages;
+
 public class LogoutModel : PageModel
 {
     private readonly SignInManager<User> _signInManager;
