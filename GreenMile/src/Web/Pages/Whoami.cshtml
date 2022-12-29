@@ -20,10 +20,10 @@
         UserName: @Model.UserName
     </div>
     <div class="h1">
-        User household: 
-        @foreach(var x in householdService.retrieveHouseholdDetailsByName("household").Result.Value.Users) {
-            <div>@x</div>
-        }
+        User household Id: 
+
+       @userManager.GetUserAsync(User).Result.HouseholdId
+       
   
     </div>
 </main>

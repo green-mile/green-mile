@@ -6,5 +6,6 @@ public class User : IdentityUser
 {
     public string FirstName { get; set; }
     public string LastName { get; set; }
-    public Household? Household { get; set; }
+    public int HouseholdId { get; set; }
+    public Household Household { get; set; }
 }
