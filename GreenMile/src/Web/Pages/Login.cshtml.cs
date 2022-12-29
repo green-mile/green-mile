@@ -30,7 +30,7 @@ public class LoginModel : PageModel
         _userManager = userManager;
     }
 
-    public void OnGetAsync() { }
+    public void OnGet() { }
 
     public async Task<IActionResult> OnPostAsync()
     {
