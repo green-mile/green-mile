@@ -9,17 +9,15 @@ using Web.Models;
 using Web.Services;
 using Web.Utils;
 using Web.UiState;
-using static System.Net.WebRequestMethods;
 
 namespace Web.Pages;
 
 public class RegisterModel : PageModel
 {
-    private UserManager<User> _userManager { get; }
-    private SignInManager<User> _signInManager { get; }
-    private IHttpContextAccessor _contextAccessor { get; set; }
-    private IHouseholdService _householdService { get; set; }
-
+    private readonly UserManager<User> _userManager;
+    private readonly SignInManager<User> _signInManager;
+    private readonly IHttpContextAccessor _contextAccessor;
+    private readonly IHouseholdService _householdService;
 
     [BindProperty, Required]
     public string UserName { get; set; }
@@ -49,14 +47,12 @@ public class RegisterModel : PageModel
         _contextAccessor = contextAccessor;
     }
 
-    public void OnGetAsync()
+    public void OnGet()
     {
-
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
-
         if ((bool)HouseholdUiState.JoinHousehold && HouseholdUiState.JoinHouseholdName is null)
         {
             ModelState.AddModelError("HouseholdUiState.JoinHouseholdName", "Please fill in the household name you want to join!");
@@ -70,18 +66,15 @@ public class RegisterModel : PageModel
 
         if (ModelState.IsValid)
         {
-      
-
-
             if ((bool)HouseholdUiState.JoinHousehold)
             {
                 Result<Household> householdResult = (await _householdService.retrieveHouseholdDetailsByName(HouseholdUiState.JoinHouseholdName));
-                if (householdResult.Status == Status.FAILURE) {
+                if (householdResult.Status == Status.FAILURE)
+                {
                     ModelState.AddModelError("HouseholdUiState.JoinHouseholdName", householdResult.Message);
                     householdResult.Print();
                     return Page();
                 }
-          
             }
             else if ((bool)!HouseholdUiState.JoinHousehold)
             {
@@ -93,14 +86,6 @@ public class RegisterModel : PageModel
                     return Page();
                 }
             }
- 
-
-
-            Console.WriteLine($"[DEBUG]: Username = {UserName}");
-            Console.WriteLine($"[DEBUG]: FirstName = {FirstName}");
-            Console.WriteLine($"[DEBUG]: LastName = {LastName}");
-            Console.WriteLine($"[DEBUG]: Email = {Email}");
-            Console.WriteLine($"[DEBUG]: Password = {Password}");
 
             var user = new User()
             {
@@ -112,37 +97,26 @@ public class RegisterModel : PageModel
 
             var result = await _userManager.CreateAsync(user, Password);
 
-
             if (result.Succeeded)
             {
-               
-              
-
-
                 await _signInManager.SignInAsync(user, false);
                 var userId = (await _userManager.FindByNameAsync(UserName)).Id;
-                
+
                 _contextAccessor.HttpContext.Session.SetString(SessionVariable.UserName, UserName);
                 _contextAccessor.HttpContext.Session.SetString(SessionVariable.UserId, userId);
-                
 
-                if((bool)!HouseholdUiState.JoinHousehold)
+                if ((bool)!HouseholdUiState.JoinHousehold)
                 {
-                    
                     await _householdService.createHousehold(HouseholdUiState.CreateHouseholdName);
                     await _householdService.addUserToHousehold(userId, (await _householdService.retrieveHouseholdDetailsByName(HouseholdUiState.CreateHouseholdName)).Value.HouseholdId);
-                } else
+                }
+                else
                 {
-
                     await _householdService.addUserToHousehold(userId, (await _householdService.retrieveHouseholdDetailsByName(HouseholdUiState.JoinHouseholdName)).Value.HouseholdId);
                 }
 
-            
-
                 return RedirectToPage("/Index");
             }
-
-
 
             foreach (var error in result.Errors)
             {
