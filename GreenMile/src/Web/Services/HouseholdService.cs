@@ -65,7 +65,9 @@ namespace Web.Services
 
         public async Task<Result<Household>> RetrieveHouseholdDetails(int householdId)
         {
-            Household? household = await _authDbContext.Household.FindAsync(householdId);
+            Household? household = await _authDbContext.Household
+                .Include(h => h.Users)
+                .FirstOrDefaultAsync(h => h.HouseholdId == householdId);
             return household is null
                 ? Result<Household>.Failure("Household was not found")
                 : Result<Household>.Success("Household exists!", household);
@@ -73,7 +75,9 @@ namespace Web.Services
 
         public async Task<Result<Household>> RetrieveHouseholdDetailsByName(string householdName)
         {
-            Household? household = await _authDbContext.Household.Where(x => x.Name == householdName).FirstOrDefaultAsync();
+            Household? household = await _authDbContext.Household
+                .Include(h => h.Users)
+                .FirstOrDefaultAsync(x => x.Name == householdName);
             return household is null
                 ? Result<Household>.Failure("Household was not found")
                 : Result<Household>.Success("Household exists!", household);
