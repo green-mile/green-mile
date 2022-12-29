@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Web.Data;
 
@@ -10,9 +11,10 @@ using Web.Data;
 namespace Web.Migrations
 {
     [DbContext(typeof(AuthDbContext))]
-    partial class AuthDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221228020125_HouseholdUser")]
+    partial class HouseholdUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.12");
@@ -183,7 +185,7 @@ namespace Web.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("HouseholdId")
+                    b.Property<int>("HouseholdId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("LastName")
@@ -292,7 +294,9 @@ namespace Web.Migrations
                 {
                     b.HasOne("Web.Models.Household", "Household")
                         .WithMany("Users")
-                        .HasForeignKey("HouseholdId");
+                        .HasForeignKey("HouseholdId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Household");
                 });

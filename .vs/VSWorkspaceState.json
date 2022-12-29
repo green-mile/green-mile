@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\GreenMile",
+    "\\GreenMile\\src",
+    "\\GreenMile\\src\\Web",
+    "\\GreenMile\\src\\Web\\Migrations",
+    "\\GreenMile\\src\\Web\\Models",
+    "\\GreenMile\\src\\Web\\Pages",
+    "\\GreenMile\\src\\Web\\Pages\\Shared",
+    "\\GreenMile\\src\\Web\\wwwroot",
+    "\\GreenMile\\src\\Web\\wwwroot\\js"
+  ],
+  "SelectedNode": "\\GreenMile\\src\\Web\\appsettings.Development.json",
+  "PreviewInSolutionExplorer": false
+}
