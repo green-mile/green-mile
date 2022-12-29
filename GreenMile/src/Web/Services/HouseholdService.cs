@@ -17,7 +17,7 @@ namespace Web.Services
             _authDbContext = authDbContext;
         }
 
-        async Task<Result<Tuple<User, Household>>> IHouseholdService.AddUserToHousehold(string userId, int householdId)
+        public async Task<Result<Tuple<User, Household>>> AddUserToHousehold(string userId, int householdId)
         {
             Household? household = await _authDbContext.Household.FindAsync(householdId);
             User? user = await _userManager.FindByIdAsync(userId);
@@ -36,11 +36,11 @@ namespace Web.Services
             return Result<Tuple<User, Household>>.Success("User has been added to the household!", new Tuple<User, Household>(user, household));
         }
 
-        async Task<Result<Household>> IHouseholdService.CreateHousehold(string household)
+        public async Task<Result<Household>> CreateHousehold(string household)
         {
             if ((await _authDbContext.Household.Where(x => x.Name == household).FirstOrDefaultAsync()) is null)
             {
-                Household householdObj = new Household()
+                Household householdObj = new()
                 {
                     Name = household
                 };
@@ -52,7 +52,7 @@ namespace Web.Services
             return Result<Household>.Failure("Household exists!");
         }
 
-        async Task<Result<User>> IHouseholdService.RemoveUserFromHousehold(string userId)
+        public async Task<Result<User>> RemoveUserFromHousehold(string userId)
         {
             User? user = await _userManager.FindByIdAsync(userId);
             if (user is null)
@@ -63,7 +63,7 @@ namespace Web.Services
             return Result<User>.Success("User was found and household as been removed!", user);
         }
 
-        async Task<Result<Household>> IHouseholdService.RetrieveHouseholdDetails(int householdId)
+        public async Task<Result<Household>> RetrieveHouseholdDetails(int householdId)
         {
             Household? household = await _authDbContext.Household.FindAsync(householdId);
             return household is null
@@ -71,7 +71,7 @@ namespace Web.Services
                 : Result<Household>.Success("Household exists!", household);
         }
 
-        async Task<Result<Household>> IHouseholdService.RetrieveHouseholdDetailsByName(string householdName)
+        public async Task<Result<Household>> RetrieveHouseholdDetailsByName(string householdName)
         {
             Household? household = await _authDbContext.Household.Where(x => x.Name == householdName).FirstOrDefaultAsync();
             return household is null
