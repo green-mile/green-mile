@@ -13,7 +13,6 @@ namespace Web.UiState
         public string? CreateHouseholdName { get; set; }
 
         [BindProperty]
-        public Boolean? JoinHousehold { get; set; } = true;
-
+        public bool? JoinHousehold { get; set; } = true;
     }
 }
