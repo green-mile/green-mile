@@ -45,7 +45,7 @@ namespace Web.Services
 
         async Task<Result<Household>> IHouseholdService.createHousehold(string household)
         {
-            if((await _authDbContext.Household.Where(x => x.Name == household).FirstOrDefaultAsync()) is null)
+            if((await _authDbContext.Household.FirstOrDefaultAsync(x => x.Name == household)) is null)
             {
                 Household householdObj =new Household() {
                     Name= household
@@ -87,7 +87,7 @@ namespace Web.Services
 
         async Task<Result<Household>> IHouseholdService.retrieveHouseholdDetailsByName(string householdName)
         {
-            Household? household = await _authDbContext.Household.Where(x => x.Name == householdName).FirstOrDefaultAsync();
+            Household? household = await _authDbContext.Household.FirstOrDefaultAsync(x => x.Name == householdName);
             return household is null
                 ? Result<Household>.Failure("Household was not found")
                 : Result<Household>.Success("Household exists!", household);
