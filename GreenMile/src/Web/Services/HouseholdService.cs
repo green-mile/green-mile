@@ -22,20 +22,19 @@ namespace Web.Services
        async Task<Result<Tuple<User, Household>>> IHouseholdService.addUserToHousehold(string userId, int householdId)
         {
            Household? household = await _authDbContext.Household.FindAsync(householdId);
-           User? user = await _userManager.FindByIdAsync(userId);
+           User? user = await _userManager.FindByIdAsync(userId.ToString());
            if (household is null)
            {
-                Result<Tuple<User, Household>>.Failure("Household was not found").Print();
                 return Result<Tuple<User, Household>>.Failure("Household was not found");
            }
            if (user is null)
            {
-                Result<Tuple<User, Household>>.Failure("User was not found").Print();
                 return Result<Tuple<User, Household>>.Failure("User was not found");  
            }
           
             household.Users.Add(user);
             await _authDbContext.SaveChangesAsync();
+           
             return Result<Tuple<User, Household>>.Success("User has been added to the household!", new Tuple<User, Household> (user, household));
            
 
@@ -43,12 +42,12 @@ namespace Web.Services
 
 
 
-        async Task<Result<Household>> IHouseholdService.createHousehold(string household)
+        async Task<Result<Household>> IHouseholdService.createHousehold(string householdName)
         {
-            if((await _authDbContext.Household.FirstOrDefaultAsync(x => x.Name == household)) is null)
+            if((await _authDbContext.Household.FirstOrDefaultAsync(x => x.Name == householdName)) is null)
             {
                 Household householdObj =new Household() {
-                    Name= household
+                    Name= householdName
                 };
 
                 await _authDbContext.Household.AddAsync(householdObj);
