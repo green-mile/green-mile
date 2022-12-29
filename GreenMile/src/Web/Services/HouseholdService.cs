@@ -18,7 +18,7 @@ namespace Web.Services
         }
 
 
-       async Task<Result<Tuple<User, Household>>> IHouseholdService.addUserToHousehold(string userId, int householdId)
+       async Task<Result<Tuple<User, Household>>> IHouseholdService.AddUserToHousehold(string userId, int householdId)
         {
            Household? household = await _authDbContext.Household.FindAsync(householdId);
            User? user = await _userManager.FindByIdAsync(userId.ToString());
@@ -41,7 +41,7 @@ namespace Web.Services
 
 
 
-        async Task<Result<Household>> IHouseholdService.createHousehold(string householdName)
+        async Task<Result<Household>> IHouseholdService.CreateHousehold(string householdName)
         {
             if((await _authDbContext.Household.FirstOrDefaultAsync(x => x.Name == householdName)) is null)
             {
@@ -59,7 +59,7 @@ namespace Web.Services
 
       
 
-        async Task<Result<User>> IHouseholdService.removeUserFromHousehold(string userId)
+        async Task<Result<User>> IHouseholdService.RemoveUserFromHousehold(string userId)
         {
             User? user = await _userManager.FindByIdAsync(userId);
             if(user is null)
@@ -72,7 +72,7 @@ namespace Web.Services
            
         }
 
-        public async Task<Result<Household>> retrieveHouseholdDetails(int householdId)
+        public async Task<Result<Household>> RetrieveHouseholdDetails(int householdId)
         {
             Household? household = await _authDbContext.Household
                 .Include(h => h.Users)
@@ -82,7 +82,7 @@ namespace Web.Services
                 : Result<Household>.Success("Household exists!", household);
         }
 
-        public async Task<Result<Household>> retrieveHouseholdDetailsByName(string householdName)
+        public async Task<Result<Household>> RetrieveHouseholdDetailsByName(string householdName)
         {
 
             Household? household = await _authDbContext.Household
