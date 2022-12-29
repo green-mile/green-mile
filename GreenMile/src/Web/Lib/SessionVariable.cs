@@ -2,6 +2,6 @@ namespace Web.Lib;
 
 public static class SessionVariable
 {
-    public static string UserName = "UserName";
-    public static string UserId = "UserId";
+    public const string UserName = "UserName";
+    public const string UserId = "UserId";
 }
