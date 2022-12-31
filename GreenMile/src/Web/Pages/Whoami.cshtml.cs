@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 using Web.Lib;
@@ -6,6 +7,7 @@ using Web.Services;
 
 namespace Web.Pages;
 
+[Authorize]
 public class WhoamiModel : PageModel
 {
     private readonly IHttpContextAccessor _http;

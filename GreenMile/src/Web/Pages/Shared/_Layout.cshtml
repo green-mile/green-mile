@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using Web.Models
+@inject SignInManager<User> signInManager
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -53,32 +56,35 @@
                                     </form>
                                 </div>
                                 <div class="header-action-icon-2">
-                                    <a href="page-account.html">
+                                    @{
+                                        if(signInManager.IsSignedIn(User)) {
+                                              <a href="/account/details">
                                         <img class="svgInject" alt="GreenMile" src="~/imgs/theme/icons/icon-user.svg" />
                                     </a>
-                                    <a href="page-account.html"><span class="lable ml-0">Account</span></a>
+                                    <a href="/account/details"><span class="lable ml-0">Account</span></a>
                                     <div class="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
                                         <ul>
                                             <li>
-                                                <a href="page-account.html">
+                                                <a href="/account/details">
                                                     <i class="fa-solid fa-user"></i>
                                                     My Account
                                                 </a>
                                             </li>
+                                        
                                             <li>
-                                                <a href="page-account.html">
-                                                    <i class="fa-solid fa-gear"></i>
-                                                    Setting
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="page-login.html">
+                                                <a href="/logout">
                                                     <i class="fa-solid fa-right-from-bracket"></i>
                                                     Sign out
                                                 </a>
                                             </li>
                                         </ul>
                                     </div>
+                                        } else {
+                                            <a href="/login"><span class="lable ml-0">Sign in</span></a>
+                                            <a href="/register" style="margin-left:15px"><span class="lable ml-0">Register</span></a>
+                                        }
+                                    }
+                                  
                                 </div>
                             </div>
                         </div>

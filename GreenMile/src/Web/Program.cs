@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 using Web.Data;
@@ -51,6 +53,18 @@ builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(3);
 });
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+  
+    options.AccessDeniedPath = "/login";
+    options.LoginPath = "/login";
+   
+
+});
+
+
+
 
 var app = builder.Build();
 
