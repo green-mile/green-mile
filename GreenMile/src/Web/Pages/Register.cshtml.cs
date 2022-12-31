@@ -87,7 +87,7 @@ public class RegisterModel : PageModel
                 }
             }
 
-            var user = new User()
+            var newUser = new User()
             {
                 UserName = UserName,
                 FirstName = FirstName,
@@ -95,15 +95,13 @@ public class RegisterModel : PageModel
                 Email = Email,
             };
 
-            var result = await _userManager.CreateAsync(user, Password);
+            var result = await _userManager.CreateAsync(newUser, Password);
 
             if (result.Succeeded)
             {
-                await _signInManager.SignInAsync(user, false);
-                var userId = (await _userManager.FindByNameAsync(UserName)).Id;
-
-                _contextAccessor.HttpContext.Session.SetString(SessionVariable.UserName, UserName);
-                _contextAccessor.HttpContext.Session.SetString(SessionVariable.UserId, userId);
+                await _signInManager.SignInAsync(newUser, false);
+                var user = await _userManager.FindByNameAsync(UserName);
+                var userId = user.Id;
 
                 if ((bool)!HouseholdUiState.JoinHousehold)
                 {
@@ -114,6 +112,10 @@ public class RegisterModel : PageModel
                 {
                     await _householdService.AddUserToHousehold(userId, (await _householdService.RetrieveHouseholdDetailsByName(HouseholdUiState.JoinHouseholdName)).Value.HouseholdId);
                 }
+
+                _contextAccessor.HttpContext.Session.SetString(SessionVariable.UserName, UserName);
+                _contextAccessor.HttpContext.Session.SetString(SessionVariable.UserId, userId);
+                _contextAccessor.HttpContext.Session.SetString(SessionVariable.HousholdName, user.Household.Name);
 
                 return RedirectToPage("/Index");
             }
