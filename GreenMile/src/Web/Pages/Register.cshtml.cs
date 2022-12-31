@@ -101,7 +101,7 @@ public class RegisterModel : PageModel
             {
                 await _signInManager.SignInAsync(newUser, false);
                 var user = await _userManager.FindByNameAsync(UserName);
-                var userId = newUser.Id;
+                var userId = user.Id;
 
                 if ((bool)!HouseholdUiState.JoinHousehold)
                 {
