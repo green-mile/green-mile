@@ -24,5 +24,8 @@ namespace Web.UiState
         public string? EmailAddress { get; set; } = null;
         public Household? Household { get; set; } = null;
 
+        public string? DeletePassword { get; set; } = null;
+        public string? DeleteUsername { get; set; } = null;
+
     }
 }

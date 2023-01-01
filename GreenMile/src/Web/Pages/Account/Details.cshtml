@@ -7,7 +7,7 @@
 @model Web.Pages.Account.DetailsModel
 @{
 
-    User user = (await userManager.GetUserAsync(HttpContext.User));
+    User user = await userManager.GetUserAsync(HttpContext.User);
 
     Household household = (await householdService.RetrieveHouseholdDetails(user.HouseholdId ?? -1)).Value;
 
@@ -30,24 +30,32 @@
                         <div class="col-md-3">
                             <div class="dashboard-menu">
                                 <ul class="nav flex-column" role="tablist">
-                                   @if(TempData["tab"]?.ToString() != "account-detail") {
+                                   @if(TempData["tab"]?.ToString() == "dashboard" || TempData["tab"]?.ToString() == null ) {
                                          <li class="nav-item">
                                         <a class="nav-link active" id="dashboard-tab" data-bs-toggle="tab" href="#dashboard" role="tab" aria-controls="dashboard" aria-selected="false"><i class="fi-rs-settings-sliders mr-10"></i>Dashboard</a>
                                     </li>
-                                    <li class="nav-item" onclick="tabChange('account-detail')">
-                                        <a class="nav-link" id="account-detail-tab" data-bs-toggle="tab" href="#account-detail" role="tab" aria-controls="account-detail" aria-selected="true"><i class="fi-rs-user mr-10"></i>Account details</a>
-                                    </li>
+                                
                                  
                                        
-                                   } else {
+                                   }  else {
                                         <li class="nav-item">
                                             <a class="nav-link" id="dashboard-tab" data-bs-toggle="tab" href="#dashboard" role="tab" aria-controls="dashboard" aria-selected="false"><i class="fi-rs-settings-sliders mr-10"></i>Dashboard</a>
                                         </li>
+                                   }
+                                   
+                                   
+                                   @if(TempData["tab"]?.ToString() == "account-detail") {
+                                    
                                         <li class="nav-item" onclick="tabChange('account-detail')">
                                             <a class="nav-link active" id="account-detail-tab" data-bs-toggle="tab" href="#account-detail" role="tab" aria-controls="account-detail" aria-selected="true"><i class="fi-rs-user mr-10"></i>Account details</a>
                                         </li>
                                                   
+                                   } else {
+                                    <li class="nav-item" onclick="tabChange('account-detail')">
+                                        <a class="nav-link" id="account-detail-tab" data-bs-toggle="tab" href="#account-detail" role="tab" aria-controls="account-detail" aria-selected="true"><i class="fi-rs-user mr-10"></i>Account details</a>
+                                    </li>
                                    }
+                                  
                                
                                     <li class="nav-item">
                                         <a class="nav-link" id="household-tab" data-bs-toggle="tab" href="#household" role="tab" aria-controls="household" aria-selected="true"><i class="fi-rs-marker mr-10"></i>Household</a>
@@ -55,9 +63,17 @@
                                     <li class="nav-item">
                                         <a class="nav-link" id="orders-tab" data-bs-toggle="tab" href="#orders" role="tab" aria-controls="orders" aria-selected="false"><i class="fi-rs-shopping-bag mr-10"></i>Orders</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="track-orders-tab" data-bs-toggle="tab" href="#track-orders" role="tab" aria-controls="track-orders" aria-selected="false"><i class="fi-rs-shopping-cart-check mr-10"></i>Track Your Order</a>
+
+                                    @if(TempData["tab"]?.ToString() == "danger-zone") {
+                                           <li class="nav-item" onclick="tabChange('danger-zone')">
+                                        <a class="nav-link active" id="track-orders-tab" data-bs-toggle="tab" href="#track-orders" role="tab" aria-controls="track-orders" aria-selected="false"><i  style="margin-right: 5px" class="fa fa-exclamation-triangle"></i>Danger zone</a>
                                     </li>
+                                    } else {
+                                           <li class="nav-item" onclick="tabChange('danger-zone')">
+                                        <a class="nav-link" id="track-orders-tab" data-bs-toggle="tab" href="#track-orders" role="tab" aria-controls="track-orders" aria-selected="false"><i  style="margin-right: 5px" class="fa fa-exclamation-triangle"></i>Danger zone</a>
+                                    </li>
+                                    }
+                                 
    
                                   
                                     <li class="nav-item">
@@ -70,95 +86,9 @@
                             <div class="tab-content account dashboard-content pl-50">
 
 
-                                      @if (TempData["tab"]?.ToString() != "account-detail") {
-                                    <div class="tab-pane fade active show" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h3 class="mb-0">Hello Rosie!</h3>
-                                            </div>
-                                            <div class="card-body">
-                                                <p>
-                                                    From your account dashboard. you can easily check &amp; view your <a href="#">recent orders</a>,<br />
-                                                    manage your <a href="#">shipping and billing addresses</a> and <a href="#">edit your password and account details.</a>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
 
-                                    <div class="tab-pane fade" id="account-detail" role="tabpanel" aria-labelledby="account-detail-tab">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h5>Account Details</h5>
-                                            </div>
-                                            <div class="card-body">
+                                @if(TempData["tab"]?.ToString() == "account-detail") {
 
-                                                <form method="POST">
-                                                    <div class="row">
-                                                        <div class="form-group col-md-6">
-                                                            <label>First Name <span class="required">*</span></label>
-                                                            <input class="form-control" asp-for="AccountUiState.FirstName" />
-                                                            <span asp-validation-for="AccountUiState.FirstName" class="text-danger"></span>
-                                                        </div>
-                                                        <div class="form-group col-md-6">
-                                                            <label>Last Name <span class="required">*</span></label>
-                                                            <input class="form-control" asp-for="AccountUiState.LastName" />
-                                                            <span asp-validation-for="AccountUiState.LastName" class="text-danger"></span>
-                                                        </div>
-                                                        <div class="form-group col-md-12">
-                                                            <label>Display Name <span class="required">*</span></label>
-                                                            <input asp-for="AccountUiState.Username" class="form-control" />
-                                                            <span asp-validation-for="AccountUiState.Username" class="text-danger"></span>
-                                                        </div>
-                                                        <div class="form-group col-md-12">
-                                                            <label>Email Address <span class="required">*</span></label>
-                                                            <input asp-for="AccountUiState.EmailAddress" type="email" class="form-control" />
-                                                            <span asp-validation-for="AccountUiState.EmailAddress" class="text-danger"></span>
-                                                        </div>
-                                                        <div class="form-group col-md-12">
-                                                            <label>Current Password <span class="required">*</span></label>
-                                                            <input class="form-control" type="password" asp-for="AccountUiState.Password" />
-                                                            <span asp-validation-for="AccountUiState.Password" class="text-danger"></span>
-                                                        </div>
-                                                        <div class="form-group col-md-12">
-                                                            <label>Create New Password <span class="required"></span></label>
-                                                            <input class="form-control" type="password" asp-for="AccountUiState.NewPassword" />
-                                                            <span asp-validation-for="AccountUiState.NewPassword" class="text-danger"></span>
-                                                        </div>
-                                                        <div class="form-group col-md-12">
-                                                            <label>Confirm New Password <span class="required"></span></label>
-                                                            <input class="form-control" type="password" asp-for="AccountUiState.ConfirmPassword" />
-                                                            <span asp-validation-for="AccountUiState.ConfirmPassword" class="text-danger"></span>
-                                                        </div>
-                                                        <input type="hidden" asp-for="AccountUiState.Tab" />
-
-                                                        <div class="col-md-12">
-                                                            <button type="submit" class="btn btn-fill-out submit font-weight-bold" name="submit" value="Submit">Save Changes</button>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                      } else {
-
-
-
-
-
-
-                                    <div class="tab-pane fade" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h3 class="mb-0">Hello Rosie!</h3>
-                                            </div>
-                                            <div class="card-body">
-                                                <p>
-                                                    From your account dashboard. you can easily check &amp; view your <a href="#">recent orders</a>,<br />
-                                                    manage your <a href="#">shipping and billing addresses</a> and <a href="#">edit your password and account details.</a>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
 
                                     <div class="tab-pane fade active show" id="account-detail" role="tabpanel" aria-labelledby="account-detail-tab">
                                         <div class="card">
@@ -207,29 +137,107 @@
                                                         <input type="hidden" asp-for="AccountUiState.Tab" />
 
                                                         <div class="col-md-12">
-                                                            <button type="submit" class="btn btn-fill-out submit font-weight-bold" name="submit" value="Submit">Save Changes</button>
+                                                            <button type="submit" class="btn btn-fill-out submit font-weight-bold" asp-page-handler="post" name="submit" value="Submit">Save Changes</button>
                                                         </div>
                                                     </div>
                                                 </form>
                                             </div>
                                         </div>
                                     </div>
+                                } else {
+                                    
+                                    <div class="tab-pane fade" id="account-detail" role="tabpanel" aria-labelledby="account-detail-tab">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h5>Account Details</h5>
+                                            </div>
+                                            <div class="card-body">
+
+                                                <form method="POST">
+                                                    <div class="row">
+                                                        <div class="form-group col-md-6">
+                                                            <label>First Name <span class="required">*</span></label>
+                                                            <input class="form-control" asp-for="AccountUiState.FirstName" />
+                                                            <span asp-validation-for="AccountUiState.FirstName" class="text-danger"></span>
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            <label>Last Name <span class="required">*</span></label>
+                                                            <input class="form-control" asp-for="AccountUiState.LastName" />
+                                                            <span asp-validation-for="AccountUiState.LastName" class="text-danger"></span>
+                                                        </div>
+                                                        <div class="form-group col-md-12">
+                                                            <label>Display Name <span class="required">*</span></label>
+                                                            <input asp-for="AccountUiState.Username" class="form-control" />
+                                                            <span asp-validation-for="AccountUiState.Username" class="text-danger"></span>
+                                                        </div>
+                                                        <div class="form-group col-md-12">
+                                                            <label>Email Address <span class="required">*</span></label>
+                                                            <input asp-for="AccountUiState.EmailAddress" type="email" class="form-control" />
+                                                            <span asp-validation-for="AccountUiState.EmailAddress" class="text-danger"></span>
+                                                        </div>
+                                                        <div class="form-group col-md-12">
+                                                            <label>Current Password <span class="required">*</span></label>
+                                                            <input class="form-control" type="password" asp-for="AccountUiState.Password" />
+                                                            <span asp-validation-for="AccountUiState.Password" class="text-danger"></span>
+                                                        </div>
+                                                        <div class="form-group col-md-12">
+                                                            <label>Create New Password <span class="required"></span></label>
+                                                            <input class="form-control" type="password" asp-for="AccountUiState.NewPassword" />
+                                                            <span asp-validation-for="AccountUiState.NewPassword" class="text-danger"></span>
+                                                        </div>
+                                                        <div class="form-group col-md-12">
+                                                            <label>Confirm New Password <span class="required"></span></label>
+                                                            <input class="form-control" type="password" asp-for="AccountUiState.ConfirmPassword" />
+                                                            <span asp-validation-for="AccountUiState.ConfirmPassword" class="text-danger"></span>
+                                                        </div>
+                                                        <input type="hidden" asp-for="AccountUiState.Tab" />
+
+                                                        <div class="col-md-12">
+                                                            <button type="submit" asp-page-handler="post" class="btn btn-fill-out submit font-weight-bold" name="submit" value="Submit">Save Changes</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+
+                                @if(TempData["tab"]?.ToString() == "dashboard" || TempData["tab"]?.ToString() == null) {
+                                    <div class="tab-pane fade active show" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="mb-0">Hello @user.UserName!</h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <p>
+                                                    From your account dashboard. you can easily check &amp; view your <a href="#">recent orders</a>,<br />
+                                                    manage your <a href="#">shipping and billing addresses</a> and <a href="#">edit your password and account details.</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                } else {
+                                    <div class="tab-pane fade" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="mb-0">Hello Rosie!</h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <p>
+                                                    From your account dashboard. you can easily check &amp; view your <a href="#">recent orders</a>,<br />
+                                                    manage your <a href="#">shipping and billing addresses</a> and <a href="#">edit your password and account details.</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-                                      }
-
+                                 
                             
 
 
@@ -282,31 +290,69 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="track-orders" role="tabpanel" aria-labelledby="track-orders-tab">
+
+
+                                @if (TempData["tab"]?.ToString() == "danger-zone") {
+                                
+                                
+                                <div class="tab-pane fade active show" id="track-orders" role="tabpanel" aria-labelledby="track-orders-tab">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h3 class="mb-0">Orders tracking</h3>
+                                            <h3 class="mb-0">Danger Zone</h3>
                                         </div>
                                         <div class="card-body contact-from-area">
-                                            <p>To track your order please enter your OrderID in the box below and press "Track" button. This was given to you on your receipt and in the confirmation email you should have received.</p>
+                                            <p>Dangerous zone! Please note that the actions you do here will be irreversable or difficult to revert. In order to make sure you really mean it, please enter your username and password to proceed with any actions here.</p>
                                             <div class="row">
                                                 <div class="col-lg-8">
-                                                    <form class="contact-form-style mt-30 mb-50" action="#" method="post">
+                                                        <form class="contact-form-style mt-30 mb-50" autocomplete="off" method="post">
                                                         <div class="input-style mb-20">
-                                                            <label>Order ID</label>
-                                                            <input name="order-id" placeholder="Found in your order confirmation email" type="text" />
+                                                            <label>Enter Your Username</label>
+                                                            <input placeholder="E.g John" asp-for="AccountUiState.DeleteUsername" />
                                                         </div>
                                                         <div class="input-style mb-20">
-                                                            <label>Billing email</label>
-                                                            <input name="billing-email" placeholder="Email you used during checkout" type="email" />
+                                                            <label>Password</label>
+                                                            <input  asp-for="AccountUiState.DeletePassword" type="password"/>
                                                         </div>
-                                                        <button class="submit submit-auto-width" type="submit">Track</button>
+                                                        <button style="background-color: red"class="submit submit-auto-width" asp-page-handler="delete" type="submit">Delete Account</button>
+                                                        <input type="hidden" asp-for="AccountUiState.Tab" />
+                                                        <button class="submit submit-auto-width" type="submit">Disable Account</button>
                                                     </form>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                } else {
+                                    
+                                <div class="tab-pane fade" id="track-orders" role="tabpanel" aria-labelledby="track-orders-tab">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="mb-0">Danger Zone</h3>
+                                        </div>
+                                        <div class="card-body contact-from-area">
+                                            <p>Dangerous zone! Please note that the actions you do here will be irreversable or difficult to revert. In order to make sure you really mean it, please enter your username and password to proceed with any actions here.</p>
+                                            <div class="row">
+                                                <div class="col-lg-8">
+                                                    <form class="contact-form-style mt-30 mb-50" autocomplete="off"   method="post">
+                                                        <div class="input-style mb-20">
+                                                            <label>Enter Your Username</label>
+                                                            <input placeholder="E.g John" asp-for="AccountUiState.DeleteUsername" />
+                                                        </div>
+                                                        <div class="input-style mb-20">
+                                                            <label>Password</label>
+                                                            <input  asp-for="AccountUiState.DeletePassword" type="password"/>
+                                                        </div>
+                                                        <button style="background-color: red"class="submit submit-auto-width" asp-page-handler="delete" type="submit">Delete Account</button>
+                                                        <input type="hidden" asp-for="AccountUiState.Tab" />
+                                                        <button class="submit submit-auto-width" type="submit">Disable Account</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                }
+
 
 
 

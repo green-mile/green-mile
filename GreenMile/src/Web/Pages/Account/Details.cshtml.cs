@@ -10,6 +10,7 @@ using Web.Lib;
 using Web.Utils;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.WebUtilities;
+using System.Transactions;
 
 namespace Web.Pages.Account
 {
@@ -20,7 +21,8 @@ namespace Web.Pages.Account
 
         [BindProperty]
         public AccountUiState? AccountUiState { get; set; } = new AccountUiState();
-       
+
+        
 
         private readonly IHouseholdService _householdService;
         private readonly UserManager<User> _userManager;
@@ -74,7 +76,7 @@ namespace Web.Pages.Account
                     ModelState.AddModelError("AccountUiState.NewPassword", "Please confirm the password correctly");
                      return Page();
                 }
-                if (AccountUiState.NewPassword != null) await _userManager.ResetPasswordAsync(user, (await _userManager.GeneratePasswordResetTokenAsync(user)), AccountUiState.NewPassword);
+                if (AccountUiState.NewPassword != null) await _userManager.ResetPasswordAsync(user, await _userManager.GeneratePasswordResetTokenAsync(user), AccountUiState.NewPassword);
 
                 user.FirstName = AccountUiState.FirstName;
                 user.LastName = AccountUiState.LastName;
@@ -94,6 +96,25 @@ namespace Web.Pages.Account
                 TempData["info"] = "Your changes are already saved";
             }
             return Page();
+        }
+
+        public async Task<IActionResult> OnPostDeleteAsync()
+        {
+            TempData["tab"] = AccountUiState.Tab;
+            User user = await _userManager.GetUserAsync(HttpContext.User);
+            if(!ModelState.IsValid && (user.UserName != AccountUiState.Username || !await _userManager.CheckPasswordAsync(user, AccountUiState.Password)))
+            {
+                TempData["tab"] = "danger-zone";
+                TempData["error"] = "Username and/or password incorrect!";
+
+                return Page();
+            } else
+            {
+                await _userManager.DeleteAsync(user);
+                TempData["success"] = "Account deleted!";
+                return Redirect("/");
+            }
+
         }
     }
 }
