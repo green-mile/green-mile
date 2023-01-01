@@ -107,7 +107,8 @@ namespace Web.Pages.Account
                 TempData["tab"] = "danger-zone";
                 TempData["error"] = "Username and/or password incorrect!";
 
-                return Page();
+
+                return Redirect("/Account/Details");
             } else
             {
                 await _userManager.DeleteAsync(user);

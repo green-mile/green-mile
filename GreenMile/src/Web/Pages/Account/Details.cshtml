@@ -101,22 +101,22 @@
                                                     <div class="row">
                                                         <div class="form-group col-md-6">
                                                             <label>First Name <span class="required">*</span></label>
-                                                            <input class="form-control" asp-for="AccountUiState.FirstName" />
+                                                            <input class="form-control" asp-for="AccountUiState.FirstName" value="@user.FirstName" />
                                                             <span asp-validation-for="AccountUiState.FirstName" class="text-danger"></span>
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label>Last Name <span class="required">*</span></label>
-                                                            <input class="form-control" asp-for="AccountUiState.LastName" />
+                                                            <input class="form-control" asp-for="AccountUiState.LastName" value="@user.LastName"  />
                                                             <span asp-validation-for="AccountUiState.LastName" class="text-danger"></span>
                                                         </div>
                                                         <div class="form-group col-md-12">
                                                             <label>Display Name <span class="required">*</span></label>
-                                                            <input asp-for="AccountUiState.Username" class="form-control" />
+                                                            <input asp-for="AccountUiState.Username" class="form-control"  value="@user.UserName" />
                                                             <span asp-validation-for="AccountUiState.Username" class="text-danger"></span>
                                                         </div>
                                                         <div class="form-group col-md-12">
                                                             <label>Email Address <span class="required">*</span></label>
-                                                            <input asp-for="AccountUiState.EmailAddress" type="email" class="form-control" />
+                                                            <input asp-for="AccountUiState.EmailAddress" type="email" class="form-control" value="@user.Email" />
                                                             <span asp-validation-for="AccountUiState.EmailAddress" class="text-danger"></span>
                                                         </div>
                                                         <div class="form-group col-md-12">
@@ -530,3 +530,4 @@
 
     }
 </script>
+@await Html.PartialAsync("_ValidationScriptsPartial")
