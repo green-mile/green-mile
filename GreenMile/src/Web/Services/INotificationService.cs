@@ -11,16 +11,18 @@ public interface INotificationService
     /// <summary>
     /// Sends a notification to all users.
     /// </summary>
+    /// <param name="notification">The notification the users will receive.</param>
     /// <returns>
     /// A task that represents the asynchronous operation.
     /// The <see cref="Task"/> result contains a <see cref="Result{T}"/>
     /// object with the value <c>true</c> if the notification was
     /// successfully sent, or <c>false</c> otherwise.
     /// </returns>
-    public Task<Result<bool>> SendNotification();
+    public Task<Result<bool>> SendNotification(Notification notification);
     /// <summary>
     /// Sends a notification to a specific user.
     /// </summary>
+    /// <param name="notification">The notification the user will receive.</param>
     /// <param name="user">The user who will receive the notification.</param>
     /// <returns>
     /// A task that represents the asynchronous operation.
@@ -28,10 +30,11 @@ public interface INotificationService
     /// object with the value <c>true</c> if the notification was
     /// successfully sent, or <c>false</c> otherwise.
     /// </returns>
-    public Task<Result<bool>> SendNotification(User user);
+    public Task<Result<bool>> SendNotification(Notification notification, User user);
     /// <summary>
     /// Sends a notification to multiple users.
     /// </summary>
+    /// <param name="notification">The notification the users will receive.</param>
     /// <param name="users">The users who will receive the notification.</param>
     /// <returns>
     /// A task that represents the asynchronous operation.
@@ -39,5 +42,5 @@ public interface INotificationService
     /// object with the value <c>true</c> if the notification was
     /// successfully sent to all users, or <c>false</c> otherwise.
     /// </returns>
-    public Task<Result<bool>> SendNotification(IEnumerable<User> users);
+    public Task<Result<bool>> SendNotification(Notification notification, IEnumerable<User> users);
 }
