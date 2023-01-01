@@ -13,6 +13,169 @@
 
 }
 <style>
+    .all {
+  max-width: 450px;
+  max-height: 500px;
+  min-height: 500px;
+  overflow:auto;
+  width: 500px;
+  
+}
+
+.shadow-1:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: inherit;
+  height: inherit;
+  z-index: -2;
+  box-sizing: border-box;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.13);
+}
+
+.shadow-1:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: inherit;
+  height: inherit;
+  z-index: -2;
+  box-sizing: border-box;
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.08);
+}
+
+.shadow-2:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: inherit;
+  height: inherit;
+  z-index: -2;
+  box-sizing: border-box;
+  box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.1);
+}
+
+.shadow-2:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: inherit;
+  height: inherit;
+  z-index: -2;
+  box-sizing: border-box;
+  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.1);
+}
+
+.shadow-3:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: inherit;
+  height: inherit;
+  z-index: -2;
+  box-sizing: border-box;
+  box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.12);
+}
+
+.shadow-3:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: inherit;
+  height: inherit;
+  z-index: -2;
+  box-sizing: border-box;
+  box-shadow: 0 17px 50px 0 rgba(0, 0, 0, 0.1);
+}
+
+.shadow-4:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: inherit;
+  height: inherit;
+  z-index: -2;
+  box-sizing: border-box;
+  box-shadow: 0 16px 28px 0 rgba(0, 0, 0, 0.11);
+}
+
+.shadow-4:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: inherit;
+  height: inherit;
+  z-index: -2;
+  box-sizing: border-box;
+  box-shadow: 0 25px 55px 0 rgba(0, 0, 0, 0.11);
+}
+
+.shadow-5:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: inherit;
+  height: inherit;
+  z-index: -2;
+  box-sizing: border-box;
+  box-shadow: 0 27px 24px 0 rgba(0, 0, 0, 0.1);
+}
+
+.shadow-5:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: inherit;
+  height: inherit;
+  z-index: -2;
+  box-sizing: border-box;
+  box-shadow: 0 40px 77px 0 rgba(0, 0, 0, 0.11);
+}
+
+.cardsb {
+  position: relative;
+  height: 100px;
+  background: #fcfcfc;
+  margin: 20px 40px;
+  transition: 0.4s all;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.cardsb.open {
+  height: 200px;
+  background: #ffffff;
+}
+
         .cardss {
         padding: 15px;
         width: 350px;
@@ -21,7 +184,7 @@
         text-align: center;
         box-shadow: 0 10px 15px rgba(0, 0, 0, 0.7);
         user-select: none;
-        margin: 0 auto;
+      
     }
 
     .cover-photo {
@@ -283,7 +446,10 @@
                                     <div class="tab-pane fade active show" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
                                         <div class="card">
                                       
-                                            <div style="" class="card-body">
+                                            <div style="flex-direction: row; display:flex;" class="card-body">
+
+                                            
+
                                                 <div class="cardss">
                                                     <div class="cover-photo">
                                                         <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="profile">
@@ -297,6 +463,19 @@
                                                         <i class="fa-brands fa-github"></i>
                                                         <i class="fa-brands fa-youtube"></i>
                                                         <i class="fa-brands fa-twitter"></i>
+                                                    </div>
+                                                </div>
+
+                                                <div class="all">
+                                                    <div class="cards">
+                                                        <div class="cardsb shadow-1"></div>
+                                                        <div class="cardsb shadow-1"></div>
+                                                        <div class="cardsb shadow-1"></div>
+                                                        <div class="cardsb shadow-1"></div>
+                                                        <div class="cardsb shadow-1"></div>
+                                                        <div class="cardsb shadow-1"></div>
+                                                        <div class="cardsb shadow-1"></div>
+                                                        <div class="cardsb shadow-1"></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -326,6 +505,19 @@
                                                         </div>
                                                     </div>
                                                 </p>
+
+                                                <div class="all">
+                                                    <div class="cards">
+                                                        <div class="cardsb shadow-1"></div>
+                                                        <div class="cardsb shadow-1"></div>
+                                                        <div class="cardsb shadow-1"></div>
+                                                        <div class="cardsb shadow-1"></div>
+                                                        <div class="cardsb shadow-1"></div>
+                                                        <div class="cardsb shadow-1"></div>
+                                                        <div class="cardsb shadow-1"></div>
+                                                        <div class="cardsb shadow-1"></div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -619,6 +811,7 @@
 </main>
 
 <link rel="stylesheet" href="~/css/Details.css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 
 <script>
     function tabChange(joinHouseholdValue) {
@@ -627,5 +820,24 @@
 
 
     }
+    $(document).ready(function() {
+
+            $('.cardsb').on('click', function () {
+        if ($(this).hasClass('open')) {
+            $('.cardsb').removeClass('open');
+            $('.cardsb').removeClass('shadow-2');
+            $(this).addClass('shadow-1');
+            return false;
+        } else {
+            $('.cardsb').removeClass('open');
+            $('.cardsb').removeClass('shadow-2');
+            $(this).addClass('open');
+            $(this).addClass('shadow-2');
+        }
+    });
+
+
+    })
+
 </script>
 @await Html.PartialAsync("_ValidationScriptsPartial")
