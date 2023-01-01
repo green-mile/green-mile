@@ -8,4 +8,8 @@ public class User : IdentityUser
     public string LastName { get; set; }
     public int? HouseholdId { get; set; } = null;
     public Household? Household { get; set; } = null;
+    public bool Disabled { get; set; } = false;
+    public Household? OwnerOf { get; set; }
+
+
 }

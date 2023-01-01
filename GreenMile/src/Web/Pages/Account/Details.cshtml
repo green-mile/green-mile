@@ -21,6 +21,30 @@
   width: 500px;
   
 }
+#style-15::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+	background-color: #F5F5F5;
+	border-radius: 10px;
+}
+
+#style-15::-webkit-scrollbar
+{
+	width: 10px;
+	background-color: #F5F5F5;
+}
+
+#style-15::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	background-color: #FFF;
+	background-image: -webkit-gradient(linear,
+									   40% 0%,
+									   75% 84%,
+									   from(#4D9C41),
+									   to(#19911D),
+									   color-stop(.6,#54DE5D))
+}
 
 .shadow-1:before {
   content: "";
@@ -466,7 +490,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="all">
+                                                <div class="all" id="style-15">
                                                     <div class="cards">
                                                         <div class="cardsb shadow-1"></div>
                                                         <div class="cardsb shadow-1"></div>
@@ -484,29 +508,28 @@
                                 } else {
                                     <div class="tab-pane fade" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
                                         <div class="card">
-                                            <div class="card-header">
-                                                <h3 class="mb-0">Hello @user.UserName!</h3>
-                                            </div>
-                                            <div class="card-body">
-                                                <p>
-                                                   <div class="cardss">
-                                                        <div class="cover-photo">
-                                                            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="profile">
-                                                        </div>
-                                                        <h3 class="profile-name">James Carson</h3>
-                                                        <p class="about">UI/UX Designer <br> Front End Developer</p>
-                                                        <button class="btn">Message</button>
-                                                        <button class="btn">Following</button>
-                                                        <div class="icons">
-                                                            <i class="fa-brands fa-linkedin"></i>
-                                                            <i class="fa-brands fa-github"></i>
-                                                            <i class="fa-brands fa-youtube"></i>
-                                                            <i class="fa-brands fa-twitter"></i>
-                                                        </div>
-                                                    </div>
-                                                </p>
+                                        
+                                                       <div style="flex-direction: row; display:flex;" class="card-body">
 
-                                                <div class="all">
+                                            
+
+                                                <div class="cardss">
+                                                    <div class="cover-photo">
+                                                        <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="profile">
+                                                    </div>
+                                                    <h3 style="margin-right:20px; position: relative; right: 40px"class="profile-name">@user.UserName</h3>
+                                                    <p class="about">Household:<strong>  @household.Name</strong><br /> Date Joined: 2/10/5</p>
+                                                    <button class="btn">Member</button>
+                                                  
+                                                    <div class="icons">
+                                                        <i class="fa-brands fa-linkedin"></i>
+                                                        <i class="fa-brands fa-github"></i>
+                                                        <i class="fa-brands fa-youtube"></i>
+                                                        <i class="fa-brands fa-twitter"></i>
+                                                    </div>
+                                                </div>
+
+                                                <div class="all" id="style-15">
                                                     <div class="cards">
                                                         <div class="cardsb shadow-1"></div>
                                                         <div class="cardsb shadow-1"></div>
