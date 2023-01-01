@@ -16,9 +16,6 @@ namespace Web.Pages.Account
 
         [BindProperty]
         public AccountUiState? AccountUiState { get; set; } = new AccountUiState();
-
-        
-
         private readonly IHouseholdService _householdService;
         private readonly UserManager<User> _userManager;
 
@@ -41,8 +38,6 @@ namespace Web.Pages.Account
             AccountUiState.LastName = user.LastName;
             AccountUiState.Username = user.UserName;
             AccountUiState.EmailAddress = user.Email;
-            
-
 
         }
 
@@ -60,10 +55,6 @@ namespace Web.Pages.Account
                 if(!(await _userManager.CheckPasswordAsync(user, AccountUiState.Password)))
                 {
                     ModelState.AddModelError("AccountUiState.Password", "Please enter the correct password if you want to change credentials!");
-                    
-                    
-                   
-
                     return Page();
                 }
                 if (AccountUiState.NewPassword != AccountUiState.ConfirmPassword)
@@ -80,11 +71,6 @@ namespace Web.Pages.Account
                 
                 await _userManager.UpdateAsync(user);
                 TempData["success"] = "Changes have been saved"!;
-
-         
-
-
-
 
             } else
             {
