@@ -12,7 +12,83 @@
     Household household = (await householdService.RetrieveHouseholdDetails(user.HouseholdId ?? -1)).Value;
 
 }
+<style>
+        .cardss {
+        padding: 15px;
+        width: 350px;
+        background: #fff;
+        border-radius: 5px;
+        text-align: center;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.7);
+        user-select: none;
+        margin: 0 auto;
+    }
 
+    .cover-photo {
+        position: relative;
+        background: url(http://news.miami.edu/life/_assets/images/images-stories/2019/11/recycling-greenu-940x529.jpg);
+        background-size: cover;
+        height: 180px;
+        border-radius: 5px 5px 0 0;
+    }
+
+    .profile {
+        position: absolute;
+        width: 120px;
+        bottom: -60px;
+        left: 15px;
+        border-radius: 50%;
+        border: 2px solid #4BB77E;
+        background: #4BB77E;
+        padding: 5px;
+    }
+
+    .profile-name {
+        font-size: 20px;
+        margin: 25px 0 0 120px;
+        color: #000;
+    }
+
+    .about {
+        margin-top: 30px;
+        line-height: 1.6;
+    }
+
+        .btn {
+        margin: 30px 15px;
+
+        padding: 10px 25px;
+        border-radius: 3px;
+     
+        font-weight: bold;
+        
+        cursor: pointer;
+      
+        transition: 0.2s;
+    }
+
+    
+
+   
+    .icons {
+        width: 180px;
+        margin: 0 auto 10px;
+        display: flex;
+        justify-content: space-between;
+        gap: 15px;
+    }
+
+        .icons i {
+            cursor: pointer;
+            padding: 5px;
+            font-size: 18px;
+            transition: 0.2s;
+        }
+
+            .icons i:hover {
+                color: #7ce3ff;
+            }
+</style>
 <main class="main pages">
     <div class="page-header breadcrumb-wrap">
         <div class="container">
@@ -206,14 +282,23 @@
                                 @if(TempData["tab"]?.ToString() == "dashboard" || TempData["tab"]?.ToString() == null) {
                                     <div class="tab-pane fade active show" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
                                         <div class="card">
-                                            <div class="card-header">
-                                                <h3 class="mb-0">Hello @user.UserName!</h3>
-                                            </div>
-                                            <div class="card-body">
-                                                <p>
-                                                    From your account dashboard. you can easily check &amp; view your <a href="#">recent orders</a>,<br />
-                                                    manage your <a href="#">shipping and billing addresses</a> and <a href="#">edit your password and account details.</a>
-                                                </p>
+                                      
+                                            <div style="" class="card-body">
+                                                <div class="cardss">
+                                                    <div class="cover-photo">
+                                                        <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="profile">
+                                                    </div>
+                                                    <h3 style="margin-right:20px; position: relative; right: 40px"class="profile-name">@user.UserName</h3>
+                                                    <p class="about">Household:<strong>  @household.Name</strong><br /> Date Joined: 2/10/5</p>
+                                                    <button class="btn">Member</button>
+                                                  
+                                                    <div class="icons">
+                                                        <i class="fa-brands fa-linkedin"></i>
+                                                        <i class="fa-brands fa-github"></i>
+                                                        <i class="fa-brands fa-youtube"></i>
+                                                        <i class="fa-brands fa-twitter"></i>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -221,12 +306,25 @@
                                     <div class="tab-pane fade" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
                                         <div class="card">
                                             <div class="card-header">
-                                                <h3 class="mb-0">Hello Rosie!</h3>
+                                                <h3 class="mb-0">Hello @user.UserName!</h3>
                                             </div>
                                             <div class="card-body">
                                                 <p>
-                                                    From your account dashboard. you can easily check &amp; view your <a href="#">recent orders</a>,<br />
-                                                    manage your <a href="#">shipping and billing addresses</a> and <a href="#">edit your password and account details.</a>
+                                                   <div class="cardss">
+                                                        <div class="cover-photo">
+                                                            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="profile">
+                                                        </div>
+                                                        <h3 class="profile-name">James Carson</h3>
+                                                        <p class="about">UI/UX Designer <br> Front End Developer</p>
+                                                        <button class="btn">Message</button>
+                                                        <button class="btn">Following</button>
+                                                        <div class="icons">
+                                                            <i class="fa-brands fa-linkedin"></i>
+                                                            <i class="fa-brands fa-github"></i>
+                                                            <i class="fa-brands fa-youtube"></i>
+                                                            <i class="fa-brands fa-twitter"></i>
+                                                        </div>
+                                                    </div>
                                                 </p>
                                             </div>
                                         </div>
