@@ -10,8 +10,8 @@ namespace Web.Services
     public class HouseholdService : IHouseholdService
     {
         private readonly UserManager<User> _userManager;
-        private readonly AuthDbContext _authDbContext;
-        public HouseholdService(UserManager<User> userManager, AuthDbContext authDbContext)
+        private readonly DataContext _authDbContext;
+        public HouseholdService(UserManager<User> userManager, DataContext authDbContext)
         {
             _userManager = userManager;
             _authDbContext = authDbContext;
