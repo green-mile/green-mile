@@ -4,7 +4,7 @@
 
 namespace Web.Migrations
 {
-    public partial class HouseholdUpdate3 : Migration
+    public partial class AddHousehold : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

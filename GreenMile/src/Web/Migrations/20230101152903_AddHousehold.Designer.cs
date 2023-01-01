@@ -11,8 +11,8 @@ using Web.Data;
 namespace Web.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221229013535_FinalHouseholdUser")]
-    partial class FinalHouseholdUser
+    [Migration("20230101152903_AddHousehold")]
+    partial class AddHousehold
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -185,7 +185,7 @@ namespace Web.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("HouseholdId")
+                    b.Property<int?>("HouseholdId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("LastName")
@@ -294,9 +294,7 @@ namespace Web.Migrations
                 {
                     b.HasOne("Web.Models.Household", "Household")
                         .WithMany("Users")
-                        .HasForeignKey("HouseholdId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("HouseholdId");
 
                     b.Navigation("Household");
                 });
