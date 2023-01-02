@@ -12,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<IHouseholdService, HouseholdService>();
-builder.Services.AddDbContext<AuthDbContext>(options =>
+builder.Services.AddDbContext<DataContext>(options =>
 {
     if (builder.Environment.IsDevelopment())
     {
@@ -36,7 +36,7 @@ builder.Services.AddDbContext<AuthDbContext>(options =>
     }
 });
 builder.Services.AddIdentity<User, IdentityRole>()
-    .AddEntityFrameworkStores<AuthDbContext>();
+    .AddEntityFrameworkStores<DataContext>();
 // Configure Identity Options
 builder.Services.Configure<IdentityOptions>(options =>
 {
