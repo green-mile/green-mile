@@ -1,6 +1,5 @@
 using Web.Data;
 using Web.Models;
-using Web.Utils;
 
 namespace Web.Services;
 
@@ -9,9 +8,33 @@ namespace Web.Services;
 /// </summary>
 public class NotificationService : INotificationService
 {
-    public Task<bool> SendNotification(Notification notification)
+    private readonly AuthDbContext _context;
+
+    public NotificationService(AuthDbContext context)
     {
-        throw new NotImplementedException();
+        _context = context;
+    }
+
+    public async Task<bool> SendNotification(Notification notification)
+    {
+        if (notification is null)
+        {
+            throw new ArgumentNullException(nameof(notification));
+        }
+        var users = _context.Users.AsEnumerable();
+        foreach (var user in users)
+        {
+            var notificationClone = new Notification()
+            {
+                Message = notification.Message,
+                System = notification.System,
+                Date = notification.Date,
+                Read = notification.Read,
+            };
+            notificationClone.SetUser(user);
+            await _context.Notifications.AddAsync(notificationClone);
+        }
+        return true;
     }
 
     public Task<bool> SendNotification(Notification notification, User user)
