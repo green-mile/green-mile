@@ -20,7 +20,7 @@ public class Notification
 
     /// <summary>
     /// The sub-system/module that the notification came from. An example
-    /// would be <c>Food Sharing</c>
+    /// would be "Food Sharing"
     /// </summary>
     public string System { get; set; } = string.Empty;
 
@@ -28,4 +28,9 @@ public class Notification
     /// The date and time that the notification was created.
     /// </summary>
     public DateTime Date { get; set; }
+
+    /// <summary>
+    /// Indicates whether the notification has been read.
+    /// </summary>
+    public bool Read { get; set; }
 }
