@@ -51,30 +51,39 @@ namespace Web.Pages.Account
                 AccountUiState.ConfirmPassword != null
             };
             if(ModelState.IsValid && formCheck.Any(x => x == true))
-            {
-                if(!(await _userManager.CheckPasswordAsync(user, AccountUiState.Password)))
-                {
-                    ModelState.AddModelError("AccountUiState.Password", "Please enter the correct password if you want to change credentials!");
-                    return Page();
-                }
-                if (AccountUiState.NewPassword != AccountUiState.ConfirmPassword)
-                {
-                    ModelState.AddModelError("AccountUiState.NewPassword", "Please confirm the password correctly");
-                     return Page();
-                }
-                if (AccountUiState.NewPassword != null) await _userManager.ResetPasswordAsync(user, await _userManager.GeneratePasswordResetTokenAsync(user), AccountUiState.NewPassword);
 
-                user.FirstName = AccountUiState.FirstName;
-                user.LastName = AccountUiState.LastName;
-                user.UserName = AccountUiState.Username;
-                user.Email = AccountUiState.EmailAddress;
-                
-                await _userManager.UpdateAsync(user);
-                TempData["success"] = "Changes have been saved"!;
+            {
+                if(formCheck.Any(x => x == true))
+                {
+                    if (!(await _userManager.CheckPasswordAsync(user, AccountUiState.Password)))
+                    {
+                        ModelState.AddModelError("AccountUiState.Password", "Please enter the correct password if you want to change credentials!");
+                        return Page();
+                    }
+                    if (AccountUiState.NewPassword != AccountUiState.ConfirmPassword)
+                    {
+                        ModelState.AddModelError("AccountUiState.NewPassword", "Please confirm the password correctly");
+                        return Page();
+                    }
+                    if (AccountUiState.NewPassword != null) await _userManager.ResetPasswordAsync(user, await _userManager.GeneratePasswordResetTokenAsync(user), AccountUiState.NewPassword);
+
+                    user.FirstName = AccountUiState.FirstName;
+                    user.LastName = AccountUiState.LastName;
+                    user.UserName = AccountUiState.Username;
+                    user.Email = AccountUiState.EmailAddress;
+
+                    await _userManager.UpdateAsync(user);
+                    TempData["success"] = "Changes have been saved"!;
+                }
+                else
+                {
+                    TempData["info"] = "Your changes are already saved";
+                }
+   
 
             } else
             {
-                TempData["info"] = "Your changes are already saved";
+                TempData["error"] = "Form not filled properly!";
             }
             return Page();
         }
