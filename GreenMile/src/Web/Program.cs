@@ -12,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<IHouseholdService, HouseholdService>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddDbContext<AuthDbContext>(options =>
 {
     if (builder.Environment.IsDevelopment())
@@ -56,10 +57,10 @@ builder.Services.AddSession(options =>
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
-  
+
     options.AccessDeniedPath = "/login";
     options.LoginPath = "/login";
-   
+
 
 });
 
