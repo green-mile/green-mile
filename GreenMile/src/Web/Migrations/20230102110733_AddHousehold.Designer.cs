@@ -11,7 +11,7 @@ using Web.Data;
 namespace Web.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230101152903_AddHousehold")]
+    [Migration("20230102110733_AddHousehold")]
     partial class AddHousehold
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
