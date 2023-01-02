@@ -73,4 +73,32 @@ public class NotificationService : INotificationService
             await _context.Notifications.AddAsync(notificationClone);
         }
     }
+
+    public async Task SendNotification(Notification notification, Household household)
+    {
+        if (notification is null)
+        {
+            throw new ArgumentNullException(nameof(notification));
+        }
+        if (household is null)
+        {
+            throw new ArgumentNullException(nameof(household));
+        }
+        if (household.Users is null)
+        {
+            throw new InvalidOperationException($"Member `Users` is `null` in argument {nameof(household)}.");
+        }
+        foreach (var user in household.Users)
+        {
+            var notificationClone = new Notification()
+            {
+                Message = notification.Message,
+                System = notification.System,
+                Date = notification.Date,
+                Read = notification.Read,
+            };
+            notificationClone.SetUser(user);
+            await _context.Notifications.AddAsync(notificationClone);
+        }
+    }
 }

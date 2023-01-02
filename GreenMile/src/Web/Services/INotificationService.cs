@@ -43,4 +43,19 @@ public interface INotificationService
     /// Thrown when <paramref name="notification"/> or <paramref name="users"/> is <c>null</c>.
     /// </exception>
     public Task SendNotification(Notification notification, IEnumerable<User> users);
+    /// <summary>
+    /// Sends a notification to a household
+    /// </summary>
+    /// <param name="notification">The notification the users will receive.</param>
+    /// <param name="household">The household whos members will receive the notification.</param>
+    /// <returns>
+    /// A task that represents the asynchronous operation.
+    /// </returns>
+    /// <exception cref="ArgumentNullException">
+    /// Thrown when <paramref name="notification"/> or <paramref name="household"/> is <c>null</c>.
+    /// </exception>
+    /// <exception cref="InvalidOperationException">
+    /// Thrown when <paramref name="household.Users"/> is <c>null</c>.
+    /// </exception>
+    public Task SendNotification(Notification notification, Household household);
 }
