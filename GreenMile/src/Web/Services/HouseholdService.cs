@@ -51,8 +51,8 @@ namespace Web.Services
 
 
 
-            //user.HouseholdId = householdId;
-            household.Users.Add(user);
+            user.HouseholdId = householdId;
+            //household.Users.Add(user);
             //household.Users.Add(user);
             await _authDbContext.SaveChangesAsync();
            
