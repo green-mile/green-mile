@@ -30,7 +30,7 @@
                     <tr>
                         <td>@notif.System</td>
                         <td>@notif.Message</td>
-                        <td>@notif.Read</td>
+                        <td>@(notif.Read ? "Read" : "Unread")</td>
                         <td>@notif.Date</td>
                     </tr>
                 }
