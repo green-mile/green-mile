@@ -53,22 +53,26 @@ public class RegisterModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        if ((bool)HouseholdUiState.JoinHousehold && HouseholdUiState.JoinHouseholdName is null)
+        if ((bool)HouseholdUiState.JoinHousehold && HouseholdUiState.InviteLink is null)
         {
-            ModelState.AddModelError("HouseholdUiState.JoinHouseholdName", "Please fill in the household name you want to join!");
+            ModelState.AddModelError("HouseholdUiState.JoinHouseholdName", "Please fill in the household's invite code you want to join!");
             return Page();
         }
         else if ((bool)!HouseholdUiState.JoinHousehold && HouseholdUiState.CreateHouseholdName is null)
         {
             ModelState.AddModelError("HouseholdUiState.CreateHouseholdName", "Please fill in the household name you want to create!");
+            if(HouseholdUiState.Address is null) ModelState.AddModelError("HouseholdUiState.Address", "Please fill in the address!");
+          
             return Page();
         }
+        
 
         if (ModelState.IsValid)
         {
             if ((bool)HouseholdUiState.JoinHousehold)
             {
-                Result<Household> householdResult = await _householdService.RetrieveHouseholdDetailsByName(HouseholdUiState.JoinHouseholdName);
+
+                Result<Household> householdResult = await _householdService.VerifyLink(HouseholdUiState.InviteLink);
                 if (householdResult.Status == Status.FAILURE)
                 {
                     ModelState.AddModelError("HouseholdUiState.JoinHouseholdName", householdResult.Message);
@@ -102,20 +106,25 @@ public class RegisterModel : PageModel
                 await _signInManager.SignInAsync(newUser, false);
                 var user = await _userManager.FindByNameAsync(UserName);
                 var userId = user.Id;
+               
 
                 if ((bool)!HouseholdUiState.JoinHousehold)
                 {
-                    await _householdService.CreateHousehold(HouseholdUiState.CreateHouseholdName);
+                    await _householdService.CreateHousehold(HouseholdUiState.CreateHouseholdName, HouseholdUiState.Address, userId);
                     await _householdService.AddUserToHousehold(userId, (await _householdService.RetrieveHouseholdDetailsByName(HouseholdUiState.CreateHouseholdName)).Value.HouseholdId);
+                    TempData["success"] = "Created household!";
+
                 }
                 else
                 {
-                    await _householdService.AddUserToHousehold(userId, (await _householdService.RetrieveHouseholdDetailsByName(HouseholdUiState.JoinHouseholdName)).Value.HouseholdId);
+                    
+                    await _householdService.AddUserToHousehold(userId, (await _householdService.VerifyLink(HouseholdUiState.InviteLink)).Value.HouseholdId);
+                    TempData["success"] = "Added to household!";
                 }
 
-                _contextAccessor.HttpContext.Session.SetString(SessionVariable.UserName, UserName);
-                _contextAccessor.HttpContext.Session.SetString(SessionVariable.UserId, userId);
-                _contextAccessor.HttpContext.Session.SetString(SessionVariable.HousholdName, user.Household.Name);
+                //_contextAccessor.HttpContext.Session.SetString(SessionVariable.UserName, UserName);
+                //_contextAccessor.HttpContext.Session.SetString(SessionVariable.UserId, userId);
+                //_contextAccessor.HttpContext.Session.SetString(SessionVariable.HousholdName, user.Household.Name);
 
                 return RedirectToPage("/Index");
             }

@@ -1,8 +1,8 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Web.UiState
 {
-    public class HouseholdUiState
+    public class TransferHouseholdUiState
     {
         [BindProperty]
         public string? InviteLink { get; set; }
