@@ -52,8 +52,28 @@ public class NotificationService : INotificationService
         return true;
     }
 
-    public Task<bool> SendNotification(Notification notification, IEnumerable<User> users)
+    public async Task<bool> SendNotification(Notification notification, IEnumerable<User> users)
     {
-        throw new NotImplementedException();
+        if (notification is null)
+        {
+            throw new ArgumentNullException(nameof(notification));
+        }
+        if (users is null)
+        {
+            throw new ArgumentNullException(nameof(users));
+        }
+        foreach (var user in users)
+        {
+            var notificationClone = new Notification()
+            {
+                Message = notification.Message,
+                System = notification.System,
+                Date = notification.Date,
+                Read = notification.Read,
+            };
+            notificationClone.SetUser(user);
+            await _context.Notifications.AddAsync(notificationClone);
+        }
+        return true;
     }
 }
