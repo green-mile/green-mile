@@ -340,7 +340,7 @@
    
                                   
                                     <li class="nav-item">
-                                        <a class="nav-link" href="page-login.html"><i class="fi-rs-sign-out mr-10"></i>Logout</a>
+                                        <a class="nav-link" href="/logout"><i class="fi-rs-sign-out mr-10"></i>Logout</a>
                                     </li>
                                 </ul>
                             </div>
@@ -745,7 +745,10 @@
                                                 </div>
 
                                                 <div class="profile-card-ctr">
-                                                    <button class="profile-card__button button--blue js-message-btn">Details</button>
+                                                    <form action="/households/details">
+                                                         <button class="profile-card__button button--blue js-message-btn">Details</button>
+                                                    </form>
+                                                   
                                                     @if(await userManager.IsInRoleAsync(user, "HouseOwner"))  {
                                                  
                                                         <button disabled type="button" style="background-color: grey"  class="profile-card__button button--orange">You are the Owner</button>

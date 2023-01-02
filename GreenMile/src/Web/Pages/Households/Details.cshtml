@@ -2,14 +2,26 @@
 @model Web.Pages.Account.Households.DetailsModel
 @{
 }
+
+<style>
+    img {
+        width: 80px
+    }
+</style>
+<div class="page-header breadcrumb-wrap" >
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
+            <span></span>  <a href="/account/details" rel="nofollow">Account</a><span></span> Household
+        </div>
+    </div>
+</div>
 <main class="main-wrap">
+
     <header class="main-header navbar">
         <div class="col-search">
             <form class="searchform">
-                <div class="input-group">
-                    <input list="search_terms" type="text" class="form-control" placeholder="Search term" />
-                    <button class="btn btn-light bg" type="button"><i class="material-icons md-search"></i></button>
-                </div>
+             
                 <datalist id="search_terms">
                     <option value="Products"></option>
                     <option value="New orders"></option>
@@ -19,7 +31,7 @@
             </form>
         </div>
         <div class="col-nav">
-            <button class="btn btn-icon btn-mobile me-auto" data-trigger="#offcanvas_aside"><i class="material-icons md-apps"></i></button>
+            
             <ul class="nav">
                 <li class="nav-item">
                     <a class="nav-link btn-icon" href="#">
@@ -33,38 +45,19 @@
                 <li class="nav-item">
                     <a href="#" class="requestfullscreen nav-link btn-icon"><i class="material-icons md-cast"></i></a>
                 </li>
-                <li class="dropdown nav-item">
-                    <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownLanguage" aria-expanded="false"><i class="material-icons md-public"></i></a>
-                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownLanguage">
-                        <a class="dropdown-item text-brand" href="#"><img src="assets/imgs/theme/flag-us.png" alt="English" />English</a>
-                        <a class="dropdown-item" href="#"><img src="assets/imgs/theme/flag-fr.png" alt="Français" />Français</a>
-                        <a class="dropdown-item" href="#"><img src="assets/imgs/theme/flag-jp.png" alt="Français" />日本語</a>
-                        <a class="dropdown-item" href="#"><img src="assets/imgs/theme/flag-cn.png" alt="Français" />中国人</a>
-                    </div>
-                </li>
-                <li class="dropdown nav-item">
-                    <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount" aria-expanded="false"> <img class="img-xs rounded-circle" src="assets/imgs/people/avatar-2.png" alt="User" /></a>
-                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount">
-                        <a class="dropdown-item" href="#"><i class="material-icons md-perm_identity"></i>Edit Profile</a>
-                        <a class="dropdown-item" href="#"><i class="material-icons md-settings"></i>Account Settings</a>
-                        <a class="dropdown-item" href="#"><i class="material-icons md-account_balance_wallet"></i>Wallet</a>
-                        <a class="dropdown-item" href="#"><i class="material-icons md-receipt"></i>Billing</a>
-                        <a class="dropdown-item" href="#"><i class="material-icons md-help_outline"></i>Help center</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item text-danger" href="#"><i class="material-icons md-exit_to_app"></i>Logout</a>
-                    </div>
-                </li>
+ 
+        
             </ul>
         </div>
     </header>
     <section class="content-main">
         <div class="content-header">
-            <h2 class="content-title">Sellers list</h2>
-            <div>
+            <h2 class="content-title">Household Members</h2>
+            <div style="position:relative;left: 90%; top: -100%;  ">
                 <a href="#" class="btn btn-primary"><i class="material-icons md-plus"></i> Create new</a>
             </div>
         </div>
-        <div class="card mb-4">
+        <div class="card mb-4" style="margin-top: 40px">
             <header class="card-header">
                 <div class="row gx-3">
                     <div class="col-lg-4 col-md-6 me-auto">
@@ -105,7 +98,7 @@
                                 <td width="40%">
                                     <a href="#" class="itemside">
                                         <div class="left">
-                                            <img src="assets/imgs/people/avatar-1.png" class="img-sm img-avatar" alt="Userpic" />
+                                            <img width="100px" src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-unknown-social-media-user-photo-default-avatar-profile-icon-vector-unknown-social-media-user-184816085.jpg" class="img-sm img-avatar" alt="Userpic" />
                                         </div>
                                         <div class="info pl-3">
                                             <h6 class="mb-0 title">Eleanor Pena</h6>
@@ -124,7 +117,7 @@
                                 <td width="40%">
                                     <a href="#" class="itemside">
                                         <div class="left">
-                                            <img src="assets/imgs/people/avatar-2.png" class="img-sm img-avatar" alt="Userpic" />
+                                            <img src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-unknown-social-media-user-photo-default-avatar-profile-icon-vector-unknown-social-media-user-184816085.jpg" class="img-sm img-avatar" alt="Userpic" />
                                         </div>
                                         <div class="info pl-3">
                                             <h6 class="mb-0 title">Mary Monasa</h6>
