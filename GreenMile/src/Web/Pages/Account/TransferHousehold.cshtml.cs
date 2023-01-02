@@ -48,12 +48,12 @@ namespace Web.Pages
         {
             if ((bool)TransferHouseholdUiState.JoinHousehold && TransferHouseholdUiState.InviteLink is null)
             {
-                ModelState.AddModelError("HouseholdUiState.JoinHouseholdName", "Please fill in the household's invite code you want to join!");
+                ModelState.AddModelError("TransferHouseholdUiState.JoinHouseholdName", "Please fill in the household's invite code you want to join!");
                 return Page();
             }
             else if ((bool)!TransferHouseholdUiState.JoinHousehold && TransferHouseholdUiState.CreateHouseholdName is null)
             {
-                ModelState.AddModelError("HouseholdUiState.CreateHouseholdName", "Please fill in the household name you want to create!");
+                ModelState.AddModelError("TransferHouseholdUiState.CreateHouseholdName", "Please fill in the household name you want to create!");
                 if (TransferHouseholdUiState.Address is null) ModelState.AddModelError("HouseholdUiState.Address", "Please fill in the address!");
 
                 return Page();
@@ -68,7 +68,7 @@ namespace Web.Pages
                     Result<Household> householdResult = await _householdService.VerifyLink(TransferHouseholdUiState.InviteLink);
                     if (householdResult.Status == Status.FAILURE)
                     {
-                        ModelState.AddModelError("HouseholdUiState.JoinHouseholdName", householdResult.Message);
+                        ModelState.AddModelError("TransferHouseholdUiState.JoinHouseholdName", householdResult.Message);
                         householdResult.Print();
                         return Page();
                     }
@@ -78,7 +78,7 @@ namespace Web.Pages
                     Result<Household> createHouseholdResult = await _householdService.RetrieveHouseholdDetailsByName(TransferHouseholdUiState.CreateHouseholdName);
                     if (createHouseholdResult.Status == Status.SUCCESS)
                     {
-                        ModelState.AddModelError("HouseholdUiState.CreateHouseholdName", createHouseholdResult.Message);
+                        ModelState.AddModelError("TransferHouseholdUiState.CreateHouseholdName", createHouseholdResult.Message);
                         createHouseholdResult.Print();
                         return Page();
                     }

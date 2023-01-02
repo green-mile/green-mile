@@ -77,7 +77,10 @@
                                                         <input asp-for="TransferHouseholdUiState.Address" placeholder="Enter Address" />
                                                         <span asp-validation-for="TransferHouseholdUiState.Address" class="text-danger"></span>
                                                     </div>
-
+                                                    
+                                                            <input asp-for="TransferHouseholdUiState.JoinHousehold" type="hidden" />
+                                                    
+                                                      
                                                 </section>
 
                                             </div>
@@ -122,8 +125,8 @@
 
 <script>
                                                 function household(joinHouseholdValue) {
-                                                    document.getElementById("HouseholdUiState_JoinHousehold").value = joinHouseholdValue
-        console.log(document.getElementById("HouseholdUiState_JoinHousehold").value)
+                                                    document.getElementById("TransferHouseholdUiState_JoinHousehold").value = joinHouseholdValue
+        console.log(document.getElementById("TransferHouseholdUiState_JoinHousehold").value)
 
 
                                                 }
