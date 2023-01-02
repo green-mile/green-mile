@@ -37,9 +37,19 @@ public class NotificationService : INotificationService
         return true;
     }
 
-    public Task<bool> SendNotification(Notification notification, User user)
+    public async Task<bool> SendNotification(Notification notification, User user)
     {
-        throw new NotImplementedException();
+        if (notification is null)
+        {
+            throw new ArgumentNullException(nameof(notification));
+        }
+        if (user is null)
+        {
+            throw new ArgumentNullException(nameof(user));
+        }
+        notification.SetUser(user);
+        await _context.Notifications.AddAsync(notification);
+        return true;
     }
 
     public Task<bool> SendNotification(Notification notification, IEnumerable<User> users)
