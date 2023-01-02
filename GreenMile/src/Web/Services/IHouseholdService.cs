@@ -10,5 +10,6 @@ namespace Web.Services
         public Task<Result<Household>> RetrieveHouseholdDetails(int householdId);
         public Task<Result<User>> RemoveUserFromHousehold(string userId);
         public Task<Result<Household>> RetrieveHouseholdDetailsByName(string householdName);
+        public Task<Result<Household>> VerifyLink(string code);
     }
 }

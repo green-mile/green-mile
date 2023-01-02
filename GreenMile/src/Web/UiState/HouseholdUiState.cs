@@ -5,7 +5,7 @@ namespace Web.UiState
     public class HouseholdUiState
     {
         [BindProperty]
-        public string? JoinHouseholdName { get; set; }
+        public string? InviteLink { get; set; }
 
         [BindProperty]
         public string? CreateHouseholdName { get; set; }

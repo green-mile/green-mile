@@ -11,6 +11,7 @@ namespace Web.Models
         public User? Owner { get; set; } = null;
         public string? OwnerId { get; set; } = null;
         public string? Address { get; set;}
+        public string? InviteLink { get; set; } = Guid.NewGuid().ToString();
 
 
     }

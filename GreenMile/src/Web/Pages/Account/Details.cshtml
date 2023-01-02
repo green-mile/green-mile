@@ -478,9 +478,16 @@
                                                     <div class="cover-photo">
                                                         <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="profile">
                                                     </div>
-                                                    <h3 style="margin-right:20px; position: relative; right: 40px"class="profile-name">@user.UserName</h3>
-                                                    <p class="about">Household:<strong>  @household.Name</strong><br /> Date Joined: 2/10/5</p>
-                                                    <button class="btn">Member</button>
+                                                    <h3 style="margin-right:20px; position: relative; right: 40px; margin-top:60px"class="profile-name">@user.UserName</h3>
+                                                    <p style="margin-bottom: 30px; margin-top:20px" class="about">Household:<strong>  @household.Name</strong><br /> Date Joined: @user.CreatedAt</p>
+                                                                                                 @foreach(var role in (await userManager.GetRolesAsync(user))) {
+                                                       if(role == "HouseOwner") {
+                                                            <button class="btn" style="background-color:darkred;margin-top:0">@role</button>
+                                                       } else {
+                                                            <button class="btn" style="margin-top:0">@role</button>
+                                                       }
+                                                      
+                                                   }
                                                   
                                                     <div class="icons">
                                                         <i class="fa-brands fa-linkedin"></i>
@@ -518,8 +525,16 @@
                                                         <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="profile">
                                                     </div>
                                                     <h3 style="margin-right:20px; position: relative; right: 40px"class="profile-name">@user.UserName</h3>
-                                                    <p class="about">Household:<strong>  @household.Name</strong><br /> Date Joined: 2/10/5</p>
-                                                    <button class="btn">Member</button>
+                                                    <p class="about">Household:<strong>  @household.Name</strong><br /> Date Joined: @user.CreatedAt</p>
+                                                   @foreach(var role in (await userManager.GetRolesAsync(user))) {
+                                                       if(role == "HouseOwner") {
+                                                            <button class="btn" style="background-color:darkred">@role</button>
+                                                       } else {
+                                                            <button class="btn">@role</button>
+                                                       }
+                                                      
+                                                   }
+                                                    
                                                   
                                                     <div class="icons">
                                                         <i class="fa-brands fa-linkedin"></i>
@@ -685,14 +700,14 @@
 
                                             <div class="profile-card__cnt js-profile-cnt">
                                                 <div class="profile-card__name">@household?.Name</div>
-                                                <div class="profile-card__txt">Current owner: <strong>PinkPolo</strong></div>
+                                                <div class="profile-card__txt">Current owner: <strong>@((await userManager.FindByIdAsync(household.OwnerId)).UserName) </strong></div>
                                                 <div class="profile-card-loc">
                                                     <span class="profile-card-loc__icon">
                                                         <svg class="icon"><use xlink:href="#icon-location"></use></svg>
                                                     </span>
 
                                                     <span class="profile-card-loc__txt">
-                                                        Singapore, Lakeside
+                                                        @household.Address
                                                     </span>
                                                 </div>
 
@@ -719,9 +734,9 @@
                                                 </div>
 
                                                 <div class="profile-card-social">
-                                                    <strong style="font-size:20px">Copy Invite Link</strong>
+                                                    <strong style="font-size:20px">Copy Invite Code</strong>
 
-                                                    <a href="http://muhammederdem.com.tr/" class="profile-card-social__item link" target="_blank">
+                                                    <a id="copy" onclick="navigator.clipboard.writeText('@(household.InviteLink)')" class="profile-card-social__item link">
                                                         <span class="icon-font">
                                                             <svg class="icon"><use xlink:href="#icon-link"></use></svg>
                                                         </span>
@@ -836,6 +851,10 @@
 <link rel="stylesheet" href="~/css/Details.css">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 
+
+
+
+
 <script>
     function tabChange(joinHouseholdValue) {
         document.getElementById("AccountUiState_Tab").value = joinHouseholdValue
@@ -843,6 +862,10 @@
 
 
     }
+
+
+   
+
     $(document).ready(function() {
 
             $('.cardsb').on('click', function () {
@@ -861,6 +884,10 @@
 
 
     })
+
+
+
+
 
 </script>
 @await Html.PartialAsync("_ValidationScriptsPartial")

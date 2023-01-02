@@ -53,9 +53,9 @@ public class RegisterModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        if ((bool)HouseholdUiState.JoinHousehold && HouseholdUiState.JoinHouseholdName is null)
+        if ((bool)HouseholdUiState.JoinHousehold && HouseholdUiState.InviteLink is null)
         {
-            ModelState.AddModelError("HouseholdUiState.JoinHouseholdName", "Please fill in the household name you want to join!");
+            ModelState.AddModelError("HouseholdUiState.JoinHouseholdName", "Please fill in the household's invite code you want to join!");
             return Page();
         }
         else if ((bool)!HouseholdUiState.JoinHousehold && HouseholdUiState.CreateHouseholdName is null)
@@ -71,7 +71,8 @@ public class RegisterModel : PageModel
         {
             if ((bool)HouseholdUiState.JoinHousehold)
             {
-                Result<Household> householdResult = await _householdService.RetrieveHouseholdDetailsByName(HouseholdUiState.JoinHouseholdName);
+
+                Result<Household> householdResult = await _householdService.VerifyLink(HouseholdUiState.InviteLink);
                 if (householdResult.Status == Status.FAILURE)
                 {
                     ModelState.AddModelError("HouseholdUiState.JoinHouseholdName", householdResult.Message);
@@ -116,7 +117,8 @@ public class RegisterModel : PageModel
                 }
                 else
                 {
-                    await _householdService.AddUserToHousehold(userId, (await _householdService.RetrieveHouseholdDetailsByName(HouseholdUiState.JoinHouseholdName)).Value.HouseholdId);
+                    
+                    await _householdService.AddUserToHousehold(userId, (await _householdService.VerifyLink(HouseholdUiState.InviteLink)).Value.HouseholdId);
                 }
 
                 //_contextAccessor.HttpContext.Session.SetString(SessionVariable.UserName, UserName);

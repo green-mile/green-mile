@@ -135,5 +135,17 @@ namespace Web.Services
                 ? Result<Household>.Failure("Household was not found")
                 : Result<Household>.Success("Household exists!", household);
         }
+
+        public async Task<Result<Household>> VerifyLink(string code)
+        {
+            Household household = await _authDbContext.Household.FirstOrDefaultAsync(h => h.InviteLink == code);
+            if(household is null)
+            {
+                return Result<Household>.Failure("No household found!");
+            }
+            return Result<Household>.Success("Household found!", household);
+
+
+        }
     }
 }
