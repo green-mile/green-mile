@@ -69,4 +69,34 @@ public interface INotificationService
     /// Thrown when <paramref name="household.Users"/> is <c>null</c>.
     /// </exception>
     public Task SendNotification(Notification notification, Household household);
+
+    /// <summary>
+    /// Returns a notification object.
+    /// </summary>
+    /// <param name="system">
+    /// The sub-system/module that the notification came from. An example
+    /// would be "Food Sharing"
+    /// </param>
+    /// <param name="message">The message of the notification.</param>
+    /// <returns>
+    /// The notification object.
+    /// </returns>
+    /// <exception cref="ArgumentNullException">
+    /// Thrown when <paramref name="system"/> or
+    /// <paramref name="message"/> is <c>null</c>.
+    /// </exception>
+    public Notification Create(string system, string message)
+    {
+        return system is null
+            ? throw new ArgumentNullException(nameof(system))
+            : message is null
+            ? throw new ArgumentNullException(nameof(message))
+            : (new()
+            {
+                System = system,
+                Message = message,
+                Date = DateTime.Now,
+                Read = false
+            });
+    }
 }
