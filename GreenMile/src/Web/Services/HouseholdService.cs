@@ -33,8 +33,6 @@ namespace Web.Services
                 return Result<Tuple<User, Household>>.Failure("User was not found");  
            }
 
-       
-
 
             IdentityRole role = await _roleManager.FindByNameAsync("Member");
             if (role is null)
@@ -57,11 +55,7 @@ namespace Web.Services
             await _authDbContext.SaveChangesAsync();
            
             return Result<Tuple<User, Household>>.Success("User has been added to the household!", new Tuple<User, Household> (user, household));
-           
-
        }
-
-
 
         async Task<Result<Household>> IHouseholdService.CreateHousehold(string householdName, string address, string ownerId)
         {
