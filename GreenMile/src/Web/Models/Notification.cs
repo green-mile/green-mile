@@ -33,4 +33,18 @@ public class Notification
     /// Indicates whether the notification has been read.
     /// </summary>
     public bool Read { get; set; }
+
+    /// <summary>
+    /// The user that will receive the notification.
+    /// </summary>
+    public User? User { get; private set; }
+
+    /// <summary>
+    /// Sets the user that will receive the notification.
+    /// </summary>
+    /// <param name="user">The user to set.</param>
+    public void SetUser(User user)
+    {
+        User = user;
+    }
 }
