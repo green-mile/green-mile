@@ -1,0 +1,33 @@
+﻿@page
+@model Web.Pages.FoodTracker.IndexModel
+@{
+}
+
+
+<a class="btn btn-primary mt-3 float-end" asp-page="/FoodTracker/AddFoodItem">Add Food Item</a>
+<table class="table mt-3">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.FoodItemList[0].Id)</th>
+            <th>@Html.DisplayNameFor(model => model.FoodItemList[0].Name)</th>
+            <th>@Html.DisplayNameFor(model => model.FoodItemList[0].Count)</th>
+            <th>@Html.DisplayNameFor(model => model.FoodItemList[0].Description)</th>
+            <th>@Html.DisplayNameFor(model => model.FoodItemList[0].ExpiryDate)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            @foreach(var item in Model.FoodItemList)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.Count</td>
+                    <td>@item.Description</td>
+                    <td>@item.ExpiryDate</td>
+                </tr>
+            }
+        }
+    </tbody>
+    
+</table>

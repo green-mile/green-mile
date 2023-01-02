@@ -18,4 +18,6 @@ public class DataContext : IdentityDbContext<User>
     public DataContext(DbContextOptions options) : base(options)
     {
     }
+
+    public DbSet<FoodItem> FoodItems { get; set; }
 }
