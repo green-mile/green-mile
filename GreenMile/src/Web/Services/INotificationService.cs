@@ -14,14 +14,11 @@ public interface INotificationService
     /// <param name="notification">The notification the users will receive.</param>
     /// <returns>
     /// A task that represents the asynchronous operation.
-    /// The <see cref="Task"/> result contains a <see cref="Result{T}"/>
-    /// object with the value <c>true</c> if the notification was
-    /// successfully sent, or <c>false</c> otherwise.
     /// </returns>
     /// <exception cref="ArgumentNullException">
     /// Thrown when <paramref name="notification"/> is <c>null</c>.
     /// </exception>
-    public Task<bool> SendNotification(Notification notification);
+    public Task SendNotification(Notification notification);
     /// <summary>
     /// Sends a notification to a specific user.
     /// </summary>
@@ -29,14 +26,11 @@ public interface INotificationService
     /// <param name="user">The user who will receive the notification.</param>
     /// <returns>
     /// A task that represents the asynchronous operation.
-    /// The <see cref="Task"/> result contains a <see cref="Result{T}"/>
-    /// object with the value <c>true</c> if the notification was
-    /// successfully sent, or <c>false</c> otherwise.
     /// </returns>
     /// <exception cref="ArgumentNullException">
     /// Thrown when <paramref name="notification"/> or <paramref name="user"/> is <c>null</c>.
     /// </exception>
-    public Task<bool> SendNotification(Notification notification, User user);
+    public Task SendNotification(Notification notification, User user);
     /// <summary>
     /// Sends a notification to multiple users.
     /// </summary>
@@ -44,12 +38,9 @@ public interface INotificationService
     /// <param name="users">The users who will receive the notification.</param>
     /// <returns>
     /// A task that represents the asynchronous operation.
-    /// The <see cref="Task"/> result contains a <see cref="Result{T}"/>
-    /// object with the value <c>true</c> if the notification was
-    /// successfully sent to all users, or <c>false</c> otherwise.
     /// </returns>
     /// <exception cref="ArgumentNullException">
     /// Thrown when <paramref name="notification"/> or <paramref name="users"/> is <c>null</c>.
     /// </exception>
-    public Task<bool> SendNotification(Notification notification, IEnumerable<User> users);
+    public Task SendNotification(Notification notification, IEnumerable<User> users);
 }

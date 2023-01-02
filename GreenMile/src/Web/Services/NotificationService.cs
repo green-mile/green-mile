@@ -15,7 +15,7 @@ public class NotificationService : INotificationService
         _context = context;
     }
 
-    public async Task<bool> SendNotification(Notification notification)
+    public async Task SendNotification(Notification notification)
     {
         if (notification is null)
         {
@@ -34,10 +34,9 @@ public class NotificationService : INotificationService
             notificationClone.SetUser(user);
             await _context.Notifications.AddAsync(notificationClone);
         }
-        return true;
     }
 
-    public async Task<bool> SendNotification(Notification notification, User user)
+    public async Task SendNotification(Notification notification, User user)
     {
         if (notification is null)
         {
@@ -49,10 +48,9 @@ public class NotificationService : INotificationService
         }
         notification.SetUser(user);
         await _context.Notifications.AddAsync(notification);
-        return true;
     }
 
-    public async Task<bool> SendNotification(Notification notification, IEnumerable<User> users)
+    public async Task SendNotification(Notification notification, IEnumerable<User> users)
     {
         if (notification is null)
         {
@@ -74,6 +72,5 @@ public class NotificationService : INotificationService
             notificationClone.SetUser(user);
             await _context.Notifications.AddAsync(notificationClone);
         }
-        return true;
     }
 }
