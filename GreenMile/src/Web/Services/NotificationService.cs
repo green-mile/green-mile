@@ -43,8 +43,9 @@ public class NotificationService : INotificationService
                 Read = notification.Read,
             };
             notificationClone.SetUser(user);
-            await _context.Notifications.AddAsync(notificationClone);
+            _context.Notifications.Add(notificationClone);
         }
+        await _context.SaveChangesAsync();
     }
 
     public async Task SendNotification(Notification notification, User user)
@@ -58,7 +59,8 @@ public class NotificationService : INotificationService
             throw new ArgumentNullException(nameof(user));
         }
         notification.SetUser(user);
-        await _context.Notifications.AddAsync(notification);
+        _context.Notifications.Add(notification);
+        await _context.SaveChangesAsync();
     }
 
     public async Task SendNotification(Notification notification, IEnumerable<User> users)
@@ -81,8 +83,9 @@ public class NotificationService : INotificationService
                 Read = notification.Read,
             };
             notificationClone.SetUser(user);
-            await _context.Notifications.AddAsync(notificationClone);
+            _context.Notifications.Add(notificationClone);
         }
+        await _context.SaveChangesAsync();
     }
 
     public async Task SendNotification(Notification notification, Household household)
@@ -109,7 +112,8 @@ public class NotificationService : INotificationService
                 Read = notification.Read,
             };
             notificationClone.SetUser(user);
-            await _context.Notifications.AddAsync(notificationClone);
+            _context.Notifications.Add(notificationClone);
         }
+        await _context.SaveChangesAsync();
     }
 }
