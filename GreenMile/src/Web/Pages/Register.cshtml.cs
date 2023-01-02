@@ -112,13 +112,14 @@ public class RegisterModel : PageModel
                 {
                     await _householdService.CreateHousehold(HouseholdUiState.CreateHouseholdName, HouseholdUiState.Address, userId);
                     await _householdService.AddUserToHousehold(userId, (await _householdService.RetrieveHouseholdDetailsByName(HouseholdUiState.CreateHouseholdName)).Value.HouseholdId);
-
+                    TempData["success"] = "Created household!";
 
                 }
                 else
                 {
                     
                     await _householdService.AddUserToHousehold(userId, (await _householdService.VerifyLink(HouseholdUiState.InviteLink)).Value.HouseholdId);
+                    TempData["success"] = "Added to household!";
                 }
 
                 //_contextAccessor.HttpContext.Session.SetString(SessionVariable.UserName, UserName);
