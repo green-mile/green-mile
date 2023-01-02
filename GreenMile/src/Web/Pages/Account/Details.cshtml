@@ -746,7 +746,17 @@
 
                                                 <div class="profile-card-ctr">
                                                     <button class="profile-card__button button--blue js-message-btn">Details</button>
-                                                    <button class="profile-card__button button--orange">Transfer Household</button>
+                                                    @if(await userManager.IsInRoleAsync(user, "HouseOwner"))  {
+                                                 
+                                                        <button disabled type="button" style="background-color: grey"  class="profile-card__button button--orange">You are the Owner</button>
+                                                   
+                                                    } else {
+                                                                           <form action="/account/transferhousehold">
+                                                         <button class="profile-card__button button--orange">Transfer Household</button>
+                                                    </form>
+                                                    }
+                                 
+                                                   
                                                 </div>
                                             </div>
 
