@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+
 using Web.Data;
 using Web.Models;
 
@@ -13,6 +15,15 @@ public class NotificationService : INotificationService
     public NotificationService(AuthDbContext context)
     {
         _context = context;
+    }
+
+    public async Task<IEnumerable<Notification>> GetNotifications(User user)
+    {
+        return user is null
+            ? throw new ArgumentNullException(nameof(user))
+            : await _context.Notifications
+                .Where(n => n.User == user)
+                .ToListAsync();
     }
 
     public async Task SendNotification(Notification notification)

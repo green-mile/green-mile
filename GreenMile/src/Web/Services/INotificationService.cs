@@ -9,6 +9,17 @@ namespace Web.Services;
 public interface INotificationService
 {
     /// <summary>
+    /// Retrieves the notification for a given user.
+    /// </summary>
+    /// <param name="user">The user whose notifications are being retrieved.</param>
+    /// <returns>
+    /// An enumerable collection of notifications belonging to the user.
+    /// </returns>
+    /// <exception cref="ArgumentNullException">
+    /// Thrown if <paramref name="user"/> is <c>null</c>.
+    /// </exception>
+    public Task<IEnumerable<Notification>> GetNotifications(User user);
+    /// <summary>
     /// Sends a notification to all users.
     /// </summary>
     /// <param name="notification">The notification the users will receive.</param>
