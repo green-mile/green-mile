@@ -21,7 +21,7 @@ public interface INotificationService
     /// <exception cref="ArgumentNullException">
     /// Thrown when <paramref name="notification"/> is <c>null</c>.
     /// </exception>
-    public Task<Result<bool>> SendNotification(Notification notification);
+    public Task<bool> SendNotification(Notification notification);
     /// <summary>
     /// Sends a notification to a specific user.
     /// </summary>
@@ -36,7 +36,7 @@ public interface INotificationService
     /// <exception cref="ArgumentNullException">
     /// Thrown when <paramref name="notification"/> or <paramref name="user"/> is <c>null</c>.
     /// </exception>
-    public Task<Result<bool>> SendNotification(Notification notification, User user);
+    public Task<bool> SendNotification(Notification notification, User user);
     /// <summary>
     /// Sends a notification to multiple users.
     /// </summary>
@@ -51,5 +51,5 @@ public interface INotificationService
     /// <exception cref="ArgumentNullException">
     /// Thrown when <paramref name="notification"/> or <paramref name="users"/> is <c>null</c>.
     /// </exception>
-    public Task<Result<bool>> SendNotification(Notification notification, IEnumerable<User> users);
+    public Task<bool> SendNotification(Notification notification, IEnumerable<User> users);
 }
