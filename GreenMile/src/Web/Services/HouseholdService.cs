@@ -10,24 +10,23 @@ namespace Web.Services
     public class HouseholdService : IHouseholdService
     {
         private readonly UserManager<User> _userManager;
-<<<<<<< HEAD
-        private readonly AuthDbContext _authDbContext;
+
         private readonly RoleManager<IdentityRole> _roleManager;
-        public HouseholdService(UserManager<User> userManager, AuthDbContext authDbContext, RoleManager<IdentityRole> roleManager)
-=======
-        private readonly DataContext _authDbContext;
-        public HouseholdService(UserManager<User> userManager, DataContext authDbContext)
->>>>>>> b1b361bf7b1db0c57442a775274f9d81bf223953
+
+        private readonly DataContext _dbContext;
+        public HouseholdService(UserManager<User> userManager, DataContext authDbContext, RoleManager<IdentityRole> roleManager)
+
         {
             _userManager = userManager;
-            _authDbContext = authDbContext;
+            _dbContext = authDbContext;
+
             _roleManager = roleManager;
         }
 
 
-       async Task<Result<Tuple<User, Household>>> IHouseholdService.AddUserToHousehold(string userId, int householdId)
+        async Task<Result<Tuple<User, Household>>> IHouseholdService.AddUserToHousehold(string userId, int householdId)
         {
-           Household? household = await _authDbContext.Household.FindAsync(householdId);
+           Household? household = await _dbContext.Household.FindAsync(householdId);
            User? user = await _userManager.FindByIdAsync(userId.ToString());
            if (household is null)
            {
@@ -57,7 +56,7 @@ namespace Web.Services
             user.HouseholdId = householdId;
             //household.Users.Add(user);
             //household.Users.Add(user);
-            await _authDbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
            
             return Result<Tuple<User, Household>>.Success("User has been added to the household!", new Tuple<User, Household> (user, household));
        }
@@ -66,7 +65,7 @@ namespace Web.Services
         {
           
 
-            if((await _authDbContext.Household.FirstOrDefaultAsync(x => x.Name == householdName)) is null)
+            if((await _dbContext.Household.FirstOrDefaultAsync(x => x.Name == householdName)) is null)
             {
                 Household householdObj =new Household() {
                     Name= householdName,
@@ -96,8 +95,8 @@ namespace Web.Services
               
                 if (!await _userManager.IsInRoleAsync(user, "HouseOwner")) await _userManager.AddToRoleAsync( user, "HouseOwner");
                 if (!await _userManager.IsInRoleAsync(user, "Member")) await _userManager.AddToRoleAsync(user, "Member");
-                await _authDbContext.Household.AddAsync(householdObj);
-                await _authDbContext.SaveChangesAsync();
+                await _dbContext.Household.AddAsync(householdObj);
+                await _dbContext.SaveChangesAsync();
                 return Result<Household>.Success("Household has been created!", householdObj);
             }
             return Result<Household>.Failure("Household exists!");
@@ -121,7 +120,7 @@ namespace Web.Services
 
         public async Task<Result<Household>> RetrieveHouseholdDetails(int householdId)
         {
-            Household? household = await _authDbContext.Household
+            Household? household = await _dbContext.Household
                 .Include(h => h.Users)
                 .FirstOrDefaultAsync(h => h.HouseholdId == householdId);
             return household is null
@@ -132,7 +131,7 @@ namespace Web.Services
         public async Task<Result<Household>> RetrieveHouseholdDetailsByName(string householdName)
         {
 
-            Household? household = await _authDbContext.Household
+            Household? household = await _dbContext.Household
                 .Include(h => h.Users)
                 .FirstOrDefaultAsync(x => x.Name == householdName);
 
@@ -143,7 +142,7 @@ namespace Web.Services
 
         public async Task<Result<Household>> VerifyLink(string code)
         {
-            Household household = await _authDbContext.Household.FirstOrDefaultAsync(h => h.InviteLink == code);
+            Household household = await _dbContext.Household.FirstOrDefaultAsync(h => h.InviteLink == code);
             if(household is null)
             {
                 return Result<Household>.Failure("No household found!");

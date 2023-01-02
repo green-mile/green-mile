@@ -10,7 +10,7 @@ using Web.Data;
 
 namespace Web.Migrations
 {
-    [DbContext(typeof(AuthDbContext))]
+    [DbContext(typeof(DataContext))]
     [Migration("20230101142659_OwnerHouseholdAlpha")]
     partial class OwnerHouseholdAlpha
     {
