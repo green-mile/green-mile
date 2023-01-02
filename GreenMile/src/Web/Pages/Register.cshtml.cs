@@ -18,6 +18,7 @@ public class RegisterModel : PageModel
     private readonly SignInManager<User> _signInManager;
     private readonly IHttpContextAccessor _contextAccessor;
     private readonly IHouseholdService _householdService;
+    private readonly INotificationService _notificationService;
 
     [BindProperty, Required]
     public string UserName { get; set; }
@@ -39,12 +40,13 @@ public class RegisterModel : PageModel
     [BindProperty, Required]
     public HouseholdUiState HouseholdUiState { get; set; }
 
-    public RegisterModel(UserManager<User> userManager, SignInManager<User> signInManager, IHttpContextAccessor contextAccessor, IHouseholdService householdService)
+    public RegisterModel(UserManager<User> userManager, SignInManager<User> signInManager, IHttpContextAccessor contextAccessor, IHouseholdService householdService, INotificationService notificationService)
     {
         _householdService = householdService;
         _userManager = userManager;
         _signInManager = signInManager;
         _contextAccessor = contextAccessor;
+        _notificationService = notificationService;
     }
 
     public void OnGet()
@@ -125,6 +127,13 @@ public class RegisterModel : PageModel
                 //_contextAccessor.HttpContext.Session.SetString(SessionVariable.UserName, UserName);
                 //_contextAccessor.HttpContext.Session.SetString(SessionVariable.UserId, userId);
                 //_contextAccessor.HttpContext.Session.SetString(SessionVariable.HousholdName, user.Household.Name);
+
+                var notif = _notificationService.Create(
+                    nameof(RegisterModel),
+                    "Welcome to GreenMile! Thank you for registering with us."
+                );
+
+                await _notificationService.SendNotification(notif, user);
 
                 return RedirectToPage("/Index");
             }

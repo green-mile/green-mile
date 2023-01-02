@@ -9,6 +9,7 @@ namespace Web.Data;
 public class DataContext : IdentityDbContext<User>
 {
     public DbSet<Household> Household { get; set; }
+    public DbSet<Notification> Notifications { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

@@ -1,0 +1,46 @@
+@page
+@using Models
+@model Web.Pages.NotificationsModel
+
+<main class="pt-50">
+    <header>
+        <h4>
+            @(Model.Notifications is not null
+            ? Model.Notifications.Count()
+            : "Error") Notifications
+        </h4>
+    </header>
+    <table>
+        <thead>
+            <tr>
+                <th>System</th>
+                <th>Message</th>
+                <th>Read</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (
+            Model.Notifications is not null
+            && Model.Notifications.Count() > 0
+            )
+            {
+                foreach (Notification notif in Model.Notifications)
+                {
+                    <tr>
+                        <td>@notif.System</td>
+                        <td>@notif.Message</td>
+                        <td>@(notif.Read ? "Read" : "Unread")</td>
+                        <td>@notif.Date</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="4">No notifications yet.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</main>
