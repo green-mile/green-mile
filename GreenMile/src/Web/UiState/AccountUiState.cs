@@ -27,5 +27,6 @@ namespace Web.UiState
         public string? DeletePassword { get; set; } = null;
         public string? DeleteUsername { get; set; } = null;
 
+
     }
 }

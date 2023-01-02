@@ -10,7 +10,8 @@ namespace Web.Models
         public ICollection<User> Users { get; set; } = new Collection<User>();
         public User? Owner { get; set; } = null;
         public string? OwnerId { get; set; } = null;
-        public string Address { get; set;}
+        public string? Address { get; set;}
+
 
     }
 }

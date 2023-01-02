@@ -11,10 +11,12 @@ namespace Web.Services
     {
         private readonly UserManager<User> _userManager;
         private readonly AuthDbContext _authDbContext;
-        public HouseholdService(UserManager<User> userManager, AuthDbContext authDbContext)
+        private readonly RoleManager<IdentityRole> _roleManager;
+        public HouseholdService(UserManager<User> userManager, AuthDbContext authDbContext, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _authDbContext = authDbContext;
+            _roleManager = roleManager;
         }
 
 
@@ -30,8 +32,28 @@ namespace Web.Services
            {
                 return Result<Tuple<User, Household>>.Failure("User was not found");  
            }
-          
+
+       
+
+
+            IdentityRole role = await _roleManager.FindByNameAsync("Member");
+            if (role is null)
+            {
+                IdentityResult result = await _roleManager.CreateAsync(new IdentityRole("Member"));
+                if (!result.Succeeded)
+                {
+                    return Result<Tuple<User, Household>>.Failure("Creation of Member failed");
+                }
+            }
+      
+            if (!await _userManager.IsInRoleAsync(user, "Member")) await _userManager.AddToRoleAsync(user, "Member");
+            if (await _userManager.IsInRoleAsync(user, "HouseOwner") && household.OwnerId != userId) await _userManager.RemoveFromRoleAsync(user, "HouseOwner");
+
+
+
+            //user.HouseholdId = householdId;
             household.Users.Add(user);
+            //household.Users.Add(user);
             await _authDbContext.SaveChangesAsync();
            
             return Result<Tuple<User, Household>>.Success("User has been added to the household!", new Tuple<User, Household> (user, household));
@@ -41,14 +63,40 @@ namespace Web.Services
 
 
 
-        async Task<Result<Household>> IHouseholdService.CreateHousehold(string householdName)
+        async Task<Result<Household>> IHouseholdService.CreateHousehold(string householdName, string address, string ownerId)
         {
+          
+
             if((await _authDbContext.Household.FirstOrDefaultAsync(x => x.Name == householdName)) is null)
             {
                 Household householdObj =new Household() {
-                    Name= householdName
+                    Name= householdName,
+                    Address = address,
+                    OwnerId = ownerId
                 };
 
+                IdentityRole role = await _roleManager.FindByNameAsync("HouseOwner");
+                if(role is null)
+                {
+                    IdentityResult result = await _roleManager.CreateAsync(new IdentityRole("HouseOwner"));
+                    if(!result.Succeeded)
+                    {
+                        return Result<Household>.Failure("Creation of Household owner failed");
+                    }
+                }
+                IdentityRole roleM = await _roleManager.FindByNameAsync("Member");
+                if (roleM is null)
+                {
+                    IdentityResult result = await _roleManager.CreateAsync(new IdentityRole("Member"));
+                    if (!result.Succeeded)
+                    {
+                        return Result<Household>.Failure("Creation of Member failed");
+                    }
+                }
+                User user = await _userManager.FindByIdAsync(ownerId);
+              
+                if (!await _userManager.IsInRoleAsync(user, "HouseOwner")) await _userManager.AddToRoleAsync( user, "HouseOwner");
+                if (!await _userManager.IsInRoleAsync(user, "Member")) await _userManager.AddToRoleAsync(user, "Member");
                 await _authDbContext.Household.AddAsync(householdObj);
                 await _authDbContext.SaveChangesAsync();
                 return Result<Household>.Success("Household has been created!", householdObj);

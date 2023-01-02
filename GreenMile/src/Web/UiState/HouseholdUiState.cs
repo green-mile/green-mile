@@ -12,5 +12,8 @@ namespace Web.UiState
 
         [BindProperty]
         public bool? JoinHousehold { get; set; } = true;
+
+        [BindProperty]
+        public string? Address { get; set; } = null;
     }
 }

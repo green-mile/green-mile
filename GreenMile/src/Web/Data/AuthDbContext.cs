@@ -19,6 +19,7 @@ public class AuthDbContext : IdentityDbContext<User>
             .HasOne(u => u.OwnerOf)
             .WithOne(h => h.Owner)
             .HasForeignKey<Household>(h => h.OwnerId).IsRequired(false);
+     
     }
 
     public AuthDbContext(DbContextOptions options) : base(options)

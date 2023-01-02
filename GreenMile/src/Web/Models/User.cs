@@ -10,6 +10,7 @@ public class User : IdentityUser
     public Household? Household { get; set; } = null;
     public bool Disabled { get; set; } = false;
     public Household? OwnerOf { get; set; }
+    public DateTime? CreatedAt { get; set; } = DateTime.Now;
 
 
 }
