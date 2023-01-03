@@ -170,7 +170,8 @@
                                                         <form method="POST">
                                                             
                                                                  <input value="@user.UserName"  disabled style="margin-bottom:20px"/>
-                                                                <button style="margin-right: 15px;background-color: #000" class="btn btn-lg btn-warning rounded font-sm mt-15">Give owner to @user.UserName</button>
+                                                                 <input type="hidden" value="@user.Id" asp-for="HouseholdDetailsUiState.NextOwnerId"/>
+                                                                <button type="submit" asp-page-handler="Patch" style="margin-right: 15px;background-color: #000;padding: 10px 30px; font-weight: 700" id="bro" class="btn btn-lg btn-warning rounded font-sm mt-15">Give owner to @user.UserName</button>
 
 
                                                         </form>
@@ -331,5 +332,8 @@
                                     }
                                        #ok:hover {
                                        background-color: darkred !important;
+                                    }
+                                                     #bro:hover {
+                                       background-color: #000 !important;
                                     }
                                 </style>

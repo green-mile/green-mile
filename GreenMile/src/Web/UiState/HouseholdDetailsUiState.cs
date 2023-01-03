@@ -6,5 +6,6 @@ namespace Web.UiState
     {
         public ICollection<User>? Users { get; set; }
         public string? UserRemoveId { get; set; }
+        public string?  NextOwnerId { get; set; }
     }
 }

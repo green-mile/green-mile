@@ -1,11 +1,13 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Principal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 using Web.Models;
 using Web.Services;
 using Web.UiState;
+using Web.Utils;
 
 namespace Web.Pages.Account.Households
 {
@@ -25,6 +27,7 @@ namespace Web.Pages.Account.Households
 
         public async Task<IActionResult> OnGetAsync()
         {
+
             int user = (int)(await _userManager.GetUserAsync(User)).HouseholdId;
              if (!await _userManager.IsInRoleAsync(await _userManager.GetUserAsync(User), "Member"))
             {
@@ -51,6 +54,20 @@ namespace Web.Pages.Account.Households
             await _householdService.RemoveUserFromHousehold(HouseholdDetailsUiState?.UserRemoveId);
             TempData["success"] = "User has been removed!";
 
+            return Redirect("/households/details");
+        }
+
+        public async Task<IActionResult> OnPostPatchAsync()
+        {
+            Result<User> result = await _householdService.TransferHouseholdOwnership((await _userManager.GetUserAsync(User)).Id, HouseholdDetailsUiState?.NextOwnerId);
+            if(result.Status == Status.FAILURE)
+            {
+                TempData["error"] = "Something unexpected went wrong";
+                return Page();
+            };
+
+
+            TempData["success"] = "Household ownership transferred!";
             return Redirect("/households/details");
         }
 
