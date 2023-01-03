@@ -5,7 +5,7 @@
 @inject UserManager<User> UserManager
 @model Web.Pages.Account.Households.DetailsModel
 @{
-    
+    var owner = await UserManager.IsInRoleAsync(await UserManager.GetUserAsync(User), "HouseOwner");
 }
 
 <style>
@@ -95,7 +95,10 @@
                                 <th>Email</th>
                                 <th>Roles</th>
                                 <th>Registered</th>
-                                <th class="text-center">Action</th>
+                                @if(owner) {
+                                    <th class="text-center">Action</th>
+                                }
+                               
                             </tr>
                         </thead>
                         <tbody>
@@ -135,12 +138,16 @@
                                     <td>@user?.CreatedAt?.ToString().Split(" ")[0]</td>
 
 
-                                  
-                                    <td class="text-center">
-                                        <button data-bs-toggle="modal" data-bs-target="#quickViewModal-@(user.Id)" style="background-color: black; color:white;margin-right: 15px" href="#" class="btn btn-sm btn-warning rounded font-sm mt-15">Transfer Ownership</button>
-                                        <button href="#" data-bs-toggle="modal" data-bs-target="#ViewModal-@(user.Id)" style="background-color:red" id="ok" class="btn btn-sm btn-brand rounded font-sm mt-15">Remove</button>
-                                    </td>
+                                    @if (owner && (await UserManager.GetUserAsync(User)).Id != user.Id)
+                                    {
+                                        <td class="text-center">
 
+                                            <button data-bs-toggle="modal" data-bs-target="#quickViewModal-@(user.Id)" style="background-color: black; color:white;margin-right: 15px" href="#" class="btn btn-sm btn-warning rounded font-sm mt-15">Transfer Ownership</button>
+                                            <button href="#" data-bs-toggle="modal" data-bs-target="#ViewModal-@(user.Id)" style="background-color:red" id="ok" class="btn btn-sm btn-brand rounded font-sm mt-15">Remove</button>
+                                        </td>
+
+                                  }
+                           
 
 
 
@@ -154,12 +161,20 @@
 
                                                         <div class="detail-info pr-30 pl-30">
                                                             <span class="stock-status out-stock"> Danger </span>
-                                                            <h3 class="title-detail"><a style="" href="shop-product-right.html" class="text-heading">Are you sure you want to transfer ownership to @user.UserName</a></h3>
+                                                            <h3 class="title-detail"><a style="" href="shop-product-right.html" class="text-heading">Are you sure you want to transfer ownership to</a></h3>
 
                                                         </div>
                                                         <!-- Detail Info -->
                                                         <div style="margin-top: 30px;margin-left:10px" class="text-start">
-                                                            <button style="margin-right: 15px;background-color: #000"  class="btn btn-lg btn-warning rounded font-sm mt-15">Give owner to @user.UserName</button>
+
+                                                        <form method="POST">
+                                                            
+                                                                 <input value="@user.UserName"  disabled style="margin-bottom:20px"/>
+                                                                <button style="margin-right: 15px;background-color: #000" class="btn btn-lg btn-warning rounded font-sm mt-15">Give owner to @user.UserName</button>
+
+
+                                                        </form>
+                                                   
                                                             <button class="btn btn-lg btn-brand rounded font-sm mt-15">No thanks</button>
                                                         </div>
                                                     </div>
@@ -188,7 +203,11 @@
                                                             </div>
                                                             <!-- Detail Info -->
                                                             <div style="margin-top: 30px;margin-left:10px" class="text-start" >
-                                                            <button  style="margin-right: 15px; background-color: red; hover: red" id= "hi" class="btn btn-lg btn-brand rounded font-sm mt-15" >Remove @user.UserName</button>
+                                                                <form method="POST">
+                                                                <input asp-for="HouseholdDetailsUiState.UserRemoveId" value="@user.Id" type="hidden" />
+                                                                <button type="submit"  style="margin-right: 15px; background-color: red; hover: red; padding: 10px 30px; font-weight: 700" id="hi" class="btn btn-lg btn-brand rounded font-sm mt-15">Remove @user.UserName</button>
+                                                                </form>
+                                                        
                                                                 <button  class="btn btn-lg btn-brand rounded font-sm mt-15">No thanks</button>
                                                             </div>
                                                         

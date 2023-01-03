@@ -4,6 +4,7 @@ namespace Web.UiState
 {
     public class HouseholdDetailsUiState
     {
-        public ICollection<User> Users { get; set; }
+        public ICollection<User>? Users { get; set; }
+        public string? UserRemoveId { get; set; }
     }
 }

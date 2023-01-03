@@ -26,11 +26,14 @@ namespace Web.Pages.Account
           
         }
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
           
             User user = (await _userManager.GetUserAsync(HttpContext.User));
-           
+            if (!await _userManager.IsInRoleAsync(user, "Member"))
+            {
+                return Redirect("/account/transferhousehold");
+            }
             Household household = (await _householdService.RetrieveHouseholdDetails(user.HouseholdId ?? -1)).Value;
             AccountUiState.Tab = TempData["tab"]?.ToString();
             AccountUiState.Household = household;
@@ -38,7 +41,7 @@ namespace Web.Pages.Account
             AccountUiState.LastName = user.LastName;
             AccountUiState.Username = user.UserName;
             AccountUiState.EmailAddress = user.Email;
-
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()

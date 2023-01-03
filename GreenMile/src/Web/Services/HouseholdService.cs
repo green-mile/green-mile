@@ -110,9 +110,15 @@ namespace Web.Services
             {
                 return Result<User>.Failure("User was not found");
             }
-            user.Household = null;
-            
-             return Result<User>.Success("User was found and household as been removed!", user);
+            user.HouseholdId = null;
+            if (await _userManager.IsInRoleAsync(user, "HouseOwner")) await _userManager.RemoveFromRoleAsync(user, "HouseOwner");
+            if (await _userManager.IsInRoleAsync(user, "Member")) await _userManager.RemoveFromRoleAsync(user, "Member");
+            if(user.OwnerOf is not null)
+            {
+                user.OwnerOf = null;
+            }
+
+            return Result<User>.Success("User was found and household as been removed!", user);
            
         }
 

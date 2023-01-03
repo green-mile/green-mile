@@ -10,7 +10,7 @@ using Web.Utils;
 
 namespace Web.Pages
 {
-    [Authorize(Roles = "Member")]
+    [Authorize]
     public class TransferHouseholdModel : PageModel
     {
         private readonly UserManager<User> _userManager;
@@ -33,12 +33,16 @@ namespace Web.Pages
 
         public async Task<IActionResult> OnGetAsync()
         {
-           /* if (await _userManager.IsInRoleAsync(await _userManager.GetUserAsync(HttpContext.User), "HouseOwner")) ;
+            if (!await _userManager.IsInRoleAsync(await _userManager.GetUserAsync(HttpContext.User), "Member")) ;
             {
-                TempData["error"] = "Can't transfer to household because you're an owner!";
+                TempData["info"] = "You may have gotten kicked out of the household! Please join another one";
              
-                return Redirect("/account/details");
-            }*/
+           
+            }
+
+            
+
+
             return Page();
         }
 
