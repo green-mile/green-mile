@@ -6,7 +6,9 @@ namespace Web.Models
     {
 
         [Key]
-        public string Id { get; set; } = string.Empty;
+        public string Id { get; set; } 
+
+        public string Household { get; set; }
 
         public string Name { get; set; }
 
@@ -14,7 +16,8 @@ namespace Web.Models
 
         public int Count { get; set; }
 
-        public DateOnly ExpiryDate { get; set; } = new DateOnly();
+        public string ExpiryDate { get; set; }
 
+        
     }
 }
