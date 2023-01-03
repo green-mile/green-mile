@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Web.Models;
 
@@ -10,5 +11,5 @@ public class CustomFood
     public string Description { get; set; }
     public string Image { get; set; }
     public DateTime ExpiredDate { get; set; }
-    public Donation? Donation { get; set; }
+    
 }
