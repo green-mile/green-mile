@@ -18,6 +18,7 @@ public class RegisterModel : PageModel
     private readonly SignInManager<User> _signInManager;
     private readonly IHttpContextAccessor _contextAccessor;
     private readonly IHouseholdService _householdService;
+    private readonly INotificationService _notificationService;
 
     [BindProperty, Required]
     public string UserName { get; set; }
@@ -39,12 +40,13 @@ public class RegisterModel : PageModel
     [BindProperty, Required]
     public HouseholdUiState HouseholdUiState { get; set; }
 
-    public RegisterModel(UserManager<User> userManager, SignInManager<User> signInManager, IHttpContextAccessor contextAccessor, IHouseholdService householdService)
+    public RegisterModel(UserManager<User> userManager, SignInManager<User> signInManager, IHttpContextAccessor contextAccessor, IHouseholdService householdService, INotificationService notificationService)
     {
         _householdService = householdService;
         _userManager = userManager;
         _signInManager = signInManager;
         _contextAccessor = contextAccessor;
+        _notificationService = notificationService;
     }
 
     public void OnGet()
@@ -53,22 +55,26 @@ public class RegisterModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        if ((bool)HouseholdUiState.JoinHousehold && HouseholdUiState.JoinHouseholdName is null)
+        if ((bool)HouseholdUiState.JoinHousehold && HouseholdUiState.InviteLink is null)
         {
-            ModelState.AddModelError("HouseholdUiState.JoinHouseholdName", "Please fill in the household name you want to join!");
+            ModelState.AddModelError("HouseholdUiState.JoinHouseholdName", "Please fill in the household's invite code you want to join!");
             return Page();
         }
         else if ((bool)!HouseholdUiState.JoinHousehold && HouseholdUiState.CreateHouseholdName is null)
         {
             ModelState.AddModelError("HouseholdUiState.CreateHouseholdName", "Please fill in the household name you want to create!");
+            if(HouseholdUiState.Address is null) ModelState.AddModelError("HouseholdUiState.Address", "Please fill in the address!");
+          
             return Page();
         }
+        
 
         if (ModelState.IsValid)
         {
             if ((bool)HouseholdUiState.JoinHousehold)
             {
-                Result<Household> householdResult = await _householdService.RetrieveHouseholdDetailsByName(HouseholdUiState.JoinHouseholdName);
+
+                Result<Household> householdResult = await _householdService.VerifyLink(HouseholdUiState.InviteLink);
                 if (householdResult.Status == Status.FAILURE)
                 {
                     ModelState.AddModelError("HouseholdUiState.JoinHouseholdName", householdResult.Message);
@@ -102,20 +108,32 @@ public class RegisterModel : PageModel
                 await _signInManager.SignInAsync(newUser, false);
                 var user = await _userManager.FindByNameAsync(UserName);
                 var userId = user.Id;
+               
 
                 if ((bool)!HouseholdUiState.JoinHousehold)
                 {
-                    await _householdService.CreateHousehold(HouseholdUiState.CreateHouseholdName);
+                    await _householdService.CreateHousehold(HouseholdUiState.CreateHouseholdName, HouseholdUiState.Address, userId);
                     await _householdService.AddUserToHousehold(userId, (await _householdService.RetrieveHouseholdDetailsByName(HouseholdUiState.CreateHouseholdName)).Value.HouseholdId);
+                    TempData["success"] = "Created household!";
+
                 }
                 else
                 {
-                    await _householdService.AddUserToHousehold(userId, (await _householdService.RetrieveHouseholdDetailsByName(HouseholdUiState.JoinHouseholdName)).Value.HouseholdId);
+                    
+                    await _householdService.AddUserToHousehold(userId, (await _householdService.VerifyLink(HouseholdUiState.InviteLink)).Value.HouseholdId);
+                    TempData["success"] = "Added to household!";
                 }
 
-                _contextAccessor.HttpContext.Session.SetString(SessionVariable.UserName, UserName);
-                _contextAccessor.HttpContext.Session.SetString(SessionVariable.UserId, userId);
-                _contextAccessor.HttpContext.Session.SetString(SessionVariable.HousholdName, user.Household.Name);
+                //_contextAccessor.HttpContext.Session.SetString(SessionVariable.UserName, UserName);
+                //_contextAccessor.HttpContext.Session.SetString(SessionVariable.UserId, userId);
+                //_contextAccessor.HttpContext.Session.SetString(SessionVariable.HousholdName, user.Household.Name);
+
+                var notif = _notificationService.Create(
+                    nameof(RegisterModel),
+                    "Welcome to GreenMile! Thank you for registering with us."
+                );
+
+                await _notificationService.SendNotification(notif, user);
 
                 return RedirectToPage("/Index");
             }

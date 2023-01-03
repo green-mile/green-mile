@@ -5,11 +5,7 @@ using Web.UiState;
 using Web.Models;
 using Web.Services;
 using Microsoft.AspNetCore.Identity;
-using static System.Net.WebRequestMethods;
-using Web.Lib;
-using Web.Utils;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.WebUtilities;
+
 
 namespace Web.Pages.Account
 {
@@ -20,8 +16,6 @@ namespace Web.Pages.Account
 
         [BindProperty]
         public AccountUiState? AccountUiState { get; set; } = new AccountUiState();
-       
-
         private readonly IHouseholdService _householdService;
         private readonly UserManager<User> _userManager;
 
@@ -44,8 +38,6 @@ namespace Web.Pages.Account
             AccountUiState.LastName = user.LastName;
             AccountUiState.Username = user.UserName;
             AccountUiState.EmailAddress = user.Email;
-            
-
 
         }
 
@@ -59,41 +51,61 @@ namespace Web.Pages.Account
                 AccountUiState.ConfirmPassword != null
             };
             if(ModelState.IsValid && formCheck.Any(x => x == true))
+
             {
-                if(!(await _userManager.CheckPasswordAsync(user, AccountUiState.Password)))
+                if(formCheck.Any(x => x == true))
                 {
-                    ModelState.AddModelError("AccountUiState.Password", "Please enter the correct password if you want to change credentials!");
-                    
-                    
-                   
+                    if (!(await _userManager.CheckPasswordAsync(user, AccountUiState.Password)))
+                    {
+                        ModelState.AddModelError("AccountUiState.Password", "Please enter the correct password if you want to change credentials!");
+                        return Page();
+                    }
+                    if (AccountUiState.NewPassword != AccountUiState.ConfirmPassword)
+                    {
+                        ModelState.AddModelError("AccountUiState.NewPassword", "Please confirm the password correctly");
+                        return Page();
+                    }
+                    if (AccountUiState.NewPassword != null) await _userManager.ResetPasswordAsync(user, await _userManager.GeneratePasswordResetTokenAsync(user), AccountUiState.NewPassword);
 
-                    return Page();
+                    user.FirstName = AccountUiState.FirstName;
+                    user.LastName = AccountUiState.LastName;
+                    user.UserName = AccountUiState.Username;
+                    user.Email = AccountUiState.EmailAddress;
+
+                    await _userManager.UpdateAsync(user);
+                    TempData["success"] = "Changes have been saved"!;
                 }
-                if (AccountUiState.NewPassword != AccountUiState.ConfirmPassword)
+                else
                 {
-                    ModelState.AddModelError("AccountUiState.NewPassword", "Please confirm the password correctly");
-                     return Page();
+                    TempData["info"] = "Your changes are already saved";
                 }
-                if (AccountUiState.NewPassword != null) await _userManager.ResetPasswordAsync(user, (await _userManager.GeneratePasswordResetTokenAsync(user)), AccountUiState.NewPassword);
-
-                user.FirstName = AccountUiState.FirstName;
-                user.LastName = AccountUiState.LastName;
-                user.UserName = AccountUiState.Username;
-                user.Email = AccountUiState.EmailAddress;
-                
-                await _userManager.UpdateAsync(user);
-                TempData["success"] = "Changes have been saved"!;
-
-         
-
-
-
+   
 
             } else
             {
-                TempData["info"] = "Your changes are already saved";
+                TempData["error"] = "Form not filled properly!";
             }
             return Page();
+        }
+
+        public async Task<IActionResult> OnPostDeleteAsync()
+        {
+            TempData["tab"] = AccountUiState.Tab;
+            User user = await _userManager.GetUserAsync(HttpContext.User);
+            if(!ModelState.IsValid && (user.UserName != AccountUiState.Username || !await _userManager.CheckPasswordAsync(user, AccountUiState.Password)))
+            {
+                TempData["tab"] = "danger-zone";
+                TempData["error"] = "Username and/or password incorrect!";
+
+
+                return Redirect("/Account/Details");
+            } else
+            {
+                await _userManager.DeleteAsync(user);
+                TempData["success"] = "Account deleted!";
+                return Redirect("/");
+            }
+
         }
     }
 }

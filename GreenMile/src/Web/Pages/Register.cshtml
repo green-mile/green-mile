@@ -64,17 +64,8 @@
 
 
 
-
                                         <input type="hidden" asp-for="HouseholdUiState.JoinHousehold" value="true"/>
-
-
-
-
-
-
                                         <link rel="stylesheet" href="~/css/Register.css" asp-append-version="true" />
-
-
                                         <div class="heading_s2" style="width:1000px; margin-top: 50px;font-size:25px">
                                             <h2 class="mb-3">Household</h2>
                                             <span></span>
@@ -92,7 +83,6 @@
                                                         </svg><br><span>Join Household</span>
                                                     </label>
                                                 </li>
-                                        
                                               
                                                 <li title="Create Household" onclick="household(false)">
                                                     <label for="tab2" role="button">
@@ -105,52 +95,31 @@
                                                     OR
                                                 </span>
                                             </ul>
-
                                           
                                             <div class="content">
                                                 <section>
                                                     <div class="form-group">
-                                                        <input asp-for="HouseholdUiState.JoinHouseholdName" placeholder="Household name" />
-                                                     <span asp-validation-for="HouseholdUiState.JoinHouseholdName" class="text-danger"></span>
+                                                        <input asp-for="HouseholdUiState.InviteLink" placeholder="Invite link" />
+                                                     <span asp-validation-for="HouseholdUiState.InviteLink" class="text-danger"></span>
                                                     </div>
                                                 </section>
                                                 <section>
                                                     <div class="form-group">
-                                                        <input asp-for="HouseholdUiState.CreateHouseholdName" placeholder="Household name" />
+                                                        <input asp-for="HouseholdUiState.CreateHouseholdName" placeholder="Household" />
                                                         <span asp-validation-for="HouseholdUiState.CreateHouseholdName" class="text-danger"></span>
                                                     </div>
+
+                                                             <div class="form-group">
+                                                        <input asp-for="HouseholdUiState.Address" placeholder="Enter Address" />
+                                                        <span asp-validation-for="HouseholdUiState.Address" class="text-danger"></span>
+                                                    </div>
+
                                                 </section>
                                          
                                             </div>
                                         </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                    
                                         @* <div class="login_footer form-group mb-50">
                                             <div class="chek-form">
                                             <div class="custome-checkbox">
