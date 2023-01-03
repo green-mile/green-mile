@@ -175,7 +175,7 @@
 
                                                         </form>
                                                    
-                                                            <button class="btn btn-lg btn-brand rounded font-sm mt-15">No thanks</button>
+                                                            <button data-bs-dismiss="modal" aria-label="Close" class="btn btn-lg btn-brand rounded font-sm mt-15">No thanks</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -207,8 +207,8 @@
                                                                 <input asp-for="HouseholdDetailsUiState.UserRemoveId" value="@user.Id" type="hidden" />
                                                                 <button type="submit"  style="margin-right: 15px; background-color: red; hover: red; padding: 10px 30px; font-weight: 700" id="hi" class="btn btn-lg btn-brand rounded font-sm mt-15">Remove @user.UserName</button>
                                                                 </form>
-                                                        
-                                                                <button  class="btn btn-lg btn-brand rounded font-sm mt-15">No thanks</button>
+
+                                                            <button data-bs-dismiss="modal" aria-label="Close"  class="btn btn-lg btn-brand rounded font-sm mt-15">No thanks</button>
                                                             </div>
                                                         
                                                     </div>

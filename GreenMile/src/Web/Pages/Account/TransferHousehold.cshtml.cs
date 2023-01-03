@@ -28,7 +28,7 @@ namespace Web.Pages
             
         }
         [BindProperty]
-        public TransferHouseholdUiState TransferHouseholdUiState { get; set; }
+        public TransferHouseholdUiState TransferHouseholdUiState { get; set; } = new TransferHouseholdUiState();
 
 
         public async Task<IActionResult> OnGetAsync()
