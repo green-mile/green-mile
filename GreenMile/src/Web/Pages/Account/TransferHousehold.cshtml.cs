@@ -33,7 +33,8 @@ namespace Web.Pages
 
         public async Task<IActionResult> OnGetAsync()
         {
-            if (!await _userManager.IsInRoleAsync(await _userManager.GetUserAsync(HttpContext.User), "Member")) ;
+            User user = await _userManager.GetUserAsync(HttpContext.User);
+            if (!await _userManager.IsInRoleAsync(user, "Member") && user.HouseholdId is null) 
             {
                 TempData["info"] = "You may have gotten kicked out of the household! Please join another one";
              
