@@ -120,7 +120,7 @@ namespace Web.Services
         {
             Household? household = await _dbContext.Household
                 .Include(h => h.Users)
-                .FirstOrDefaultAsync(h => h.HouseholdId == householdId);
+                .FirstAsync(h => h.HouseholdId == householdId);
             return household is null
                 ? Result<Household>.Failure("Household was not found")
                 : Result<Household>.Success("Household exists!", household);
