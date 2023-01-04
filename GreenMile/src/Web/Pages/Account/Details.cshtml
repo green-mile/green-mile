@@ -373,7 +373,7 @@
 
 
 
-
+<input type="hidden" asp-for="AccountUiState.HasImageChanged"/>
 
                                                      
 <div class="profile-pic-wrapper">
@@ -463,7 +463,7 @@
 
                                                 <form method="POST" enctype="multipart/form-data">
                                                     <div class="row">
-
+                                                        <input type="hidden" asp-for="AccountUiState.HasImageChanged" />
                                                         <div class="profile-pic-wrapper">
                                                             <div class="pic-holder">
                                                                 <!-- uploaded pic shown here -->
@@ -1002,7 +1002,7 @@
                             '<div class="snackbar show" role="alert"><i class="fa fa-check-circle text-success"></i> Profile image updated successfully</div>'
                         );
 
-
+                        $("#AccountUiState_HasImageChanged").val(true)
 
                         // Clear input after upload
                         $(triggerInput).val("");

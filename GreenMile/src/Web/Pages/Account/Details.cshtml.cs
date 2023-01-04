@@ -52,7 +52,7 @@ namespace Web.Pages.Account
             List<Boolean> formCheck = new List<Boolean>()
             {
                 AccountUiState.FirstName != user.FirstName, AccountUiState.Username != user.UserName, AccountUiState.LastName != user.LastName, AccountUiState.EmailAddress != user.Email, AccountUiState.NewPassword != null,
-                AccountUiState.ConfirmPassword != null, //how tf do i change if image has changed
+                AccountUiState.ConfirmPassword != null, AccountUiState.HasImageChanged
             };
             if(ModelState.IsValid && formCheck.Any(x => x == true))
 
