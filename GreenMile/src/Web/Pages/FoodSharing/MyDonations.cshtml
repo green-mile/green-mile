@@ -1,0 +1,247 @@
+﻿@page
+@using Microsoft.AspNetCore.Identity;
+@using Web.Services;
+@using Web.Models;
+@model Web.Pages.FoodSharing.MyDonationsModel
+
+@inject UserManager<User> userManager;
+
+@{
+    User user = await userManager.GetUserAsync(HttpContext.User);
+    int myCount = Model.MyCount;
+}
+
+<main class="main">
+    <div class="page-header mt-30 mb-50">
+        <div class="container">
+            <div class="archive-header">
+                <div class="row align-items-center">
+                    <div class="col-xl-8">
+                        <h1 class="mb-15">My Donation Listings</h1>
+                        <div class="breadcrumb">
+                            <a href="index.html" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
+                            <span></span> Food Sharing <span></span> My Donation Listings
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container mb-30">
+        <div class="row flex-row-reverse">
+            <div class="col-lg-8-5">
+                <div class="shop-product-fillter">
+                    <div class="totall-product">
+                        <p>We found <strong class="text-brand">
+                            @myCount
+                        </strong> 
+                        you listed, Thank You for your contribution to Singapore!</p>
+                    </div>
+                    <div class="sort-by-product-area">
+                        <div class="sort-by-cover mr-10">
+                            <div class="sort-by-product-wrap">
+                                <div class="sort-by">
+                                    <span><i class="fi-rs-apps"></i>Show:</span>
+                                </div>
+                                <div class="sort-by-dropdown-wrap">
+                                    <span> 50 <i class="fi-rs-angle-small-down"></i></span>
+                                </div>
+                            </div>
+                            <div class="sort-by-dropdown">
+                                <ul>
+                                    <li><a class="active" href="#">50</a></li>
+                                    <li><a href="#">100</a></li>
+                                    <li><a href="#">150</a></li>
+                                    <li><a href="#">200</a></li>
+                                    <li><a href="#">All</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="sort-by-cover">
+                            <div class="sort-by-product-wrap">
+                                <div class="sort-by">
+                                    <span><i class="fi-rs-apps-sort"></i>Sort by:</span>
+                                </div>
+                                <div class="sort-by-dropdown-wrap">
+                                    <span> Featured <i class="fi-rs-angle-small-down"></i></span>
+                                </div>
+                            </div>
+                            <div class="sort-by-dropdown">
+                                <ul>
+                                    <li><a class="active" href="#">Featured</a></li>
+                                    <li><a href="#">Price: Low to High</a></li>
+                                    <li><a href="#">Price: High to Low</a></li>
+                                    <li><a href="#">Release Date</a></li>
+                                    <li><a href="#">Avg. Rating</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row product-grid">
+                    <!--end product card-->
+
+                    @{
+                        @foreach (var item in Model.DonationList)
+                        {
+                            <div class="col-lg-1-5 col-md-4 col-12 col-sm-6">
+                                <div class="product-cart-wrap mb-30">
+                                    <div class="product-img-action-wrap">
+                                        <div class="product-img product-img-zoom">
+                                            <a href="shop-product-right.html">
+                                                <img class="default-img" src="@item.CustomFood.Image" alt="" />
+                                                <img class="hover-img" src="@item.CustomFood.Image" alt="" />
+                                            </a>
+                                        </div>
+                                        <div class="product-action-1">
+                                            <a aria-label="Edit My Donations" class="action-btn" asp-page="/FoodSharing/EditDonationInfo" asp-route-id="@item.Id"><i class="fi-rs-edit"></i></a>
+                                            <a aria-label="Quick view" class="action-btn" data-bs-toggle="modal" data-bs-target="#quickViewModal@(item.Id)"><i class="fi-rs-eye"></i></a>
+                                        </div>
+                                        <div class="product-badges product-badges-position product-badges-mrg">
+                                            <span class="new">@item.Status</span>
+                                        </div>
+                                    </div>
+                                    <div class="product-content-wrap">
+                                        <div class="product-category">
+                                            <a href="">Food Category</a>
+                                        </div>
+                                        <h2><a href="shop-product-right.html">@item.CustomFood.Name</a></h2>
+                                        <!--
+                                            <div class="product-rate-cover">
+                                                <div class="product-rate d-inline-block">
+                                                    <div class="product-rating" style="width: 80%"></div>
+                                                </div>
+                                                <span class="font-small ml-5 text-muted"> (3.5)</span>
+                                            </div>
+                                        -->
+                                        <div>
+                                            <span class="font-small text-muted">By <a href="">@item.User.UserName</a></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Quick view -->
+                            <div class="modal fade custom-modal" id="quickViewModal@(item.Id)" tabindex="-1" aria-labelledby="quickViewModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-md-6 col-sm-12 col-xs-12 mb-md-0 mb-sm-5">
+                                                    <div class="detail-gallery">
+                                                        
+                                                        <!-- MAIN SLIDES -->
+                                                        <div class="product-image-slider">
+                                                            <figure class="border-radius-10">
+                                                                <img src="@item.CustomFood.Image" alt="product image" />
+                                                            </figure>
+                                                            <figure class="border-radius-10">
+                                                                <img src="assets/imgs/shop/product-16-1.jpg" alt="product image" />
+                                                            </figure>
+                                                        </div>
+                                                        <!-- THUMBNAILS 
+                                                        <div class="slider-nav-thumbnails">
+                                                            <div><img src="" alt="product image" /></div>
+                                                            <div><img src="assets/imgs/shop/thumbnail-4.jpg" alt="food image" /></div>
+                                                        </div> -->
+                                                    </div>
+                                                    <!-- End Gallery -->
+                                                </div>
+                                                <div class="col-md-6 col-sm-12 col-xs-12">
+                                                    <div class="detail-info pr-30 pl-30">
+                                                        <span class="stock-status in-stock"> @item.Status </span>
+                                                        <h3 class="title-detail"><a href="shop-product-right.html" class="text-heading">@item.CustomFood.Name</a></h3>
+                                                        <!--
+                                                        <div class="product-detail-rating">
+                                                        
+                                                            <div class="product-rate-cover text-end">
+                                                                <div class="product-rate d-inline-block">
+                                                                    <div class="product-rating" style="width: 90%"></div>
+                                                                </div>
+                                                                <span class="font-small ml-5 text-muted"> (32 reviews)</span>
+                                                            </div>
+                                                        
+                                                        </div>
+                                                        
+                                                        <div class="clearfix product-price-cover">
+                                                            <div class="product-price primary-color float-left">
+                                                                <span class="current-price text-brand">$38</span>
+                                                                <span>
+                                                                    <span class="save-price font-md color3 ml-15">26% Off</span>
+                                                                    <span class="old-price font-md ml-15">$52</span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        -->
+                                                        <div class="food-description">
+                                                            <p>
+                                                            @item.CustomFood.Description
+                                                            </p>
+                                                        </div>
+                                                        <div class="detail-extralink mb-30">
+                                                            <div class="detail-qty border radius">
+                                                                
+                                                                <span class="qty-val">1</span>
+                                                                
+                                                            </div>
+                                                            <div class="product-extra-link2">
+                                                                <button type="submit" class="button button-add-to-cart"><i class="fi-rs-edit"></i>Edit</button>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                        <div class="font-xs">
+                                                            <ul>
+                                                                <li class="mb-5">Donor: <span class="text-brand">@item.User.UserName</span></li>
+                                                                <li class="mb-5">Date:<span class="text-brand"> @item.Date</span></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Detail Info -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+                <!--product grid-->
+                <div class="pagination-area mt-20 mb-20">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-start">
+                            <li class="page-item">
+                                <a class="page-link" href="#"><i class="fi-rs-arrow-small-left"></i></a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link dot" href="#">...</a></li>
+                            <li class="page-item"><a class="page-link" href="#">6</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#"><i class="fi-rs-arrow-small-right"></i></a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Preloader Start -->
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="text-center">
+                <img src="../wwwroot/imgs/theme/loading.gif" alt="" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.querySelector('.button-add-to-cart').onclick = function () {
+    window.location.href = '/FoodSharing/EditDonationInfo';
+};
+</script>

@@ -1,0 +1,87 @@
+﻿@page
+@model Web.Pages.FoodSharing.EditDonationInfoModel
+@{
+}
+<main class="main">
+    <div class="page-header mt-30 mb-50">
+        <div class="container">
+            <div class="archive-header">
+                <div class="row align-items-center">
+                    <div class="col-xl-8">
+                        <h1 class="mb-15">Edit My Donation Information</h1>
+                        <div class="breadcrumb">
+                            <a href="/Index" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
+                            <span></span> Food Sharing <span></span> My Donation Info
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form class="mt-3" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" asp-for="MyDonation.CustomFood.Name"></label>
+                <div class="col-sm-10">
+                        <input class="form-control" asp-for="MyDonation.CustomFood.Name"/>
+                        <span asp-validation-for="MyDonation.CustomFood.Name" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label" asp-for="MyDonation.CustomFood.Description"></label>
+                <div class="col-sm-10">
+                        <input class="form-control" asp-for="MyDonation.CustomFood.Description" />
+                        <span asp-validation-for="MyDonation.CustomFood.Description" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label" asp-for="MyDonation.CustomFood.ExpiredDate"></label>
+                <div class="col-sm-10">
+                        <input class="form-control" asp-for="MyDonation.CustomFood.ExpiredDate" />
+                        <span asp-validation-for="MyDonation.CustomFood.ExpiredDate" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <!--
+        <div class="col-md-4">
+            <div class="mb-3">
+                <input type="file" accept="image/*" asp-for="Upload" class="form-control" onchange="showImgPreview(this)" />
+                <span asp-validation-for="Upload" class="text-danger"></span>
+            </div>
+            <img id="imgPreview" class="rounded-circle" style="height:300px;width:300px;object-fit:cover"
+                     src=""
+                     onerror="this.src='/uploads/user.png'" />
+                <input class="form-control d-none" asp-for="MyDonation.CustomFood.Image" />
+        </div>
+        -->
+    </div>
+
+    <div>
+        <input type="submit" value="Update" class="btn btn-primary" />
+        <a class="btn btn-secondary ms-2" href="/Employees">Cancel</a>
+    </div>
+</form>
+
+</main>
+<script>
+    function showImgPreview(input) {
+        if (input.files[0]) {
+            var uploadimg = new FileReader();
+            uploadimg.onload = function (displayimg) {
+                $("#imgPreview").attr('src', displayimg.target.result);
+            }
+            uploadimg.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

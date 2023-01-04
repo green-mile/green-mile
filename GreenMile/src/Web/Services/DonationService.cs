@@ -21,6 +21,7 @@ namespace Web.Services
             return _context.Donations.Include(d => d.CustomFood).Include(u => u.User).OrderBy(m => m.Id).ToList();
         }
 
+
         public void AddDonation(Donation donation)
         {
             _context.Donations.Add(donation);
@@ -33,10 +34,19 @@ namespace Web.Services
             _context.SaveChanges();
         }
 
-        public Donation? GetDonationById(string id)
+        public Donation? GetDonationById(int id)
         {
-            Donation? donation = _context.Donations.FirstOrDefault(x => x.Id.Equals(id));
+            Donation? donation = _context.Donations.Include(d => d.CustomFood).FirstOrDefault(x => x.Id.Equals(id));
             return donation;
+        }
+
+        public List<Donation> GetDonationsByUser(string id)
+        {
+            return _context.Donations
+                .Include(d => d.CustomFood)
+                .Where(x => x.User.Id.Equals(id))
+                .OrderByDescending(m => m.Date)
+                .ToList();
         }
     }
 }
