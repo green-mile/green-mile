@@ -275,6 +275,11 @@
             .icons i:hover {
                 color: #7ce3ff;
             }
+
+
+
+
+
 </style>
 <main class="main pages">
     <div class="page-header breadcrumb-wrap">
@@ -358,10 +363,46 @@
                                             <div class="card-header">
                                                 <h5>Account Details</h5>
                                             </div>
+
+
+
                                             <div class="card-body">
 
-                                                <form method="POST">
+                                                <form method="POST" enctype="multipart/form-data" >
                                                     <div class="row">
+
+
+
+
+
+                                                     
+<div class="profile-pic-wrapper">
+  <div class="pic-holder">
+    <!-- uploaded pic shown here -->
+    <img id="profilePic" class="pic" src="https://source.unsplash.com/random/150x150?person">
+
+    <Input class="uploadProfileInput" type="file" name="profile_pic" id="newProfilePhoto" accept="image/*" style="opacity: 0;" />
+    <label for="newProfilePhoto" class="upload-file-block">
+      <div class="text-center">
+        <div class="mb-2">
+          <i class="fa fa-camera fa-2x"></i>
+        </div>
+        <div class="text-uppercase">
+          Update <br /> Profile Photo
+        </div>
+      </div>
+    </label>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
                                                         <div class="form-group col-md-6">
                                                             <label>First Name <span class="required">*</span></label>
                                                             <input class="form-control" asp-for="AccountUiState.FirstName" value="@user.FirstName" />
@@ -404,6 +445,9 @@
                                                         </div>
                                                     </div>
                                                 </form>
+
+
+
                                             </div>
                                         </div>
                                     </div>
@@ -414,10 +458,31 @@
                                             <div class="card-header">
                                                 <h5>Account Details</h5>
                                             </div>
+
                                             <div class="card-body">
 
-                                                <form method="POST">
+                                                <form method="POST" enctype="multipart/form-data">
                                                     <div class="row">
+
+                                                        <div class="profile-pic-wrapper">
+                                                            <div class="pic-holder">
+                                                                <!-- uploaded pic shown here -->
+                                                                <img id="profilePic" class="pic" src="https://source.unsplash.com/random/150x150?person">
+
+                                                                <Input class="uploadProfileInput" asp-for="AccountUiState.Upload" type="file" name="profile_pic" id="newProfilePhoto" accept="image/*" style="opacity: 0;" />
+                                                                <label for="newProfilePhoto" class="upload-file-block">
+                                                                    <div class="text-center">
+                                                                        <div class="mb-2">
+                                                                            <i class="fa fa-camera fa-2x"></i>
+                                                                        </div>
+                                                                        <div class="text-uppercase">
+                                                                            Update <br /> Profile Photo
+                                                                        </div>
+                                                                    </div>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+
                                                         <div class="form-group col-md-6">
                                                             <label>First Name <span class="required">*</span></label>
                                                             <input class="form-control" asp-for="AccountUiState.FirstName" />
@@ -901,6 +966,73 @@
 
 
 
+
+</script>
+<script>
+    $(document).on("change", ".uploadProfileInput", function () {
+        var triggerInput = this;
+        var currentImg = $(this).closest(".pic-holder").find(".pic").attr("src");
+        var holder = $(this).closest(".pic-holder");
+        var wrapper = $(this).closest(".profile-pic-wrapper");
+        $(wrapper).find('[role="alert"]').remove();
+        triggerInput.blur();
+        var files = !!this.files ? this.files : [];
+        if (!files.length || !window.FileReader) {
+            return;
+        }
+        if (/^image/.test(files[0].type)) {
+            // only image file
+            var reader = new FileReader(); // instance of the FileReader
+            reader.readAsDataURL(files[0]); // read the local file
+
+            reader.onloadend = function () {
+                $(holder).addClass("uploadInProgress");
+                $(holder).find(".pic").attr("src", this.result);
+                $(holder).append(
+                    '<div class="upload-loader"><div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div></div>'
+                );
+
+                // Dummy timeout; call API or AJAX below
+                setTimeout(() => {
+                    $(holder).removeClass("uploadInProgress");
+                    $(holder).find(".upload-loader").remove();
+                    // If upload successful
+                    if (Math.random() < 0.9) {
+                        $(wrapper).append(
+                            '<div class="snackbar show" role="alert"><i class="fa fa-check-circle text-success"></i> Profile image updated successfully</div>'
+                        );
+
+
+
+                        // Clear input after upload
+                        $(triggerInput).val("");
+
+                        setTimeout(() => {
+                            $(wrapper).find('[role="alert"]').remove();
+                        }, 3000);
+                    } else {
+                        $(holder).find(".pic").attr("src", currentImg);
+                        $(wrapper).append(
+                            '<div class="snackbar show" role="alert"><i class="fa fa-times-circle text-danger"></i> There is an error while uploading! Please try again later.</div>'
+                        );
+
+                        // Clear input after upload
+                        $(triggerInput).val("");
+                        setTimeout(() => {
+                            $(wrapper).find('[role="alert"]').remove();
+                        }, 3000);
+                    }
+                }, 1500);
+            };
+        } else {
+            $(wrapper).append(
+                '<div class="alert alert-danger d-inline-block p-2 small" role="alert">Please choose the valid image.</div>'
+            );
+            setTimeout(() => {
+                $(wrapper).find('role="alert"').remove();
+            }, 3000);
+        }
+    });
 
 </script>
 @await Html.PartialAsync("_ValidationScriptsPartial")

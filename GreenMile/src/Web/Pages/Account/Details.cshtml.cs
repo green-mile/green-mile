@@ -18,12 +18,13 @@ namespace Web.Pages.Account
         public AccountUiState? AccountUiState { get; set; } = new AccountUiState();
         private readonly IHouseholdService _householdService;
         private readonly UserManager<User> _userManager;
+        private readonly IImageService _imageService;
 
-        public DetailsModel(IHouseholdService householdService, UserManager<User> userManager)
+        public DetailsModel(IHouseholdService householdService, UserManager<User> userManager, IImageService imageService)
         {
             _householdService = householdService;
             _userManager = userManager;
-          
+            _imageService = imageService;
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -51,7 +52,7 @@ namespace Web.Pages.Account
             List<Boolean> formCheck = new List<Boolean>()
             {
                 AccountUiState.FirstName != user.FirstName, AccountUiState.Username != user.UserName, AccountUiState.LastName != user.LastName, AccountUiState.EmailAddress != user.Email, AccountUiState.NewPassword != null,
-                AccountUiState.ConfirmPassword != null
+                AccountUiState.ConfirmPassword != null, //how tf do i change if image has changed
             };
             if(ModelState.IsValid && formCheck.Any(x => x == true))
 
