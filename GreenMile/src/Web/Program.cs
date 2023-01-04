@@ -14,6 +14,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddScoped<FoodItemService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IHouseholdService, HouseholdService>();
+builder.Services.AddScoped<FoodItemService>();
 builder.Services.AddDbContext<DataContext>(options =>
 {
     if (builder.Environment.IsDevelopment())
