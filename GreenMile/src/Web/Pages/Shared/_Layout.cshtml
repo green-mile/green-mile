@@ -170,17 +170,18 @@
                                     <li>
                                         <a href="#">Smart Recipe <i class="fa-solid fa-chevron-down"></i></a>
                                         <ul class="sub-menu">
-                                            <li><a href="page-about.html">About Us</a></li>
-                                            <li><a href="page-contact.html">Contact</a></li>
-                                            <li><a href="page-account.html">My Account</a></li>
-                                            <li><a href="page-login.html">Login</a></li>
-                                            <li><a href="page-register.html">Register</a></li>
-                                            <li><a href="page-forgot-password.html">Forgot password</a></li>
-                                            <li><a href="page-reset-password.html">Reset password</a></li>
-                                            <li><a href="page-purchase-guide.html">Purchase Guide</a></li>
-                                            <li><a href="page-privacy-policy.html">Privacy Policy</a></li>
-                                            <li><a href="page-terms.html">Terms of Service</a></li>
-                                            <li><a href="page-404.html">404 Page</a></li>
+                                            <li>
+												<a asp-page="/Recipes/Index">All Recipes</a>
+											</li>
+											<li>
+												<a asp-page="/Recipes/Add">Add Recipe</a>
+											</li>
+											<li>
+												<a asp-page="/Recipes/BackendView">View Recipes (Backend)</a>
+											</li>
+											<li>
+												<a asp-page="/Recipes/viewtemplates">View Template</a>
+											</li>
                                         </ul>
                                     </li>
                                     <li>
@@ -346,6 +347,7 @@
         </div>
     </div>
     <div class="container">
+		@await Html.PartialAsync("_Flash")
         <main role="main" class="pb-3">
             <partial name="Notification" />
             @RenderBody()
