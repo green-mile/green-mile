@@ -37,6 +37,7 @@ namespace Web.Pages.FoodSharing
         [BindProperty]
         public IFormFile? Upload { get; set; }
 
+        [BindProperty]
         public Donation MyDonation { get; set; } = new ();
 
         public List<Donation> DonationList { get; set; } = new();

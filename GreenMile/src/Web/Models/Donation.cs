@@ -31,7 +31,7 @@ public class Donation
     /// <summary>
     /// The user that created the donation offer.
     /// </summary>
-    [Required]
+    
     public User? User { get; set; }
 
 
