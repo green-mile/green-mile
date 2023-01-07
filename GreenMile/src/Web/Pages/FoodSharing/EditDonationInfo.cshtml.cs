@@ -35,18 +35,19 @@ namespace Web.Pages.FoodSharing
         public CustomFood MyCustomFood { get; set; } = new();
 
         [BindProperty]
-        [Required]
         public IFormFile? Upload { get; set; }
 
-        public Donation MyDonation { get; set; }
+        public Donation MyDonation { get; set; } = new ();
 
         public List<Donation> DonationList { get; set; } = new();
         public IActionResult OnGet(int id)
         {
             Donation? donation = _donationService.GetDonationById(id);
+            CustomFood? customfood = donation.CustomFood;
             if (donation != null)
             {
-                MyDonation = donation;
+                MyCustomFood = customfood;
+                MyDonation= donation;
                 return Page();
             }
             else
@@ -65,12 +66,20 @@ namespace Web.Pages.FoodSharing
                 {
                     if (Upload.Length > 2 * 1024 * 1024)
                     {
-                        ModelState.AddModelError("Upload",
-                        "File size cannot exceed 2MB.");
+                        ModelState.AddModelError("Upload", "File size cannot exceed 2MB.");
                         return Page();
                     }
 
                     var uploadsFolder = "uploads";
+                    if(MyCustomFood.Image != null)
+                    {
+                        var oldImageFile = Path.GetFileName(MyCustomFood.Image);
+                        var oldImagePath = Path.Combine(_environment.ContentRootPath, "wwwroot", uploadsFolder, oldImageFile);
+                        if (System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+                    }
                     var imageFile = Guid.NewGuid() + Path.GetExtension(Upload.FileName);
                     var imagePath = Path.Combine(_environment.ContentRootPath, "wwwroot", uploadsFolder, imageFile);
                     using var fileStream = new FileStream(imagePath, FileMode.Create);
@@ -79,17 +88,18 @@ namespace Web.Pages.FoodSharing
                     MyCustomFood.Image = string.Format("/{0}/{1}", uploadsFolder, imageFile);
                 }
 
-                MyDonation.Status = "Active";
-                MyDonation.Type = "Active";
-                MyDonation.Date = DateTime.Now;
-                MyDonation.CustomFood = MyCustomFood;
-                MyDonation.User = await _userManager.GetUserAsync(HttpContext.User);
 
-                _customFoodService.AddCustomFood(MyCustomFood);
-                _donationService.AddDonation(MyDonation);
+                //MyDonation.User = await _userManager.GetUserAsync(HttpContext.User);
+                var user = await _userManager.GetUserAsync(HttpContext.User);
+                
+                MyDonation.CustomFood = MyCustomFood;
+                MyDonation.User = user;
+                
+                _donationService.UpdateDonation(MyDonation);
+                _customFoodService.UpdateCustomFood(MyCustomFood);
 
                 TempData["FlashMessage.Type"] = "success";
-                TempData["FlashMessage.Text"] = string.Format("Donation Offer {0} is created Of Food", MyCustomFood.Name);
+                TempData["FlashMessage.Text"] = string.Format("Donation Offer {0} is successfully updated Of Food", MyCustomFood.Name);
                 return Redirect("/FoodSharing/Index");
             }
             return Page();

@@ -21,7 +21,6 @@ namespace Web.Services
             return _context.Donations.Include(d => d.CustomFood).Include(u => u.User).OrderBy(m => m.Id).ToList();
         }
 
-
         public void AddDonation(Donation donation)
         {
             _context.Donations.Add(donation);
