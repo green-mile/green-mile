@@ -14,11 +14,13 @@ namespace Web.Pages.FoodTracker
     {
         private readonly FoodItemService _fooditemService;
         private readonly UserManager<User> _userManager;
+        private readonly IHostEnvironment _environment;
 
-        public AddFoodItemModel(FoodItemService fooditemService, UserManager<User> userManager)
+        public AddFoodItemModel(FoodItemService fooditemService, UserManager<User> userManager, IHostEnvironment environment)
         {
             _fooditemService = fooditemService;
             _userManager = userManager;
+            _environment = environment;
         }
 
         [BindProperty, Required, MinLength(1), MaxLength(20)]
@@ -30,6 +32,9 @@ namespace Web.Pages.FoodTracker
         [BindProperty, Required]
         public DateTime ExpiryDate { get; set; }
 
+        [BindProperty, Required]
+        public IFormFile Image { get; set; }
+
         public void OnGet() { }
 
         public async Task<IActionResult> OnPostAsync()
@@ -38,6 +43,7 @@ namespace Web.Pages.FoodTracker
             {
                 return Page();
             }
+
             var userId = (await _userManager.GetUserAsync(HttpContext.User)).Id;
             var user = await _userManager.Users
                 .Include(u => u.Household)
@@ -53,6 +59,13 @@ namespace Web.Pages.FoodTracker
                 Quantity = Quantity,
                 ExpiryDate = ExpiryDate
             };
+
+            var uploadFolder = "Uploads";
+            var imageFile = Guid.NewGuid() + Path.GetExtension(Image.FileName);
+            var imagePath = Path.Combine(_environment.ContentRootPath, "wwwroot", uploadFolder, imageFile);
+            using var fileStream = new FileStream(imagePath, FileMode.Create);
+            await Image.CopyToAsync(fileStream);
+            newFood.ImageFilePath = string.Format("/{0}/{1}", uploadFolder, imageFile);
 
             _fooditemService.AddFoodItem(newFood);
             return Redirect("/FoodTracker");
