@@ -1,7 +1,4 @@
-﻿using System.Linq;
-
 using Web.Data;
-using Web.Lib;
 using Web.Models;
 
 namespace Web.Services
