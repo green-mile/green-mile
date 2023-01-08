@@ -28,5 +28,6 @@ public class DataContext : IdentityDbContext<User>
     {
     }
     public DbSet<FoodItem> FoodItems { get; set; }
+    public DbSet<Category> Categories { get; set; }
 
 }

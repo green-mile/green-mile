@@ -12,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<FoodItemService>();
+builder.Services.AddScoped<FoodCategoryService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IHouseholdService, HouseholdService>();
 builder.Services.AddDbContext<DataContext>(options =>

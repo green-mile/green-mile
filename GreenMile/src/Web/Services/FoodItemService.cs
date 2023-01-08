@@ -22,11 +22,11 @@ namespace Web.Services
         }
 
 
-        public List<FoodItem> GetAll()
+        public List<FoodItem> GetAll(Household household)
         {
-            var userHousedhold = _http.HttpContext?.Session.GetString(SessionVariable.HousholdName);
+            
 
-            return _context.FoodItems.Where(x => x.Household.Equals(userHousedhold)).ToList();
+            return _context.FoodItems.Where(x => x.Household.Equals(household)).ToList();
 
         }
 
@@ -37,16 +37,21 @@ namespace Web.Services
             return fooditem;
         }
 
-        public FoodItem? GetFoodItemById(string id)
+        public FoodItem? GetFoodItemById(int id)
         {
-            FoodItem? fooditem = _context.FoodItems.FirstOrDefault(x => x.Id.Equals(id));
 
-            return fooditem;
+
+            return _context.FoodItems.FirstOrDefault(x => x.Id.Equals(id)); ;
         }
 
         public void AddFoodItem(FoodItem fooditem)
         {
             _context.FoodItems.Add(fooditem);
+            _context.SaveChanges();
+        }
+        public void UpdateFoodItem(FoodItem fooditem)
+        {
+            _context.FoodItems.Update(fooditem);
             _context.SaveChanges();
         }
         public void DeleteFoodItem(FoodItem fooditem)

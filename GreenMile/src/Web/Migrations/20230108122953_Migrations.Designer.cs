@@ -11,8 +11,8 @@ using Web.Data;
 namespace Web.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230102083009_FoodItemTable")]
-    partial class FoodItemTable
+    [Migration("20230108122953_Migrations")]
+    partial class Migrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -147,19 +147,14 @@ namespace Web.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Web.Models.FoodItem", b =>
+            modelBuilder.Entity("Web.Models.Category", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Count")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateOnly>("ExpiryDate")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
@@ -167,6 +162,46 @@ namespace Web.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("Web.Models.FoodItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("CategoryId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ExpiryDate")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("HouseholdId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ImageFilePath")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("HouseholdId");
 
                     b.ToTable("FoodItems");
                 });
@@ -177,13 +212,55 @@ namespace Web.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Address")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("InviteLink")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("OwnerId")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("HouseholdId");
 
+                    b.HasIndex("OwnerId")
+                        .IsUnique();
+
                     b.ToTable("Household");
+                });
+
+            modelBuilder.Entity("Web.Models.Notification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("Read")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("System")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("Web.Models.User", b =>
@@ -197,6 +274,12 @@ namespace Web.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -314,6 +397,39 @@ namespace Web.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Web.Models.FoodItem", b =>
+                {
+                    b.HasOne("Web.Models.Category", "Category")
+                        .WithMany("FoodItems")
+                        .HasForeignKey("CategoryId");
+
+                    b.HasOne("Web.Models.Household", "Household")
+                        .WithMany()
+                        .HasForeignKey("HouseholdId");
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Household");
+                });
+
+            modelBuilder.Entity("Web.Models.Household", b =>
+                {
+                    b.HasOne("Web.Models.User", "Owner")
+                        .WithOne("OwnerOf")
+                        .HasForeignKey("Web.Models.Household", "OwnerId");
+
+                    b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("Web.Models.Notification", b =>
+                {
+                    b.HasOne("Web.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Web.Models.User", b =>
                 {
                     b.HasOne("Web.Models.Household", "Household")
@@ -323,9 +439,19 @@ namespace Web.Migrations
                     b.Navigation("Household");
                 });
 
+            modelBuilder.Entity("Web.Models.Category", b =>
+                {
+                    b.Navigation("FoodItems");
+                });
+
             modelBuilder.Entity("Web.Models.Household", b =>
                 {
                     b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("Web.Models.User", b =>
+                {
+                    b.Navigation("OwnerOf");
                 });
 #pragma warning restore 612, 618
         }
