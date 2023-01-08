@@ -1,28 +1,23 @@
-﻿@page
-@model AddFoodItemModel
+@page
+@model UpdateModel
 
-<h1>Add food item</h1>
+<h1>Update food item</h1>
 <div asp-validation-summary="All" class="text-danger"></div>
 <form method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label asp-for="Name"></label>
-        <input asp-for="Name" class="form-control">
+        <input asp-for="Name" value="@Model.Name" class="form-control">
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Description"></label>
-        <input asp-for="Description" class="form-control">
+        <input asp-for="Description" value="@Model.Description" class="form-control">
         <span asp-validation-for="Description" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Quantity"></label>
-        <input asp-for="Quantity" class="form-control">
+        <input asp-for="Quantity" value="@Model.Quantity" class="form-control">
         <span asp-validation-for="Quantity" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="ExpiryDate"></label>
-        <input asp-for="ExpiryDate" class="form-control">
-        <span asp-validation-for="ExpiryDate" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Image"></label>

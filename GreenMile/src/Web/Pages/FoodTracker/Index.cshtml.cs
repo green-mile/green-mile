@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-using Web.Data;
 using Web.Lib;
 using Web.Models;
 using Web.Services;
@@ -17,7 +16,7 @@ namespace Web.Pages.FoodTracker
         private readonly IHttpContextAccessor _contextAccessor;
 
         [BindProperty]
-        public string Id { get; set; }
+        public int Id { get; set; }
         public IEnumerable<FoodItem> FoodItemList { get; set; }
 
 
@@ -37,7 +36,7 @@ namespace Web.Pages.FoodTracker
 
         public async Task<IActionResult> OnPostAsync()
         {
-            FoodItem? food = _fooditemService.GetFoodItemById(Id);
+            FoodItem? food = await _fooditemService.GetFoodItemById(Id);
             if (food != null)
             {
                 _fooditemService.DeleteFoodItem(food);
