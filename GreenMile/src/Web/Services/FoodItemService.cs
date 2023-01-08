@@ -22,10 +22,9 @@ namespace Web.Services
                 .ToList();
         }
 
-        public FoodItem? GetFoodItemById(string id)
+        public async Task<FoodItem?> GetFoodItemById(int id)
         {
-            return _context.FoodItems
-                .FirstOrDefault(x => x.Id.Equals(id));
+            return await _context.FoodItems.FindAsync(id);
         }
 
         public void AddFoodItem(FoodItem fooditem)
@@ -37,6 +36,12 @@ namespace Web.Services
         {
             _context.FoodItems.Remove(fooditem);
             _context.SaveChanges();
+        }
+
+        public async Task Update(FoodItem item)
+        {
+            _context.FoodItems.Update(item);
+            await _context.SaveChangesAsync();
         }
     }
 }
