@@ -31,13 +31,11 @@ public class Donation
     /// <summary>
     /// The user that created the donation offer.
     /// </summary>
-    
-    public User? User { get; set; }
 
+    public User? User { get; set; }
 
     /// <summary>
     /// Refer to the custom food class, means user not selecting food items from inventory
     /// </summary>
     public CustomFood? CustomFood { get; set; }
-
 }
