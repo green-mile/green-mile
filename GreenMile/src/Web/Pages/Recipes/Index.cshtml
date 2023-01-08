@@ -186,7 +186,6 @@
         </div>
     </div>
     <!--End header-->
-    <main class="main">
         <div class="page-header mt-30 mb-50">
             <div class="container">
                 <div class="archive-header">
@@ -203,9 +202,6 @@
                 </div>
             </div>
         </div>
-        <div class="container mb-30">
-            <div class="row">
-                <div class="col-12">
                     <div class="shop-product-fillter">
                         <div class="totall-product">
 							@{
@@ -263,8 +259,8 @@
 										<div class="product-img-action-wrap">
 											<div class="product-img product-img-zoom">
 												<a href="shop-product-right.html">
-													<img class="default-img" src="assets/imgs/shop/product-1-1.jpg" alt="" />
-													<img class="hover-img" src="assets/imgs/shop/product-1-2.jpg" alt="" />
+													<img class="default-img" src="@item.imageFilePath" alt="" />
+									@*<img class="hover-img" src="assets/imgs/shop/product-1-2.jpg" alt="" />*@
 												</a>
 											</div>
 

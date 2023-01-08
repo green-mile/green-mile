@@ -26,6 +26,8 @@ namespace Web.Models
 
         public string reviews { get; set; } = string.Empty;
 
+        public string? imageFilePath { get; set; }
+
         //image?
 
     }
