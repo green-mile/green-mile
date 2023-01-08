@@ -3,6 +3,7 @@
 @{
 }
 <section class="content-main">
+	<form method="post" enctype="multipart/form-data">
 	<div class="row">
 		<div class="col-9">
 			<div class="content-header">
@@ -19,7 +20,7 @@
 					<h4>Update Recipe</h4>
 				</div>
 				<div class="card-body">
-					<form method="post">
+					
 						<div class="mb-4">
 							<label for="product_name" class="form-label" asp-for="CurrentRecipe.recipeName">Recipe Name</label>
 							<input type="text" placeholder="@Model.CurrentRecipe.recipeName" class="form-control" asp-for="CurrentRecipe.recipeName" readonly/>
@@ -57,28 +58,43 @@
 						<div>
 							<button type="submit" class="btn btn-md rounded font-sm hover-up">Publish</button>
 						</div>
-					</form>
+					
 				</div>
 			</div>
 			<!-- card end// -->
 			<!-- card end// -->
 		</div>
-		<div class="col-lg-3">
-			<div class="card mb-4">
-				<div class="card-header">
-					<h4>Media</h4>
-				</div>
-				<div class="card-body">
-					<div class="input-upload">
-						<br />
-						@*<img src="assets/imgs/theme/upload.svg" alt="" />*@
-						<input class="form-control" type="file" />
+			<div class="col-lg-3">
+				<div class="card mb-4">
+					<div class="card-header">
+						<h4>Media</h4>
+					</div>
+					<div class="card-body">
+						<div class="input-upload">
+							<br />
+							<input class="form-control" type="file" accept="image/*" asp-for="image" onchange="showImgPreview(this)"/>
+						</div>
+						<img id="imgPreview" class="rounded-circle"
+							 style="height:300px;width:300px;object-fit:cover"
+							 src="@Model.CurrentRecipe.imageFilePath" />
 					</div>
 				</div>
+				<!-- card end// -->
+				<!-- card end// -->
 			</div>
-			<!-- card end// -->
-			<!-- card end// -->
-		</div>
 	</div>
+	</form>
 </section>
 <!-- content-main end// -->
+
+<script>
+	function showImgPreview(input) {
+		if (input.files[0]) {
+			var uploadimg = new FileReader();
+			uploadimg.onload = function (displayimg) {
+				$("#imgPreview").attr('src', displayimg.target.result);
+			}
+			uploadimg.readAsDataURL(input.files[0]);
+		}
+	}
+</script>

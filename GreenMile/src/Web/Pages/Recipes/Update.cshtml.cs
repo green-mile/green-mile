@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -9,13 +10,19 @@ namespace Web.Pages.Recipes
     public class UpdateModel : PageModel
     {
         private readonly RecipeService _recipeService;
-        public UpdateModel(RecipeService recipeService)
+        private IWebHostEnvironment _webHostEnvironment;
+        public UpdateModel(RecipeService recipeService, IWebHostEnvironment webHostEnvironment)
         {
             _recipeService = recipeService;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         [BindProperty]
         public Recipe CurrentRecipe { get; set; } = new();
+        public IFormFile? image { get; set; }
+        public List<String> ingredients { get; set; } = new();
+
+
         public IActionResult OnGet(string id)
         {
             Recipe? recipe = _recipeService.GetRecipeById(id);
@@ -26,6 +33,7 @@ namespace Web.Pages.Recipes
                 return Redirect("/Recipes/BackendView");
             }
             CurrentRecipe = recipe;
+            //get ingredients here
             return Page();
 
 
@@ -33,7 +41,18 @@ namespace Web.Pages.Recipes
         public IActionResult OnPost()
         {
             if (ModelState.IsValid)
-            {
+            { 
+                if (image != null)
+                {
+
+                    var imagesFolder = "uploads";
+                    var imageFile = Guid.NewGuid() + Path.GetExtension(image.FileName);
+                    var imagePath = Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot", imagesFolder, imageFile);
+                    using var fileStream = new FileStream(imagePath, FileMode.Create);
+                    image.CopyTo(fileStream);
+                    CurrentRecipe.imageFilePath = String.Format("/" + imagesFolder + "/" + imageFile);
+
+                }
                 _recipeService.UpdateRecipe(CurrentRecipe);
                 TempData["Flash.Type"] = "success";
                 TempData["Flash.Text"] = CurrentRecipe.recipeName + " successfully updated!";

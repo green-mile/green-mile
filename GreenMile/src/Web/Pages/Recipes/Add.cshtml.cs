@@ -19,10 +19,11 @@ namespace Web.Pages.Recipes
         [BindProperty]
         public Recipe CurrentRecipe { get; set; } = new();
         public IFormFile? image { get; set; }
+        public List<String> ingredients { get; set; } = new();
 
         public void OnGet()
         {
-
+            //get the ingredients list
         }
         public IActionResult OnPost()
         {
