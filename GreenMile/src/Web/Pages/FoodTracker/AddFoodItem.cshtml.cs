@@ -22,7 +22,7 @@ namespace Web.Pages.FoodTracker
             _userManager = userManager;
             _environment = environment;
         }
-
+        
         [BindProperty, Required, MinLength(1), MaxLength(20)]
         public string Name { get; set; }
         [BindProperty, Required, MinLength(0), MaxLength(100)]

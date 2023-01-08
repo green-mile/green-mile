@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Web.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/main.css?v=5.6" />
-
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
         integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -57,34 +57,46 @@
                                 </div>
                                 <div class="header-action-icon-2">
                                     @{
-                                        if(signInManager.IsSignedIn(User)) {
-                                              <a href="/account/details">
-                                        <img class="svgInject" alt="GreenMile" src="~/imgs/theme/icons/icon-user.svg" />
-                                    </a>
-                                    <a href="/account/details"><span class="lable ml-0">Account</span></a>
-                                    <div class="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
-                                        <ul>
-                                            <li>
-                                                <a href="/account/details">
-                                                    <i class="fa-solid fa-user"></i>
-                                                    My Account
-                                                </a>
-                                            </li>
-                                        
-                                            <li>
-                                                <a href="/logout">
-                                                    <i class="fa-solid fa-right-from-bracket"></i>
-                                                    Sign out
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                        } else {
+                                        if (signInManager.IsSignedIn(User))
+                                        {
+                                            <a href="/account/details">
+                                                <img class="svgInject" alt="GreenMile" src="~/imgs/theme/icons/icon-user.svg" />
+                                            </a>
+                                            <a href="/account/details"><span class="lable ml-0">Account</span></a>
+                                            <div class="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
+                                                <ul>
+                                                    <li>
+                                                        <a href="/account/details">
+                                                            <i class="fa-solid fa-user"></i>
+                                                            My Account
+                                                        </a>
+                                                    </li>
+
+                                                    <li>
+                                                        <a href="/notifications">
+                                                            <i class="fa-solid fa-bell"></i>
+                                                            Notifications
+                                                        </a>
+                                                    </li>
+
+                                                    <li>
+                                                        <a href="/logout">
+                                                            <i class="fa-solid fa-right-from-bracket"></i>
+                                                            Sign out
+                                                        </a>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                        }
+                                        else
+                                        {
                                             <a href="/login"><span class="lable ml-0">Sign in</span></a>
-                                            <a href="/register" style="margin-left:15px"><span class="lable ml-0">Register</span></a>
+                                            <a href="/register" style="margin-left:15px"><span
+                                                class="lable ml-0">Register</span></a>
                                         }
                                     }
-                                  
+
                                 </div>
                             </div>
                         </div>

@@ -7,12 +7,275 @@
 @model Web.Pages.Account.DetailsModel
 @{
 
-    User user = (await userManager.GetUserAsync(HttpContext.User));
+    User user = await userManager.GetUserAsync(HttpContext.User);
 
     Household household = (await householdService.RetrieveHouseholdDetails(user.HouseholdId ?? -1)).Value;
 
 }
+<style>
+    .all {
+  max-width: 450px;
+  max-height: 500px;
+  min-height: 500px;
+  overflow:auto;
+  width: 500px;
+  
+}
+#style-15::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+	background-color: #F5F5F5;
+	border-radius: 10px;
+}
 
+#style-15::-webkit-scrollbar
+{
+	width: 10px;
+	background-color: #F5F5F5;
+}
+
+#style-15::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	background-color: #FFF;
+	background-image: -webkit-gradient(linear,
+									   40% 0%,
+									   75% 84%,
+									   from(#4D9C41),
+									   to(#19911D),
+									   color-stop(.6,#54DE5D))
+}
+
+.shadow-1:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: inherit;
+  height: inherit;
+  z-index: -2;
+  box-sizing: border-box;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.13);
+}
+
+.shadow-1:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: inherit;
+  height: inherit;
+  z-index: -2;
+  box-sizing: border-box;
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.08);
+}
+
+.shadow-2:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: inherit;
+  height: inherit;
+  z-index: -2;
+  box-sizing: border-box;
+  box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.1);
+}
+
+.shadow-2:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: inherit;
+  height: inherit;
+  z-index: -2;
+  box-sizing: border-box;
+  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.1);
+}
+
+.shadow-3:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: inherit;
+  height: inherit;
+  z-index: -2;
+  box-sizing: border-box;
+  box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.12);
+}
+
+.shadow-3:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: inherit;
+  height: inherit;
+  z-index: -2;
+  box-sizing: border-box;
+  box-shadow: 0 17px 50px 0 rgba(0, 0, 0, 0.1);
+}
+
+.shadow-4:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: inherit;
+  height: inherit;
+  z-index: -2;
+  box-sizing: border-box;
+  box-shadow: 0 16px 28px 0 rgba(0, 0, 0, 0.11);
+}
+
+.shadow-4:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: inherit;
+  height: inherit;
+  z-index: -2;
+  box-sizing: border-box;
+  box-shadow: 0 25px 55px 0 rgba(0, 0, 0, 0.11);
+}
+
+.shadow-5:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: inherit;
+  height: inherit;
+  z-index: -2;
+  box-sizing: border-box;
+  box-shadow: 0 27px 24px 0 rgba(0, 0, 0, 0.1);
+}
+
+.shadow-5:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: inherit;
+  height: inherit;
+  z-index: -2;
+  box-sizing: border-box;
+  box-shadow: 0 40px 77px 0 rgba(0, 0, 0, 0.11);
+}
+
+.cardsb {
+  position: relative;
+  height: 100px;
+  background: #fcfcfc;
+  margin: 20px 40px;
+  transition: 0.4s all;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.cardsb.open {
+  height: 200px;
+  background: #ffffff;
+}
+
+        .cardss {
+        padding: 15px;
+        width: 350px;
+        background: #fff;
+        border-radius: 5px;
+        text-align: center;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.7);
+        user-select: none;
+      
+    }
+
+    .cover-photo {
+        position: relative;
+        background: url(http://news.miami.edu/life/_assets/images/images-stories/2019/11/recycling-greenu-940x529.jpg);
+        background-size: cover;
+        height: 180px;
+        border-radius: 5px 5px 0 0;
+    }
+
+    .profile {
+        position: absolute;
+        width: 120px;
+        bottom: -60px;
+        left: 15px;
+        border-radius: 50%;
+        border: 2px solid #4BB77E;
+        background: #4BB77E;
+        padding: 5px;
+    }
+
+    .profile-name {
+        font-size: 20px;
+        margin: 25px 0 0 120px;
+        color: #000;
+    }
+
+    .about {
+        margin-top: 30px;
+        line-height: 1.6;
+    }
+
+        .btn {
+        margin: 30px 15px;
+
+        padding: 10px 25px;
+        border-radius: 3px;
+     
+        font-weight: bold;
+        
+        cursor: pointer;
+      
+        transition: 0.2s;
+    }
+
+    
+
+   
+    .icons {
+        width: 180px;
+        margin: 0 auto 10px;
+        display: flex;
+        justify-content: space-between;
+        gap: 15px;
+    }
+
+        .icons i {
+            cursor: pointer;
+            padding: 5px;
+            font-size: 18px;
+            transition: 0.2s;
+        }
+
+            .icons i:hover {
+                color: #7ce3ff;
+            }
+</style>
 <main class="main pages">
     <div class="page-header breadcrumb-wrap">
         <div class="container">
@@ -30,24 +293,32 @@
                         <div class="col-md-3">
                             <div class="dashboard-menu">
                                 <ul class="nav flex-column" role="tablist">
-                                   @if(TempData["tab"]?.ToString() != "account-detail") {
+                                   @if(TempData["tab"]?.ToString() == "dashboard" || TempData["tab"]?.ToString() == null ) {
                                          <li class="nav-item">
                                         <a class="nav-link active" id="dashboard-tab" data-bs-toggle="tab" href="#dashboard" role="tab" aria-controls="dashboard" aria-selected="false"><i class="fi-rs-settings-sliders mr-10"></i>Dashboard</a>
                                     </li>
-                                    <li class="nav-item" onclick="tabChange('account-detail')">
-                                        <a class="nav-link" id="account-detail-tab" data-bs-toggle="tab" href="#account-detail" role="tab" aria-controls="account-detail" aria-selected="true"><i class="fi-rs-user mr-10"></i>Account details</a>
-                                    </li>
+                                
                                  
                                        
-                                   } else {
+                                   }  else {
                                         <li class="nav-item">
                                             <a class="nav-link" id="dashboard-tab" data-bs-toggle="tab" href="#dashboard" role="tab" aria-controls="dashboard" aria-selected="false"><i class="fi-rs-settings-sliders mr-10"></i>Dashboard</a>
                                         </li>
+                                   }
+                                   
+                                   
+                                   @if(TempData["tab"]?.ToString() == "account-detail") {
+                                    
                                         <li class="nav-item" onclick="tabChange('account-detail')">
                                             <a class="nav-link active" id="account-detail-tab" data-bs-toggle="tab" href="#account-detail" role="tab" aria-controls="account-detail" aria-selected="true"><i class="fi-rs-user mr-10"></i>Account details</a>
                                         </li>
                                                   
+                                   } else {
+                                    <li class="nav-item" onclick="tabChange('account-detail')">
+                                        <a class="nav-link" id="account-detail-tab" data-bs-toggle="tab" href="#account-detail" role="tab" aria-controls="account-detail" aria-selected="true"><i class="fi-rs-user mr-10"></i>Account details</a>
+                                    </li>
                                    }
+                                  
                                
                                     <li class="nav-item">
                                         <a class="nav-link" id="household-tab" data-bs-toggle="tab" href="#household" role="tab" aria-controls="household" aria-selected="true"><i class="fi-rs-marker mr-10"></i>Household</a>
@@ -55,9 +326,17 @@
                                     <li class="nav-item">
                                         <a class="nav-link" id="orders-tab" data-bs-toggle="tab" href="#orders" role="tab" aria-controls="orders" aria-selected="false"><i class="fi-rs-shopping-bag mr-10"></i>Orders</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="track-orders-tab" data-bs-toggle="tab" href="#track-orders" role="tab" aria-controls="track-orders" aria-selected="false"><i class="fi-rs-shopping-cart-check mr-10"></i>Track Your Order</a>
+
+                                    @if(TempData["tab"]?.ToString() == "danger-zone") {
+                                           <li class="nav-item" onclick="tabChange('danger-zone')">
+                                        <a class="nav-link active" id="track-orders-tab" data-bs-toggle="tab" href="#track-orders" role="tab" aria-controls="track-orders" aria-selected="false"><i  style="margin-right: 5px" class="fa fa-exclamation-triangle"></i>Danger zone</a>
                                     </li>
+                                    } else {
+                                           <li class="nav-item" onclick="tabChange('danger-zone')">
+                                        <a class="nav-link" id="track-orders-tab" data-bs-toggle="tab" href="#track-orders" role="tab" aria-controls="track-orders" aria-selected="false"><i  style="margin-right: 5px" class="fa fa-exclamation-triangle"></i>Danger zone</a>
+                                    </li>
+                                    }
+                                 
    
                                   
                                     <li class="nav-item">
@@ -70,21 +349,66 @@
                             <div class="tab-content account dashboard-content pl-50">
 
 
-                                      @if (TempData["tab"]?.ToString() != "account-detail") {
-                                    <div class="tab-pane fade active show" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
+
+                                @if(TempData["tab"]?.ToString() == "account-detail") {
+
+
+                                    <div class="tab-pane fade active show" id="account-detail" role="tabpanel" aria-labelledby="account-detail-tab">
                                         <div class="card">
                                             <div class="card-header">
-                                                <h3 class="mb-0">Hello Rosie!</h3>
+                                                <h5>Account Details</h5>
                                             </div>
                                             <div class="card-body">
-                                                <p>
-                                                    From your account dashboard. you can easily check &amp; view your <a href="#">recent orders</a>,<br />
-                                                    manage your <a href="#">shipping and billing addresses</a> and <a href="#">edit your password and account details.</a>
-                                                </p>
+
+                                                <form method="POST">
+                                                    <div class="row">
+                                                        <div class="form-group col-md-6">
+                                                            <label>First Name <span class="required">*</span></label>
+                                                            <input class="form-control" asp-for="AccountUiState.FirstName" value="@user.FirstName" />
+                                                            <span asp-validation-for="AccountUiState.FirstName" class="text-danger"></span>
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            <label>Last Name <span class="required">*</span></label>
+                                                            <input class="form-control" asp-for="AccountUiState.LastName" value="@user.LastName"  />
+                                                            <span asp-validation-for="AccountUiState.LastName" class="text-danger"></span>
+                                                        </div>
+                                                        <div class="form-group col-md-12">
+                                                            <label>Display Name <span class="required">*</span></label>
+                                                            <input asp-for="AccountUiState.Username" class="form-control"  value="@user.UserName" />
+                                                            <span asp-validation-for="AccountUiState.Username" class="text-danger"></span>
+                                                        </div>
+                                                        <div class="form-group col-md-12">
+                                                            <label>Email Address <span class="required">*</span></label>
+                                                            <input asp-for="AccountUiState.EmailAddress" type="email" class="form-control" value="@user.Email" />
+                                                            <span asp-validation-for="AccountUiState.EmailAddress" class="text-danger"></span>
+                                                        </div>
+                                                        <div class="form-group col-md-12">
+                                                            <label>Current Password <span class="required">*</span></label>
+                                                            <input class="form-control" type="password" asp-for="AccountUiState.Password" />
+                                                            <span asp-validation-for="AccountUiState.Password" class="text-danger"></span>
+                                                        </div>
+                                                        <div class="form-group col-md-12">
+                                                            <label>Create New Password <span class="required"></span></label>
+                                                            <input class="form-control" type="password" asp-for="AccountUiState.NewPassword" />
+                                                            <span asp-validation-for="AccountUiState.NewPassword" class="text-danger"></span>
+                                                        </div>
+                                                        <div class="form-group col-md-12">
+                                                            <label>Confirm New Password <span class="required"></span></label>
+                                                            <input class="form-control" type="password" asp-for="AccountUiState.ConfirmPassword" />
+                                                            <span asp-validation-for="AccountUiState.ConfirmPassword" class="text-danger"></span>
+                                                        </div>
+                                                        <input type="hidden" asp-for="AccountUiState.Tab" />
+
+                                                        <div class="col-md-12">
+                                                            <button type="submit" class="btn btn-fill-out submit font-weight-bold" asp-page-handler="post" name="submit" value="Submit">Save Changes</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
-
+                                } else {
+                                    
                                     <div class="tab-pane fade" id="account-detail" role="tabpanel" aria-labelledby="account-detail-tab">
                                         <div class="card">
                                             <div class="card-header">
@@ -132,104 +456,116 @@
                                                         <input type="hidden" asp-for="AccountUiState.Tab" />
 
                                                         <div class="col-md-12">
-                                                            <button type="submit" class="btn btn-fill-out submit font-weight-bold" name="submit" value="Submit">Save Changes</button>
+                                                            <button type="submit" asp-page-handler="post" class="btn btn-fill-out submit font-weight-bold" name="submit" value="Submit">Save Changes</button>
                                                         </div>
                                                     </div>
                                                 </form>
                                             </div>
                                         </div>
                                     </div>
-                                      } else {
+                                }
 
 
+                                @if(TempData["tab"]?.ToString() == "dashboard" || TempData["tab"]?.ToString() == null) {
+                                    <div class="tab-pane fade active show" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
+                                        <div class="card">
+                                      
+                                            <div style="flex-direction: row; display:flex;" class="card-body">
 
+                                            
 
+                                                <div class="cardss">
+                                                    <div class="cover-photo">
+                                                        <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="profile">
+                                                    </div>
+                                                    <h3 style="margin-right:20px; position: relative; right: 40px; margin-top:60px"class="profile-name">@user.UserName</h3>
+                                                    <p style="margin-bottom: 30px; margin-top:20px" class="about">Household:<strong>  @household.Name</strong><br /> Date Joined: @user.CreatedAt</p>
+                                                                                                 @foreach(var role in (await userManager.GetRolesAsync(user))) {
+                                                       if(role == "HouseOwner") {
+                                                            <button class="btn" style="background-color:darkred;margin-top:0">@role</button>
+                                                       } else {
+                                                            <button class="btn" style="margin-top:0">@role</button>
+                                                       }
+                                                      
+                                                   }
+                                                  
+                                                    <div class="icons">
+                                                        <i class="fa-brands fa-linkedin"></i>
+                                                        <i class="fa-brands fa-github"></i>
+                                                        <i class="fa-brands fa-youtube"></i>
+                                                        <i class="fa-brands fa-twitter"></i>
+                                                    </div>
+                                                </div>
 
-
+                                                <div class="all" id="style-15">
+                                                    <div class="cards">
+                                                        <div class="cardsb shadow-1"></div>
+                                                        <div class="cardsb shadow-1"></div>
+                                                        <div class="cardsb shadow-1"></div>
+                                                        <div class="cardsb shadow-1"></div>
+                                                        <div class="cardsb shadow-1"></div>
+                                                        <div class="cardsb shadow-1"></div>
+                                                        <div class="cardsb shadow-1"></div>
+                                                        <div class="cardsb shadow-1"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                } else {
                                     <div class="tab-pane fade" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
                                         <div class="card">
-                                            <div class="card-header">
-                                                <h3 class="mb-0">Hello Rosie!</h3>
-                                            </div>
-                                            <div class="card-body">
-                                                <p>
-                                                    From your account dashboard. you can easily check &amp; view your <a href="#">recent orders</a>,<br />
-                                                    manage your <a href="#">shipping and billing addresses</a> and <a href="#">edit your password and account details.</a>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
+                                        
+                                                       <div style="flex-direction: row; display:flex;" class="card-body">
 
-                                    <div class="tab-pane fade active show" id="account-detail" role="tabpanel" aria-labelledby="account-detail-tab">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h5>Account Details</h5>
-                                            </div>
-                                            <div class="card-body">
+                                            
 
-                                                <form method="POST">
-                                                    <div class="row">
-                                                        <div class="form-group col-md-6">
-                                                            <label>First Name <span class="required">*</span></label>
-                                                            <input class="form-control" asp-for="AccountUiState.FirstName" />
-                                                            <span asp-validation-for="AccountUiState.FirstName" class="text-danger"></span>
-                                                        </div>
-                                                        <div class="form-group col-md-6">
-                                                            <label>Last Name <span class="required">*</span></label>
-                                                            <input class="form-control" asp-for="AccountUiState.LastName" />
-                                                            <span asp-validation-for="AccountUiState.LastName" class="text-danger"></span>
-                                                        </div>
-                                                        <div class="form-group col-md-12">
-                                                            <label>Display Name <span class="required">*</span></label>
-                                                            <input asp-for="AccountUiState.Username" class="form-control" />
-                                                            <span asp-validation-for="AccountUiState.Username" class="text-danger"></span>
-                                                        </div>
-                                                        <div class="form-group col-md-12">
-                                                            <label>Email Address <span class="required">*</span></label>
-                                                            <input asp-for="AccountUiState.EmailAddress" type="email" class="form-control" />
-                                                            <span asp-validation-for="AccountUiState.EmailAddress" class="text-danger"></span>
-                                                        </div>
-                                                        <div class="form-group col-md-12">
-                                                            <label>Current Password <span class="required">*</span></label>
-                                                            <input class="form-control" type="password" asp-for="AccountUiState.Password" />
-                                                            <span asp-validation-for="AccountUiState.Password" class="text-danger"></span>
-                                                        </div>
-                                                        <div class="form-group col-md-12">
-                                                            <label>Create New Password <span class="required"></span></label>
-                                                            <input class="form-control" type="password" asp-for="AccountUiState.NewPassword" />
-                                                            <span asp-validation-for="AccountUiState.NewPassword" class="text-danger"></span>
-                                                        </div>
-                                                        <div class="form-group col-md-12">
-                                                            <label>Confirm New Password <span class="required"></span></label>
-                                                            <input class="form-control" type="password" asp-for="AccountUiState.ConfirmPassword" />
-                                                            <span asp-validation-for="AccountUiState.ConfirmPassword" class="text-danger"></span>
-                                                        </div>
-                                                        <input type="hidden" asp-for="AccountUiState.Tab" />
-
-                                                        <div class="col-md-12">
-                                                            <button type="submit" class="btn btn-fill-out submit font-weight-bold" name="submit" value="Submit">Save Changes</button>
-                                                        </div>
+                                                <div class="cardss">
+                                                    <div class="cover-photo">
+                                                        <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="profile">
                                                     </div>
-                                                </form>
+                                                    <h3 style="margin-right:20px; position: relative; right: 40px"class="profile-name">@user.UserName</h3>
+                                                    <p class="about">Household:<strong>  @household.Name</strong><br /> Date Joined: @user.CreatedAt</p>
+                                                   @foreach(var role in (await userManager.GetRolesAsync(user))) {
+                                                       if(role == "HouseOwner") {
+                                                            <button class="btn" style="background-color:darkred">@role</button>
+                                                       } else {
+                                                            <button class="btn">@role</button>
+                                                       }
+                                                      
+                                                   }
+                                                    
+                                                  
+                                                    <div class="icons">
+                                                        <i class="fa-brands fa-linkedin"></i>
+                                                        <i class="fa-brands fa-github"></i>
+                                                        <i class="fa-brands fa-youtube"></i>
+                                                        <i class="fa-brands fa-twitter"></i>
+                                                    </div>
+                                                </div>
+
+                                                <div class="all" id="style-15">
+                                                    <div class="cards">
+                                                        <div class="cardsb shadow-1"></div>
+                                                        <div class="cardsb shadow-1"></div>
+                                                        <div class="cardsb shadow-1"></div>
+                                                        <div class="cardsb shadow-1"></div>
+                                                        <div class="cardsb shadow-1"></div>
+                                                        <div class="cardsb shadow-1"></div>
+                                                        <div class="cardsb shadow-1"></div>
+                                                        <div class="cardsb shadow-1"></div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
 
+                                }
 
 
 
 
-
-
-
-
-
-
-
-
-
-                                      }
-
+                                 
                             
 
 
@@ -282,31 +618,69 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="track-orders" role="tabpanel" aria-labelledby="track-orders-tab">
+
+
+                                @if (TempData["tab"]?.ToString() == "danger-zone") {
+                                
+                                
+                                <div class="tab-pane fade active show" id="track-orders" role="tabpanel" aria-labelledby="track-orders-tab">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h3 class="mb-0">Orders tracking</h3>
+                                            <h3 class="mb-0">Danger Zone</h3>
                                         </div>
                                         <div class="card-body contact-from-area">
-                                            <p>To track your order please enter your OrderID in the box below and press "Track" button. This was given to you on your receipt and in the confirmation email you should have received.</p>
+                                            <p>Dangerous zone! Please note that the actions you do here will be irreversable or difficult to revert. In order to make sure you really mean it, please enter your username and password to proceed with any actions here.</p>
                                             <div class="row">
                                                 <div class="col-lg-8">
-                                                    <form class="contact-form-style mt-30 mb-50" action="#" method="post">
+                                                        <form class="contact-form-style mt-30 mb-50" autocomplete="off" method="post">
                                                         <div class="input-style mb-20">
-                                                            <label>Order ID</label>
-                                                            <input name="order-id" placeholder="Found in your order confirmation email" type="text" />
+                                                            <label>Enter Your Username</label>
+                                                            <input placeholder="E.g John" asp-for="AccountUiState.DeleteUsername" />
                                                         </div>
                                                         <div class="input-style mb-20">
-                                                            <label>Billing email</label>
-                                                            <input name="billing-email" placeholder="Email you used during checkout" type="email" />
+                                                            <label>Password</label>
+                                                            <input  asp-for="AccountUiState.DeletePassword" type="password"/>
                                                         </div>
-                                                        <button class="submit submit-auto-width" type="submit">Track</button>
+                                                        <button style="background-color: red"class="submit submit-auto-width" asp-page-handler="delete" type="submit">Delete Account</button>
+                                                        <input type="hidden" asp-for="AccountUiState.Tab" />
+                                                        <button class="submit submit-auto-width" type="submit">Disable Account</button>
                                                     </form>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                } else {
+                                    
+                                <div class="tab-pane fade" id="track-orders" role="tabpanel" aria-labelledby="track-orders-tab">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="mb-0">Danger Zone</h3>
+                                        </div>
+                                        <div class="card-body contact-from-area">
+                                            <p>Dangerous zone! Please note that the actions you do here will be irreversable or difficult to revert. In order to make sure you really mean it, please enter your username and password to proceed with any actions here.</p>
+                                            <div class="row">
+                                                <div class="col-lg-8">
+                                                    <form class="contact-form-style mt-30 mb-50" autocomplete="off"   method="post">
+                                                        <div class="input-style mb-20">
+                                                            <label>Enter Your Username</label>
+                                                            <input placeholder="E.g John" asp-for="AccountUiState.DeleteUsername" />
+                                                        </div>
+                                                        <div class="input-style mb-20">
+                                                            <label>Password</label>
+                                                            <input  asp-for="AccountUiState.DeletePassword" type="password"/>
+                                                        </div>
+                                                        <button style="background-color: red"class="submit submit-auto-width" asp-page-handler="delete" type="submit">Delete Account</button>
+                                                        <input type="hidden" asp-for="AccountUiState.Tab" />
+                                                        <button class="submit submit-auto-width" type="submit">Disable Account</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                }
+
 
 
 
@@ -326,14 +700,14 @@
 
                                             <div class="profile-card__cnt js-profile-cnt">
                                                 <div class="profile-card__name">@household?.Name</div>
-                                                <div class="profile-card__txt">Current owner: <strong>PinkPolo</strong></div>
+                                                <div class="profile-card__txt">Current owner: <strong>@((await userManager.FindByIdAsync(household.OwnerId)).UserName) </strong></div>
                                                 <div class="profile-card-loc">
                                                     <span class="profile-card-loc__icon">
                                                         <svg class="icon"><use xlink:href="#icon-location"></use></svg>
                                                     </span>
 
                                                     <span class="profile-card-loc__txt">
-                                                        Singapore, Lakeside
+                                                        @household.Address
                                                     </span>
                                                 </div>
 
@@ -360,9 +734,9 @@
                                                 </div>
 
                                                 <div class="profile-card-social">
-                                                    <strong style="font-size:20px">Copy Invite Link</strong>
+                                                    <strong style="font-size:20px">Copy Invite Code</strong>
 
-                                                    <a href="http://muhammederdem.com.tr/" class="profile-card-social__item link" target="_blank">
+                                                    <a id="copy" onclick="navigator.clipboard.writeText('@(household.InviteLink)')" class="profile-card-social__item link">
                                                         <span class="icon-font">
                                                             <svg class="icon"><use xlink:href="#icon-link"></use></svg>
                                                         </span>
@@ -372,7 +746,17 @@
 
                                                 <div class="profile-card-ctr">
                                                     <button class="profile-card__button button--blue js-message-btn">Details</button>
-                                                    <button class="profile-card__button button--orange">Transfer Household</button>
+                                                    @if(await userManager.IsInRoleAsync(user, "HouseOwner"))  {
+                                                 
+                                                        <button disabled type="button" style="background-color: grey"  class="profile-card__button button--orange">You are the Owner</button>
+                                                   
+                                                    } else {
+                                                                           <form action="/account/transferhousehold">
+                                                         <button class="profile-card__button button--orange">Transfer Household</button>
+                                                    </form>
+                                                    }
+                                 
+                                                   
                                                 </div>
                                             </div>
 
@@ -475,6 +859,11 @@
 </main>
 
 <link rel="stylesheet" href="~/css/Details.css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+
+
+
 
 <script>
     function tabChange(joinHouseholdValue) {
@@ -483,4 +872,32 @@
 
 
     }
+
+
+   
+
+    $(document).ready(function() {
+
+            $('.cardsb').on('click', function () {
+        if ($(this).hasClass('open')) {
+            $('.cardsb').removeClass('open');
+            $('.cardsb').removeClass('shadow-2');
+            $(this).addClass('shadow-1');
+            return false;
+        } else {
+            $('.cardsb').removeClass('open');
+            $('.cardsb').removeClass('shadow-2');
+            $(this).addClass('open');
+            $(this).addClass('shadow-2');
+        }
+    });
+
+
+    })
+
+
+
+
+
 </script>
+@await Html.PartialAsync("_ValidationScriptsPartial")
