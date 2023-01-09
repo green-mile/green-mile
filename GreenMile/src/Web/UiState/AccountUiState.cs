@@ -22,6 +22,7 @@ namespace Web.UiState
         public string? DeletePassword { get; set; } = null;
         public string? DeleteUsername { get; set; } = null;
 
+        [Microsoft.AspNetCore.Mvc.BindProperty]
         public IFormFile? Upload { get; set; }
 
       
