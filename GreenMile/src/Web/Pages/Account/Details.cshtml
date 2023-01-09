@@ -721,8 +721,8 @@ a, a:hover {
     <!-- uploaded pic shown here -->
                                                                 <img id="profilePic"  class="pic"  src="@((await imageService.RetrieveImage(user)).Value)">
 
-    <Input class="uploadProfileInput" type="file" id="newProfilePhoto" asp-for="AccountUiState.Upload" accept="image/*" style="opacity: 0;" />
-    <label for="newProfilePhoto" class="upload-file-block">
+    <input class="uploadProfileInput" type="file"  asp-for="Upload" accept="image/*" style="opacity: 0;" />
+    <label for="AccountUiState_Upload" class="upload-file-block">
       <div class="text-center">
         <div class="mb-2">
           <i class="fa fa-camera fa-2x"></i>
@@ -807,8 +807,8 @@ a, a:hover {
                                                                 <!-- uploaded pic shown here -->
                                                                 <img id="profilePic"   class="pic" src="@((await imageService.RetrieveImage(user)).Value)">
                                                                 
-                                                                <Input class="uploadProfileInput" asp-for="AccountUiState.Upload" type="file" id="newProfilePhoto" accept="image/*" style="opacity: 0;" />
-                                                                <label for="newProfilePhoto" class="upload-file-block">
+                                                                <input class="uploadProfileInput" asp-for="Upload" type="file" accept="image/*" style="opacity: 0;" />
+                                                                <label for="Upload" class="upload-file-block">
                                                                     <div class="text-center">
                                                                         <div class="mb-2">
                                                                             <i class="fa fa-camera fa-2x"></i>

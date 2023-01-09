@@ -16,6 +16,8 @@ namespace Web.Pages.Account
 
         [BindProperty]
         public AccountUiState? AccountUiState { get; set; } = new AccountUiState();
+        [BindProperty]
+        public IFormFile? Upload { get; set; }
         private readonly IHouseholdService _householdService;
         private readonly UserManager<User> _userManager;
         private readonly IImageService _imageService;
@@ -76,9 +78,13 @@ namespace Web.Pages.Account
                     user.LastName = AccountUiState.LastName;
                     user.UserName = AccountUiState.Username;
                     user.Email = AccountUiState.EmailAddress;
-                    if(AccountUiState.HasImageChanged && AccountUiState.Upload != null)
+                    if(AccountUiState.Upload!=null)
                     {
-                        _imageService.StoreImage(AccountUiState.Upload, user);
+                        Console.WriteLine("WHAT THE FUC");
+                    }
+                    if(AccountUiState.HasImageChanged && Upload != null)
+                    {
+                        _imageService.StoreImage(Upload, user);
                     }
                  
 
