@@ -22,7 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\Recipes\assets\fonts\material-icon\css\" />
     <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
 
