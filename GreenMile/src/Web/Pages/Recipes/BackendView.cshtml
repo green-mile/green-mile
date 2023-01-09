@@ -1,0 +1,86 @@
+﻿@page
+@model Web.Pages.Recipes.BackendViewModel
+@{
+}
+                <div class="content-header">
+                    <div>
+                        <h2 class="content-title card-title">Recipe grid</h2>
+               
+                    </div>
+                    <div>
+
+                        <a href="#" class="btn btn-primary btn-sm rounded">Create Recipe</a>
+                    </div>
+					<br />
+                </div>
+                <div class="card mb-4">
+                    <header class="card-header">
+                        <div class="row gx-3">
+                            <div class="col-lg-4 col-md-6 me-auto">
+                                <input type="text" placeholder="Search..." class="form-control" />
+                            </div>
+                            
+
+                        </div>
+                    </header>
+	@{
+		int counter;
+		counter = Model.RecipeList.Count();
+		@if (counter == 0)
+		{
+			<p>No recipes found.</p>
+		}
+		else if (counter == 1)
+		{
+			<p><strong class="text-brand">@counter</strong> recipe found.</p>
+		}
+		else
+		{
+			<p><strong class="text-brand">@counter</strong> recipes found.</p>
+		}
+
+	}
+                    <!-- card-header end// -->
+                    <div class="card-body">
+                        <div class="row gx-3 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 row-cols-xxl-5">
+                            @{
+									@foreach(var item in Model.RecipeList)
+								{
+									<div class="col">
+										<div class="card card-product-grid">
+											<div class="product-img-action-wrap">
+											<div class="product-img product-img-zoom">
+												<a href="shop-product-right.html">
+										<img class="default-img" src="@(string.IsNullOrEmpty(@item.imageFilePath) ?"/uploads/null.png" : item.imageFilePath)" alt="" />
+												</a>
+											</div>
+
+										</div>
+											<div class="info-wrap">
+											<a href="#" class="title text-truncate">&nbsp;@item.recipeName</a>
+											<div class="price mb-2">&nbsp;</div>
+												<!-- price.// -->
+
+												<a asp-page="/Recipes/Update" asp-route-id="@item.recipeName" class="btn btn-sm font-sm rounded btn-brand"> <i class="material-icons md-edit"></i> Edit </a>
+											
+												<a asp-page="/Recipes/BackendView" asp-page-handler="Delete" asp-route-id="@item.recipeName" class="btn btn-sm font-sm btn-light rounded"> <i class="material-icons md-delete_forever"></i> Delete </a>
+											</div>
+										</div>
+										<!-- card-product  end// -->
+										<br>
+									</div>
+							}
+							}
+
+                            
+                            
+                            
+                          
+                            
+ 
+                        </div>
+                        <!-- row.	// -->
+                    </div>
+                    <!-- card-body end// -->
+                </div>
+                <!-- card end// -->

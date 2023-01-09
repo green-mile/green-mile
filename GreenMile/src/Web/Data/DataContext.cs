@@ -10,6 +10,7 @@ public class DataContext : IdentityDbContext<User>
 {
     public DbSet<Household> Household { get; set; }
     public DbSet<Notification> Notifications { get; set; }
+    public DbSet<Recipe> Recipes { get; set; }
 
     public DbSet<Donation> Donations { get; set; }
 
