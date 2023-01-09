@@ -456,3 +456,7 @@ $RECYCLE.BIN/
 # Development Testing Databases
 dev.db
 dev.db-*
+
+# User image uploads
+[Uu]ploads/*
+![Uu]ploads/null.png

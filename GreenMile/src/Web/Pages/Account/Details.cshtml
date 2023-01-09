@@ -19,7 +19,7 @@
   min-height: 500px;
   overflow:auto;
   width: 500px;
-  
+
 }
 #style-15::-webkit-scrollbar-track
 {
@@ -208,7 +208,7 @@
         text-align: center;
         box-shadow: 0 10px 15px rgba(0, 0, 0, 0.7);
         user-select: none;
-      
+
     }
 
     .cover-photo {
@@ -246,17 +246,17 @@
 
         padding: 10px 25px;
         border-radius: 3px;
-     
+
         font-weight: bold;
-        
+
         cursor: pointer;
-      
+
         transition: 0.2s;
     }
 
-    
 
-   
+
+
     .icons {
         width: 180px;
         margin: 0 auto 10px;
@@ -297,29 +297,29 @@
                                          <li class="nav-item">
                                         <a class="nav-link active" id="dashboard-tab" data-bs-toggle="tab" href="#dashboard" role="tab" aria-controls="dashboard" aria-selected="false"><i class="fi-rs-settings-sliders mr-10"></i>Dashboard</a>
                                     </li>
-                                
-                                 
-                                       
+
+
+
                                    }  else {
                                         <li class="nav-item">
                                             <a class="nav-link" id="dashboard-tab" data-bs-toggle="tab" href="#dashboard" role="tab" aria-controls="dashboard" aria-selected="false"><i class="fi-rs-settings-sliders mr-10"></i>Dashboard</a>
                                         </li>
                                    }
-                                   
-                                   
+
+
                                    @if(TempData["tab"]?.ToString() == "account-detail") {
-                                    
+
                                         <li class="nav-item" onclick="tabChange('account-detail')">
                                             <a class="nav-link active" id="account-detail-tab" data-bs-toggle="tab" href="#account-detail" role="tab" aria-controls="account-detail" aria-selected="true"><i class="fi-rs-user mr-10"></i>Account details</a>
                                         </li>
-                                                  
+
                                    } else {
                                     <li class="nav-item" onclick="tabChange('account-detail')">
                                         <a class="nav-link" id="account-detail-tab" data-bs-toggle="tab" href="#account-detail" role="tab" aria-controls="account-detail" aria-selected="true"><i class="fi-rs-user mr-10"></i>Account details</a>
                                     </li>
                                    }
-                                  
-                               
+
+
                                     <li class="nav-item">
                                         <a class="nav-link" id="household-tab" data-bs-toggle="tab" href="#household" role="tab" aria-controls="household" aria-selected="true"><i class="fi-rs-marker mr-10"></i>Household</a>
                                     </li>
@@ -336,11 +336,11 @@
                                         <a class="nav-link" id="track-orders-tab" data-bs-toggle="tab" href="#track-orders" role="tab" aria-controls="track-orders" aria-selected="false"><i  style="margin-right: 5px" class="fa fa-exclamation-triangle"></i>Danger zone</a>
                                     </li>
                                     }
-                                 
-   
-                                  
+
+
+
                                     <li class="nav-item">
-                                        <a class="nav-link" href="page-login.html"><i class="fi-rs-sign-out mr-10"></i>Logout</a>
+                                        <a class="nav-link" href="/logout"><i class="fi-rs-sign-out mr-10"></i>Logout</a>
                                     </li>
                                 </ul>
                             </div>
@@ -408,7 +408,7 @@
                                         </div>
                                     </div>
                                 } else {
-                                    
+
                                     <div class="tab-pane fade" id="account-detail" role="tabpanel" aria-labelledby="account-detail-tab">
                                         <div class="card">
                                             <div class="card-header">
@@ -469,10 +469,10 @@
                                 @if(TempData["tab"]?.ToString() == "dashboard" || TempData["tab"]?.ToString() == null) {
                                     <div class="tab-pane fade active show" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
                                         <div class="card">
-                                      
+
                                             <div style="flex-direction: row; display:flex;" class="card-body">
 
-                                            
+
 
                                                 <div class="cardss">
                                                     <div class="cover-photo">
@@ -486,9 +486,9 @@
                                                        } else {
                                                             <button class="btn" style="margin-top:0">@role</button>
                                                        }
-                                                      
+
                                                    }
-                                                  
+
                                                     <div class="icons">
                                                         <i class="fa-brands fa-linkedin"></i>
                                                         <i class="fa-brands fa-github"></i>
@@ -515,10 +515,10 @@
                                 } else {
                                     <div class="tab-pane fade" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
                                         <div class="card">
-                                        
+
                                                        <div style="flex-direction: row; display:flex;" class="card-body">
 
-                                            
+
 
                                                 <div class="cardss">
                                                     <div class="cover-photo">
@@ -532,10 +532,10 @@
                                                        } else {
                                                             <button class="btn">@role</button>
                                                        }
-                                                      
+
                                                    }
-                                                    
-                                                  
+
+
                                                     <div class="icons">
                                                         <i class="fa-brands fa-linkedin"></i>
                                                         <i class="fa-brands fa-github"></i>
@@ -565,11 +565,11 @@
 
 
 
-                                 
-                            
 
 
-                          
+
+
+
 
 
 
@@ -621,8 +621,8 @@
 
 
                                 @if (TempData["tab"]?.ToString() == "danger-zone") {
-                                
-                                
+
+
                                 <div class="tab-pane fade active show" id="track-orders" role="tabpanel" aria-labelledby="track-orders-tab">
                                     <div class="card">
                                         <div class="card-header">
@@ -651,7 +651,7 @@
                                     </div>
                                 </div>
                                 } else {
-                                    
+
                                 <div class="tab-pane fade" id="track-orders" role="tabpanel" aria-labelledby="track-orders-tab">
                                     <div class="card">
                                         <div class="card-header">
@@ -734,9 +734,9 @@
                                                 </div>
 
                                                 <div class="profile-card-social">
-                                                    <strong style="font-size:20px">Copy Invite Code</strong>
+                                                    <strong id="txt" style="font-size:20px">Copy Invite Code</strong>
 
-                                                    <a id="copy" onclick="navigator.clipboard.writeText('@(household.InviteLink)')" class="profile-card-social__item link">
+                                                    <a id="copy" onclick="navigator.clipboard.writeText('@(household.InviteLink)'); document.getElementById('txt').textContent='Code copied!'; setTimeout(() => {document.getElementById('txt').textContent='Copy invite link'}, 500)" class="profile-card-social__item link">
                                                         <span class="icon-font">
                                                             <svg class="icon"><use xlink:href="#icon-link"></use></svg>
                                                         </span>
@@ -745,18 +745,21 @@
                                                 </div>
 
                                                 <div class="profile-card-ctr">
-                                                    <button class="profile-card__button button--blue js-message-btn">Details</button>
+                                                    <form action="/households/details">
+                                                         <button class="profile-card__button button--blue js-message-btn">Details</button>
+                                                    </form>
+
                                                     @if(await userManager.IsInRoleAsync(user, "HouseOwner"))  {
-                                                 
+
                                                         <button disabled type="button" style="background-color: grey"  class="profile-card__button button--orange">You are the Owner</button>
-                                                   
+
                                                     } else {
-                                                                           <form action="/account/transferhousehold">
-                                                         <button class="profile-card__button button--orange">Transfer Household</button>
+                                                    <form action="/account/transferhousehold">
+                                                         <button style="margin-left: 20px;" class="profile-card__button button--orange">Transfer Household</button>
                                                     </form>
                                                     }
-                                 
-                                                   
+
+
                                                 </div>
                                             </div>
 
@@ -848,7 +851,7 @@
 
 
 
-                               
+
                             </div>
                         </div>
                     </div>
@@ -874,7 +877,7 @@
     }
 
 
-   
+
 
     $(document).ready(function() {
 

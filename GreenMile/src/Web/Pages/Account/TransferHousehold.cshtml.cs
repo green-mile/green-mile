@@ -10,7 +10,7 @@ using Web.Utils;
 
 namespace Web.Pages
 {
-    [Authorize(Roles = "Member")]
+    [Authorize]
     public class TransferHouseholdModel : PageModel
     {
         private readonly UserManager<User> _userManager;
@@ -25,20 +25,25 @@ namespace Web.Pages
             _userManager = userManager;
             _signInManager = signInManager;
             _contextAccessor = contextAccessor;
-            
+
         }
         [BindProperty]
-        public TransferHouseholdUiState TransferHouseholdUiState { get; set; }
+        public TransferHouseholdUiState TransferHouseholdUiState { get; set; } = new TransferHouseholdUiState();
 
 
         public async Task<IActionResult> OnGetAsync()
         {
-           /* if (await _userManager.IsInRoleAsync(await _userManager.GetUserAsync(HttpContext.User), "HouseOwner")) ;
+            User user = await _userManager.GetUserAsync(HttpContext.User);
+            if (!await _userManager.IsInRoleAsync(user, "Member") && user.HouseholdId is null)
             {
-                TempData["error"] = "Can't transfer to household because you're an owner!";
-             
-                return Redirect("/account/details");
-            }*/
+                TempData["info"] = "You may have gotten kicked out of the household! Please join another one";
+
+
+            }
+
+
+
+
             return Page();
         }
 
@@ -94,29 +99,29 @@ namespace Web.Pages
 
 
 
-                    if ((bool)!TransferHouseholdUiState.JoinHousehold)
-                    {
-                        await _householdService.CreateHousehold(TransferHouseholdUiState.CreateHouseholdName, TransferHouseholdUiState.Address, userId);
-                        await _householdService.AddUserToHousehold(userId, (await _householdService.RetrieveHouseholdDetailsByName(TransferHouseholdUiState.CreateHouseholdName)).Value.HouseholdId);
-                        TempData["success"] = "Created household!";
+                if ((bool)!TransferHouseholdUiState.JoinHousehold)
+                {
+                    await _householdService.CreateHousehold(TransferHouseholdUiState.CreateHouseholdName, TransferHouseholdUiState.Address, userId);
+                    await _householdService.AddUserToHousehold(userId, (await _householdService.RetrieveHouseholdDetailsByName(TransferHouseholdUiState.CreateHouseholdName)).Value.HouseholdId);
+                    TempData["success"] = "Created household!";
 
-                    }
-                    else
-                    {
+                }
+                else
+                {
 
-                        await _householdService.AddUserToHousehold(userId, (await _householdService.VerifyLink(TransferHouseholdUiState.InviteLink)).Value.HouseholdId);
-                        TempData["success"] = "Transferred household!";
-                    }
-
-                    //_contextAccessor.HttpContext.Session.SetString(SessionVariable.UserName, UserName);
-                    //_contextAccessor.HttpContext.Session.SetString(SessionVariable.UserId, userId);
-                    //_contextAccessor.HttpContext.Session.SetString(SessionVariable.HousholdName, user.Household.Name);
-
-                    return RedirectToPage("/Index");
+                    await _householdService.AddUserToHousehold(userId, (await _householdService.VerifyLink(TransferHouseholdUiState.InviteLink)).Value.HouseholdId);
+                    TempData["success"] = "Transferred household!";
                 }
 
-        
-            
+                //_contextAccessor.HttpContext.Session.SetString(SessionVariable.UserName, UserName);
+                //_contextAccessor.HttpContext.Session.SetString(SessionVariable.UserId, userId);
+                //_contextAccessor.HttpContext.Session.SetString(SessionVariable.HousholdName, user.Household.Name);
+
+                return RedirectToPage("/Index");
+            }
+
+
+
             return Page();
         }
 
