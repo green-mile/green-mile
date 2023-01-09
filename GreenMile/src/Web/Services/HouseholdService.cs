@@ -110,9 +110,15 @@ namespace Web.Services
             {
                 return Result<User>.Failure("User was not found");
             }
-            user.Household = null;
-            
-             return Result<User>.Success("User was found and household as been removed!", user);
+            user.HouseholdId = null;
+            if (await _userManager.IsInRoleAsync(user, "HouseOwner")) await _userManager.RemoveFromRoleAsync(user, "HouseOwner");
+            if (await _userManager.IsInRoleAsync(user, "Member")) await _userManager.RemoveFromRoleAsync(user, "Member");
+            if(user.OwnerOf is not null)
+            {
+                user.OwnerOf = null;
+            }
+
+            return Result<User>.Success("User was found and household as been removed!", user);
            
         }
 
@@ -147,6 +153,37 @@ namespace Web.Services
             }
             return Result<Household>.Success("Household found!", household);
 
+
+        }
+
+        public async Task<Result<User>> TransferHouseholdOwnership(string currentOwnerId, string nextOwnerId)
+        {
+            User currentOwner = await _userManager.FindByIdAsync(currentOwnerId);
+            User nextOwner = await _userManager.FindByIdAsync(nextOwnerId);
+            if(currentOwner.HouseholdId != nextOwner.HouseholdId)
+            {
+                return Result<User>.Failure("These two live in different households!");
+            }
+            if (!await _userManager.IsInRoleAsync(currentOwner, "HouseOwner"))
+            {
+                return Result<User>.Failure("Id inserted is not the owner!");
+            }
+            if(await _userManager.IsInRoleAsync(nextOwner, "HouseOwner"))
+            {
+                return Result<User>.Failure("Next owner id is an owner!");
+            }
+            Household? household = await _dbContext.Household.FindAsync(currentOwner.HouseholdId);
+            if(household is null)
+            {
+                return Result<User>.Failure("Invalid household");
+            }
+            await _userManager.RemoveFromRoleAsync(currentOwner, "HouseOwner");
+            await _userManager.AddToRoleAsync(nextOwner, "HouseOwner");
+
+            household.Owner = nextOwner;
+            household.OwnerId = nextOwnerId;
+            _dbContext.SaveChanges();
+            return Result<User>.Success("Transfer of ownership successful!", nextOwner);
 
         }
     }
