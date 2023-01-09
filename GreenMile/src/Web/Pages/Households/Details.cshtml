@@ -1,5 +1,4 @@
 ﻿@page
-
 @using Web.Models
 @using Microsoft.AspNetCore.Identity
 @inject UserManager<User> UserManager
@@ -13,11 +12,11 @@
         width: 80px
     }
 </style>
-<div class="page-header breadcrumb-wrap" >
+<div class="page-header breadcrumb-wrap">
     <div class="container">
         <div class="breadcrumb">
             <a href="index.html" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
-            <span></span>  <a href="/account/details" rel="nofollow">Account</a><span></span> Household
+            <span></span> <a href="/account/details" rel="nofollow">Account</a><span></span> Household
         </div>
     </div>
 </div>
@@ -26,7 +25,7 @@
     <header class="main-header navbar">
         <div class="col-search">
             <form class="searchform">
-             
+
                 <datalist id="search_terms">
                     <option value="Products"></option>
                     <option value="New orders"></option>
@@ -36,7 +35,6 @@
             </form>
         </div>
         <div class="col-nav">
-            
             <ul class="nav">
                 <li class="nav-item">
                     <a class="nav-link btn-icon" href="#">
@@ -50,8 +48,8 @@
                 <li class="nav-item">
                     <a href="#" class="requestfullscreen nav-link btn-icon"><i class="material-icons md-cast"></i></a>
                 </li>
- 
-        
+
+
             </ul>
         </div>
     </header>
@@ -59,14 +57,16 @@
         <div class="content-header">
             <h2 class="content-title">Household Members</h2>
             <div style="position:relative;left: 90%; top: -100%;  ">
-                <a data-bs-target="#invite" data-bs-toggle="modal" class="btn btn-primary"><i class="material-icons md-plus"></i> Invite Members</a>
+                <a data-bs-target="#invite" data-bs-toggle="modal" class="btn btn-primary"><i
+                        class="material-icons md-plus"></i> Invite Members</a>
             </div>
         </div>
         <div class="card mb-4" style="margin-top: 40px">
             <header class="card-header">
                 <div class="row gx-3">
                     <div class="col-lg-4 col-md-6 me-auto">
-                        <input type="text" style="background-color: white" placeholder="Search..." class="form-control" />
+                        <input type="text" style="background-color: white" placeholder="Search..."
+                            class="form-control" />
                     </div>
                     <div class="col-lg-2 col-md-3 col-6">
                         <select class="form-select">
@@ -95,10 +95,11 @@
                                 <th>Email</th>
                                 <th>Roles</th>
                                 <th>Registered</th>
-                                @if(owner) {
+                                @if (owner)
+                                {
                                     <th class="text-center">Action</th>
                                 }
-                               
+
                             </tr>
                         </thead>
                         <tbody>
@@ -109,7 +110,9 @@
                                     <td width="40%">
                                         <a href="#" class="itemside">
                                             <div class="left">
-                                                <img width="100px" src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-unknown-social-media-user-photo-default-avatar-profile-icon-vector-unknown-social-media-user-184816085.jpg" class="img-sm img-avatar" alt="Userpic" />
+                                                <img width="100px"
+                                                src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-unknown-social-media-user-photo-default-avatar-profile-icon-vector-unknown-social-media-user-184816085.jpg"
+                                                class="img-sm img-avatar" alt="Userpic" />
                                             </div>
                                             <div class="info pl-3">
                                                 <h6 class="mb-0 title">@user.UserName</h6>
@@ -120,21 +123,21 @@
                                     <td>@user.Email</td>
                                     <td>
 
-                     
-                                    @foreach (var role in (await UserManager.GetRolesAsync(user)))
-                                    {
-                                        if (role == "HouseOwner")
+
+                                        @foreach (var role in (await UserManager.GetRolesAsync(user)))
                                         {
-                                            <span class="badge rounded-pill alert-danger">@role</span>
+                                            if (role == "HouseOwner")
+                                            {
+                                                <span class="badge rounded-pill alert-danger">@role</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge rounded-pill alert-success">@role</span>
+                                            }
+
                                         }
-                                        else
-                                        {
-                                            <span class="badge rounded-pill alert-success">@role</span>
-                                        }
-                                    
-                                    }
                                     </td>
-                                   
+
                                     <td>@user?.CreatedAt?.ToString().Split(" ")[0]</td>
 
 
@@ -142,41 +145,57 @@
                                     {
                                         <td class="text-center">
 
-                                            <button data-bs-toggle="modal" data-bs-target="#quickViewModal-@(user.Id)" style="background-color: black; color:white;margin-right: 15px" href="#" class="btn btn-sm btn-warning rounded font-sm mt-15">Transfer Ownership</button>
-                                            <button href="#" data-bs-toggle="modal" data-bs-target="#ViewModal-@(user.Id)" style="background-color:red" id="ok" class="btn btn-sm btn-brand rounded font-sm mt-15">Remove</button>
+                                            <button data-bs-toggle="modal" data-bs-target="#quickViewModal-@(user.Id)"
+                                        style="background-color: black; color:white;margin-right: 15px" href="#"
+                                        class="btn btn-sm btn-warning rounded font-sm mt-15">Transfer Ownership</button>
+                                            <button href="#" data-bs-toggle="modal" data-bs-target="#ViewModal-@(user.Id)"
+                                        style="background-color:red" id="ok"
+                                        class="btn btn-sm btn-brand rounded font-sm mt-15">Remove</button>
                                         </td>
 
-                                  }
-                           
+                                    }
 
 
 
-                                    <div class="modal fade custom-modal" id="quickViewModal-@(user.Id)" tabindex="-1" aria-labelledby="quickViewModalLabel" aria-hidden="true">
+
+                                    <div class="modal fade custom-modal" id="quickViewModal-@(user.Id)" tabindex="-1"
+                                    aria-labelledby="quickViewModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
                                                 <div class="modal-body">
                                                     <div class="row">
 
 
                                                         <div class="detail-info pr-30 pl-30">
                                                             <span class="stock-status out-stock"> Danger </span>
-                                                            <h3 class="title-detail"><a style="" href="shop-product-right.html" class="text-heading">Are you sure you want to transfer ownership to</a></h3>
+                                                            <h3 class="title-detail"><a style=""
+                                                                href="shop-product-right.html" class="text-heading">Are
+                                                                    you sure you want to transfer ownership to</a></h3>
 
                                                         </div>
                                                         <!-- Detail Info -->
-                                                        <div style="margin-top: 30px;margin-left:10px" class="text-start">
+                                                    <div style="margin-top: 30px;margin-left:10px" class="text-start">
 
-                                                        <form method="POST">
-                                                            
-                                                                 <input value="@user.UserName"  disabled style="margin-bottom:20px"/>
-                                                                 <input type="hidden" value="@user.Id" asp-for="HouseholdDetailsUiState.NextOwnerId"/>
-                                                                <button type="submit" asp-page-handler="Patch" style="margin-right: 15px;background-color: #000;padding: 10px 30px; font-weight: 700" id="bro" class="btn btn-lg btn-warning rounded font-sm mt-15">Give owner to @user.UserName</button>
+                                                            <form method="POST">
+
+                                                                <input value="@user.UserName" disabled
+                                                                style="margin-bottom:20px" />
+                                                                <input type="hidden" value="@user.Id"
+                                                                asp-for="HouseholdDetailsUiState.NextOwnerId" />
+                                                                <button type="submit" asp-page-handler="Patch"
+                                                                style="margin-right: 15px;background-color: #000;padding: 10px 30px; font-weight: 700"
+                                                                id="bro"
+                                                                class="btn btn-lg btn-warning rounded font-sm mt-15">Give
+                                                                    owner to @user.UserName</button>
 
 
-                                                        </form>
-                                                   
-                                                            <button data-bs-dismiss="modal" aria-label="Close" class="btn btn-lg btn-brand rounded font-sm mt-15">No thanks</button>
+                                                            </form>
+
+                                                            <button data-bs-dismiss="modal" aria-label="Close"
+                                                            class="btn btn-lg btn-brand rounded font-sm mt-15">No
+                                                                thanks</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -189,29 +208,40 @@
 
 
 
-                                    <div class="modal fade custom-modal" id="ViewModal-@(user.Id)" tabindex="-1" aria-labelledby="ViewModalLabel" aria-hidden="true">
+                                    <div class="modal fade custom-modal" id="ViewModal-@(user.Id)" tabindex="-1"
+                                    aria-labelledby="ViewModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
                                                 <div class="modal-body">
                                                     <div class="row">
 
-                                                    
-                                                            <div class="detail-info pr-30 pl-30">
-                                                                <span class="stock-status out-stock"> Danger </span>
-                                                                <h3 class="title-detail"><a style="" href="shop-product-right.html" class="text-heading">Are you sure you want to remove @user.UserName</a></h3>
-                                                               
-                                                            </div>
-                                                            <!-- Detail Info -->
-                                                            <div style="margin-top: 30px;margin-left:10px" class="text-start" >
-                                                                <form method="POST">
-                                                                <input asp-for="HouseholdDetailsUiState.UserRemoveId" value="@user.Id" type="hidden" />
-                                                                <button type="submit"  style="margin-right: 15px; background-color: red; hover: red; padding: 10px 30px; font-weight: 700" id="hi" class="btn btn-lg btn-brand rounded font-sm mt-15">Remove @user.UserName</button>
-                                                                </form>
 
-                                                            <button data-bs-dismiss="modal" aria-label="Close"  class="btn btn-lg btn-brand rounded font-sm mt-15">No thanks</button>
-                                                            </div>
-                                                        
+                                                        <div class="detail-info pr-30 pl-30">
+                                                            <span class="stock-status out-stock"> Danger </span>
+                                                            <h3 class="title-detail"><a style=""
+                                                                href="shop-product-right.html" class="text-heading">Are
+                                                                    you sure you want to remove @user.UserName</a></h3>
+
+                                                        </div>
+                                                        <!-- Detail Info -->
+                                                    <div style="margin-top: 30px;margin-left:10px" class="text-start">
+                                                            <form method="POST">
+                                                                <input asp-for="HouseholdDetailsUiState.UserRemoveId"
+                                                                value="@user.Id" type="hidden" />
+                                                                <button type="submit"
+                                                                style="margin-right: 15px; background-color: red; hover: red; padding: 10px 30px; font-weight: 700"
+                                                                id="hi"
+                                                                class="btn btn-lg btn-brand rounded font-sm mt-15">Remove
+                                                                    @user.UserName</button>
+                                                            </form>
+
+                                                            <button data-bs-dismiss="modal" aria-label="Close"
+                                                            class="btn btn-lg btn-brand rounded font-sm mt-15">No
+                                                                thanks</button>
+                                                        </div>
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -225,7 +255,7 @@
 
                                 </tr>
                             }
-                
+
                         </tbody>
                     </table>
                     <!-- table-responsive.// -->
@@ -256,7 +286,6 @@
                 <script>
                     document.write(new Date().getFullYear());
                 </script>
-
             </div>
             <div class="col-sm-6">
                 <div class="text-sm-end">All rights reserved</div>
@@ -283,7 +312,8 @@
                     <div class="col-md-6 col-sm-12 col-xs-12">
                         <div class="detail-info pr-30 pl-30">
                             <span class="stock-status out-stock"> Sale Off </span>
-                            <h3 class="title-detail"><a href="shop-product-right.html" class="text-heading">Seeds of Change Organic Quinoa, Brown</a></h3>
+                            <h3 class="title-detail"><a href="shop-product-right.html" class="text-heading">Seeds of
+                                    Change Organic Quinoa, Brown</a></h3>
                             <div class="product-detail-rating">
                                 <div class="product-rate-cover text-end">
                                     <div class="product-rate d-inline-block">
@@ -308,7 +338,8 @@
                                     <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
                                 </div>
                                 <div class="product-extra-link2">
-                                    <button type="submit" class="button button-add-to-cart"><i class="fi-rs-shopping-cart"></i>Add to cart</button>
+                                    <button type="submit" class="button button-add-to-cart"><i
+                                            class="fi-rs-shopping-cart"></i>Add to cart</button>
                                 </div>
                             </div>
                             <div class="font-xs">
@@ -326,14 +357,16 @@
     </div>
 </div>
 
-                                <style>
-                                    #hi:hover {
-                                       background-color: darkred !important;
-                                    }
-                                       #ok:hover {
-                                       background-color: darkred !important;
-                                    }
-                                                     #bro:hover {
-                                       background-color: #000 !important;
-                                    }
-                                </style>
+<style>
+    #hi:hover {
+        background-color: darkred !important;
+    }
+
+    #ok:hover {
+        background-color: darkred !important;
+    }
+
+    #bro:hover {
+        background-color: #000 !important;
+    }
+</style>

@@ -23,12 +23,12 @@ namespace Web.Pages.Account
         {
             _householdService = householdService;
             _userManager = userManager;
-          
+
         }
 
         public async Task<IActionResult> OnGetAsync()
         {
-          
+
             User user = (await _userManager.GetUserAsync(HttpContext.User));
             if (!await _userManager.IsInRoleAsync(user, "Member"))
             {
@@ -53,10 +53,10 @@ namespace Web.Pages.Account
                 AccountUiState.FirstName != user.FirstName, AccountUiState.Username != user.UserName, AccountUiState.LastName != user.LastName, AccountUiState.EmailAddress != user.Email, AccountUiState.NewPassword != null,
                 AccountUiState.ConfirmPassword != null
             };
-            if(ModelState.IsValid && formCheck.Any(x => x == true))
+            if (ModelState.IsValid && formCheck.Any(x => x == true))
 
             {
-                if(formCheck.Any(x => x == true))
+                if (formCheck.Any(x => x == true))
                 {
                     if (!(await _userManager.CheckPasswordAsync(user, AccountUiState.Password)))
                     {
@@ -82,9 +82,10 @@ namespace Web.Pages.Account
                 {
                     TempData["info"] = "Your changes are already saved";
                 }
-   
 
-            } else
+
+            }
+            else
             {
                 TempData["error"] = "Form not filled properly!";
             }
@@ -95,14 +96,15 @@ namespace Web.Pages.Account
         {
             TempData["tab"] = AccountUiState.Tab;
             User user = await _userManager.GetUserAsync(HttpContext.User);
-            if(!ModelState.IsValid && (user.UserName != AccountUiState.Username || !await _userManager.CheckPasswordAsync(user, AccountUiState.Password)))
+            if (!ModelState.IsValid && (user.UserName != AccountUiState.Username || !await _userManager.CheckPasswordAsync(user, AccountUiState.Password)))
             {
                 TempData["tab"] = "danger-zone";
                 TempData["error"] = "Username and/or password incorrect!";
 
 
                 return Redirect("/Account/Details");
-            } else
+            }
+            else
             {
                 await _userManager.DeleteAsync(user);
                 TempData["success"] = "Account deleted!";

@@ -24,9 +24,7 @@ public class NotificationsModel : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-     
-        
-        if(!await _userManager.IsInRoleAsync(await _userManager.GetUserAsync(HttpContext.User), "Member"))
+        if (!await _userManager.IsInRoleAsync(await _userManager.GetUserAsync(HttpContext.User), "Member"))
         {
             return Redirect("/account/transferhousehold");
         }
