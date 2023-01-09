@@ -43,13 +43,13 @@ namespace Web.Pages.Recipes
                 Recipe? recipe = _recipeService.GetRecipeById(CurrentRecipe.recipeName);
                 if(recipe != null)
                 {
-                    TempData["Flash.Type"] = "danger";
-                    TempData["Flash.Text"] = CurrentRecipe.recipeName + " already exists!";
+                    TempData["FlashMessage.Type"] = "danger";
+                    TempData["FlashMessage.Text"] = CurrentRecipe.recipeName + " already exists!";
                     return Page();
                 }
                 _recipeService.AddRecipe(CurrentRecipe);
-                TempData["Flash.Type"] = "success";
-                TempData["Flash.Text"] = CurrentRecipe.recipeName + " successfully added!";
+                TempData["FlashMessage.Type"] = "success";
+                TempData["FlashMessage.Text"] = CurrentRecipe.recipeName + " successfully added!";
                 return Redirect("/Recipes/Index");
             }
             return Page();

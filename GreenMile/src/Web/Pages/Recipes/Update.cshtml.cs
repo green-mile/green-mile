@@ -28,8 +28,8 @@ namespace Web.Pages.Recipes
             Recipe? recipe = _recipeService.GetRecipeById(id);
             if(recipe == null)
             {
-                TempData["Flash.Type"] = "danger";
-                TempData["Flash.Text"] = "Recipe not found!";
+                TempData["FlashMessage.Type"] = "danger";
+                TempData["FlashMessage.Text"] = "Recipe not found!";
                 return Redirect("/Recipes/BackendView");
             }
             CurrentRecipe = recipe;
@@ -54,8 +54,8 @@ namespace Web.Pages.Recipes
 
                 }
                 _recipeService.UpdateRecipe(CurrentRecipe);
-                TempData["Flash.Type"] = "success";
-                TempData["Flash.Text"] = CurrentRecipe.recipeName + " successfully updated!";
+                TempData["FlashMessage.Type"] = "success";
+                TempData["FlashMessage.Text"] = CurrentRecipe.recipeName + " successfully updated!";
                 return Redirect("/Recipes/Index");
             }
             return Page();

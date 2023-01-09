@@ -27,8 +27,8 @@ namespace Web.Pages.Recipes
         {
             Recipe? recipe = _recipeService.GetRecipeById(id);
             _recipeService.DeleteRecipe(recipe);
-            TempData["Flash.Type"] = "success";
-            TempData["Flash.Text"] = id + " successfully Deleted!";
+            TempData["FlashMessage.Type"] = "success";
+            TempData["FlashMessage.Text"] = id + " successfully Deleted!";
             RecipeList = _recipeService.GetAll();
             return Page();
         }
