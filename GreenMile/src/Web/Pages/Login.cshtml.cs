@@ -49,7 +49,7 @@ public class LoginModel : PageModel
                     .FirstAsync(u => u.UserName == UserName);
                 _http.HttpContext.Session.SetString(SessionVariable.UserName, user.UserName);
                 _http.HttpContext.Session.SetString(SessionVariable.UserId, user.Id);
-                _http.HttpContext.Session.SetString(SessionVariable.HousholdName, user.Household.Name);
+               // _http.HttpContext.Session.SetString(SessionVariable.HousholdName, user.Household.Name);
                 return RedirectToPage("/Index");
             }
             ModelState.AddModelError("", "Username or Password incorrect.");

@@ -11,11 +11,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+// In-house Services
 builder.Services.AddScoped<FoodItemService>();
 builder.Services.AddScoped<FoodCategoryService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IHouseholdService, HouseholdService>();
-builder.Services.AddScoped<FoodItemService>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddScoped<RecipeService>();
+builder.Services.AddScoped<DonationService>();
+builder.Services.AddScoped<CustomFoodService>();
+
 builder.Services.AddDbContext<DataContext>(options =>
 {
     if (builder.Environment.IsDevelopment())
