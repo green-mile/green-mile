@@ -16,14 +16,21 @@ namespace Web.Pages.Account
 
         [BindProperty]
         public AccountUiState? AccountUiState { get; set; } = new AccountUiState();
+        [BindProperty]
+        public IFormFile? Upload { get; set; }
         private readonly IHouseholdService _householdService;
         private readonly UserManager<User> _userManager;
+        private readonly IImageService _imageService;
 
-        public DetailsModel(IHouseholdService householdService, UserManager<User> userManager)
+        public DetailsModel(IHouseholdService householdService, UserManager<User> userManager, IImageService imageService)
         {
             _householdService = householdService;
             _userManager = userManager;
+<<<<<<< HEAD
+            _imageService = imageService;
+=======
 
+>>>>>>> eb05816296435ec6003689756e85a9309ea68499
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -41,6 +48,7 @@ namespace Web.Pages.Account
             AccountUiState.LastName = user.LastName;
             AccountUiState.Username = user.UserName;
             AccountUiState.EmailAddress = user.Email;
+
             return Page();
         }
 
@@ -51,7 +59,7 @@ namespace Web.Pages.Account
             List<Boolean> formCheck = new List<Boolean>()
             {
                 AccountUiState.FirstName != user.FirstName, AccountUiState.Username != user.UserName, AccountUiState.LastName != user.LastName, AccountUiState.EmailAddress != user.Email, AccountUiState.NewPassword != null,
-                AccountUiState.ConfirmPassword != null
+                AccountUiState.ConfirmPassword != null, AccountUiState.HasImageChanged
             };
             if (ModelState.IsValid && formCheck.Any(x => x == true))
 
@@ -74,6 +82,15 @@ namespace Web.Pages.Account
                     user.LastName = AccountUiState.LastName;
                     user.UserName = AccountUiState.Username;
                     user.Email = AccountUiState.EmailAddress;
+                    if(AccountUiState.Upload!=null)
+                    {
+                        Console.WriteLine("WHAT THE FUC");
+                    }
+                    if(AccountUiState.HasImageChanged && Upload != null)
+                    {
+                        _imageService.StoreImage(Upload, user);
+                    }
+                 
 
                     await _userManager.UpdateAsync(user);
                     TempData["success"] = "Changes have been saved"!;

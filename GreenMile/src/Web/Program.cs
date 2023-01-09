@@ -17,8 +17,10 @@ builder.Services.AddScoped<FoodItemService>();
 builder.Services.AddScoped<FoodCategoryService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IHouseholdService, HouseholdService>();
-builder.Services.AddScoped<INotificationService, NotificationService>();
+
+builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<RecipeService>();
+
 builder.Services.AddScoped<DonationService>();
 builder.Services.AddScoped<CustomFoodService>();
 

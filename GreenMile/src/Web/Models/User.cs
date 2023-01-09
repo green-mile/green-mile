@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 using Microsoft.AspNetCore.Identity;
 
 namespace Web.Models;
@@ -11,6 +13,9 @@ public class User : IdentityUser
     public bool Disabled { get; set; } = false;
     public Household? OwnerOf { get; set; }
     public DateTime? CreatedAt { get; set; } = DateTime.Now;
+
+    [MaxLength(100)]
+    public string ImageURL { get; set; } 
 
 
 }
