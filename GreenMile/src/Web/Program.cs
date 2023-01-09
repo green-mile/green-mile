@@ -17,13 +17,10 @@ builder.Services.AddScoped<FoodItemService>();
 builder.Services.AddScoped<FoodCategoryService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IHouseholdService, HouseholdService>();
-builder.Services.AddScoped<INotificationService, NotificationService>();
-<<<<<<< HEAD
-builder.Services.AddScoped<IImageService, ImageService>();
 
-=======
+builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<RecipeService>();
->>>>>>> eb05816296435ec6003689756e85a9309ea68499
+
 builder.Services.AddScoped<DonationService>();
 builder.Services.AddScoped<CustomFoodService>();
 
