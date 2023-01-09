@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Web.Data;
 
@@ -10,9 +11,10 @@ using Web.Data;
 namespace Web.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230103134911_imageURL")]
+    partial class imageURL
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.12");
@@ -259,38 +261,6 @@ namespace Web.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Notifications");
-                });
-
-            modelBuilder.Entity("Web.Models.Recipe", b =>
-                {
-                    b.Property<string>("recipeName")
-                        .HasMaxLength(20)
-                        .HasColumnType("TEXT");
-
-                    b.Property<decimal>("difficulty")
-                        .HasColumnType("decimal(2,1)");
-
-                    b.Property<int>("duration")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("imageFilePath")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("ingredientAmount")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("ingredients")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("reviews")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("recipeName");
-
-                    b.ToTable("Recipes");
                 });
 
             modelBuilder.Entity("Web.Models.User", b =>
