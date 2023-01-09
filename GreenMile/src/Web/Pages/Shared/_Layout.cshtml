@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Web.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/main.css?v=5.6" />
+    <link href="assets/css/main.css?v=1.1" rel="stylesheet" type="text/css" />
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
         integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
@@ -160,17 +161,18 @@
                                     <li>
                                         <a href="#">Smart Recipe <i class="fa-solid fa-chevron-down"></i></a>
                                         <ul class="sub-menu">
-                                            <li><a href="page-about.html">About Us</a></li>
-                                            <li><a href="page-contact.html">Contact</a></li>
-                                            <li><a href="page-account.html">My Account</a></li>
-                                            <li><a href="page-login.html">Login</a></li>
-                                            <li><a href="page-register.html">Register</a></li>
-                                            <li><a href="page-forgot-password.html">Forgot password</a></li>
-                                            <li><a href="page-reset-password.html">Reset password</a></li>
-                                            <li><a href="page-purchase-guide.html">Purchase Guide</a></li>
-                                            <li><a href="page-privacy-policy.html">Privacy Policy</a></li>
-                                            <li><a href="page-terms.html">Terms of Service</a></li>
-                                            <li><a href="page-404.html">404 Page</a></li>
+                                            <li>
+                                                <a asp-page="/Recipes/Index">All Recipes</a>
+                                            </li>
+                                            <li>
+                                                <a asp-page="/Recipes/Add">Add Recipe</a>
+                                            </li>
+                                            <li>
+                                                <a asp-page="/Recipes/BackendView">View Recipes (Backend)</a>
+                                            </li>
+                                            <li>
+                                                <a asp-page="/Recipes/viewtemplates">View Template</a>
+                                            </li>
                                         </ul>
                                     </li>
                                     <li>

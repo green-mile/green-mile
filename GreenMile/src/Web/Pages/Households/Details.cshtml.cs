@@ -14,7 +14,7 @@ namespace Web.Pages.Account.Households
     [Authorize]
     public class DetailsModel : PageModel
     {
-    
+
         private readonly IHouseholdService _householdService;
         private readonly UserManager<User> _userManager;
         public DetailsModel(IHouseholdService householdService, UserManager<User> userManager)
@@ -29,21 +29,22 @@ namespace Web.Pages.Account.Households
         {
 
             int user = (int)(await _userManager.GetUserAsync(User)).HouseholdId;
-             if (!await _userManager.IsInRoleAsync(await _userManager.GetUserAsync(User), "Member"))
+            if (!await _userManager.IsInRoleAsync(await _userManager.GetUserAsync(User), "Member"))
             {
-               return Redirect("/account/transferhousehold");
+                return Redirect("/account/transferhousehold");
             }
             if (user != null)
             {
                 Utils.Result<Household> household = await _householdService.RetrieveHouseholdDetails(user);
-                if(household.Status == Utils.Status.SUCCESS && household.Value != null)
+                if (household.Status == Utils.Status.SUCCESS && household.Value != null)
                 {
                     HouseholdDetailsUiState.Users = household?.Value?.Users;
-                } else
+                }
+                else
                 {
                     Console.WriteLine("OI YOU FUCK");
                 }
-         
+
             }
             return Page();
 
@@ -60,7 +61,7 @@ namespace Web.Pages.Account.Households
         public async Task<IActionResult> OnPostPatchAsync()
         {
             Result<User> result = await _householdService.TransferHouseholdOwnership((await _userManager.GetUserAsync(User)).Id, HouseholdDetailsUiState?.NextOwnerId);
-            if(result.Status == Status.FAILURE)
+            if (result.Status == Status.FAILURE)
             {
                 TempData["error"] = "Something unexpected went wrong";
                 return Page();
