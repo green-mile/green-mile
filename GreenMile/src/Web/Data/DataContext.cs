@@ -12,6 +12,10 @@ public class DataContext : IdentityDbContext<User>
     public DbSet<Notification> Notifications { get; set; }
     public DbSet<Recipe> Recipes { get; set; }
 
+    public DbSet<Donation> Donations { get; set; }
+
+    public DbSet<CustomFood> CustomFoods { get; set; }
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
