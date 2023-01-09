@@ -26,11 +26,8 @@ namespace Web.Pages.Account
         {
             _householdService = householdService;
             _userManager = userManager;
-<<<<<<< HEAD
             _imageService = imageService;
-=======
 
->>>>>>> eb05816296435ec6003689756e85a9309ea68499
         }
 
         public async Task<IActionResult> OnGetAsync()
