@@ -1,8 +1,6 @@
 ﻿@page
-@model Web.Pages.FoodSharing.EditDonationInfoModel
-@{
+@model EditDonationInfoModel
 
-}
 <main class="main">
     <div class="page-header mt-30 mb-50">
         <div class="container">
@@ -20,63 +18,47 @@
         </div>
     </div>
     <div class="container mb-30">
+        <div asp-validation-summary="All" class="text-danger"></div>
         <form class="mt-3" method="post" enctype="multipart/form-data">
-            <div asp-validation-summary="All" class="text-danger"></div>
 
-            <div class="row">
-                <div class="col-md-8">
-                    <div class="row mb-3">
-                        <label class="col-sm-2 col-form-label" asp-for="MyCustomFood.Name"></label>
-                        <div class="col-sm-10">
-                            <input class="form-control" asp-for="MyCustomFood.Name" />
-                            <span asp-validation-for="MyCustomFood.Name" class="text-danger"></span>
-                        </div>
-                    </div>
+            <input type="hidden" asp-for="FoodItemId" value="@Model.FoodItemId">
 
-                    <div class="row mb-3">
-                        <label class="col-sm-2 col-form-label" asp-for="MyCustomFood.Description"></label>
-                        <div class="col-sm-10">
-                            <input class="form-control" asp-for="MyCustomFood.Description" />
-                            <span asp-validation-for="MyCustomFood.Description" class="text-danger"></span>
-                        </div>
-                    </div>
-
-                    <div class="row mb-3">
-                        <label class="col-sm-2 col-form-label" asp-for="MyCustomFood.ExpiredDate"></label>
-                        <div class="col-sm-10">
-                            <input class="form-control" asp-for="MyCustomFood.ExpiredDate" />
-                            <span asp-validation-for="MyCustomFood.ExpiredDate" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="mb-3">
-                        <input type="file" accept="image/*" asp-for="Upload" class="form-control" onchange="showImgPreview(this)" />
-                        <span asp-validation-for="Upload" class="text-danger"></span>
-                    </div>
-                    <img id="imgPreview" class="rounded-circle" style="height:300px;width:300px;object-fit:cover"
-                         src="@(string.IsNullOrEmpty(Model.MyCustomFood.Image) ? "/uploads/user.png" : Model.MyCustomFood.Image)"
-                         onerror="this.src='/uploads/user.png'" />
-                    <input class="form-control d-none" asp-for="MyCustomFood.Image" />
-                </div>
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                <input asp-for="Name">
+                <span asp-validation-for="Name"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description"></label>
+                <input asp-for="Description">
+                <span asp-validation-for="Description"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Quantity"></label>
+                <input asp-for="Quantity">
+                <span asp-validation-for="Quantity"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExpiryDate"></label>
+                <input asp-for="ExpiryDate">
+                <span asp-validation-for="ExpiryDate"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Image"></label>
+                <input asp-for="Image">
+                <span asp-validation-for="Image"></span>
             </div>
 
             <div class="form-group mb-30">
-                <button type="submit" value="Update" class="btn btn-fill-out btn-block hover-up font-weight-bold">Edit</button>
+                <button type="submit" value="Update"
+                    class="btn btn-fill-out btn-block hover-up font-weight-bold">Edit</button>
                 <a class="btn btn-secondary ms-2" href="/FoodSharing/MyDonations">Cancel</a>
             </div>
-            <input class="form-control" asp-for="MyDonation.Status" hidden/>
-            <input class="form-control" asp-for="MyDonation.Type" hidden />
-            <input class="form-control" asp-for="MyDonation.Date" hidden />
-            <input class="form-control" asp-for="MyDonation.Id" hidden />
-            <input class="form-control" asp-for="MyCustomFood.Id" hidden />
-            
+
         </form>
     </div>
-
-   
 </main>
+
 <script>
     function showImgPreview(input) {
         if (input.files[0]) {
@@ -90,7 +72,7 @@
 </script>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+@{
+await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
 }

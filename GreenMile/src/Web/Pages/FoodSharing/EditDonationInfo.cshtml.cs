@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,96 +12,82 @@ namespace Web.Pages.FoodSharing
     [Authorize]
     public class EditDonationInfoModel : PageModel
     {
+        private readonly FoodItemService _foodService;
         private readonly DonationService _donationService;
-        private readonly CustomFoodService _customFoodService;
+        private readonly IWebHostEnvironment _environment;
         private readonly UserManager<User> _userManager;
-        private IWebHostEnvironment _environment;
 
-        public EditDonationInfoModel(DonationService donationService,
-            CustomFoodService customFoodService,
-            UserManager<User> userManager,
-            IWebHostEnvironment environment
-            )
+        public EditDonationInfoModel(
+            FoodItemService foodItemService,
+            DonationService donationService,
+            IWebHostEnvironment environment,
+            UserManager<User> userManager
+        )
         {
             _donationService = donationService;
-            _customFoodService = customFoodService;
+            _foodService = foodItemService;
             _userManager = userManager;
             _environment = environment;
         }
 
         [BindProperty]
-        public CustomFood MyCustomFood { get; set; } = new();
+        public int FoodItemId { get; set; }
 
         [BindProperty]
-        public IFormFile? Upload { get; set; }
+        public string? Name { get; set; }
 
         [BindProperty]
-        public Donation MyDonation { get; set; } = new ();
+        public string? Description { get; set; }
 
-        public List<Donation> DonationList { get; set; } = new();
+        [BindProperty]
+        public int? Quantity { get; set; }
+
+        [BindProperty]
+        public DateTime? ExpiryDate { get; set; }
+
+        [BindProperty]
+        public IFormFile? Image { get; set; }
+
+        public bool IsCustom { get; set; }
+
         public IActionResult OnGet(int id)
         {
-            Donation? donation = _donationService.GetDonationById(id);
-            CustomFood? customfood = donation.CustomFood;
-            if (donation != null)
-            {
-                MyCustomFood = customfood;
-                MyDonation= donation;
-                return Page();
-            }
-            else
-            {
-                TempData["FlashMessage.Type"] = "danger";
-                TempData["FlashMessage.Text"] = string.Format("Donation ID {0} not found", id);
-                return Redirect("/FoodSharing/Index");
-            }
+            var donation = _donationService.GetDonationById(id);
+
+            if (donation is null)
+                return NotFound();
+
+            IsCustom = donation.FoodItem!.IsCustom;
+            FoodItemId = donation.FoodItem.Id;
+
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
+                return Page();
+
+            var foodItem = await _foodService.GetFoodItemById(FoodItemId);
+
+            foodItem!.Name = Name ?? foodItem.Name;
+            foodItem.Description = Description ?? foodItem.Description;
+            foodItem.ExpiryDate = ExpiryDate ?? foodItem.ExpiryDate;
+            foodItem.Quantity = Quantity ?? foodItem.Quantity;
+
+            if (Image is not null)
             {
-                if (Upload != null)
-                {
-                    if (Upload.Length > 2 * 1024 * 1024)
-                    {
-                        ModelState.AddModelError("Upload", "File size cannot exceed 2MB.");
-                        return Page();
-                    }
-
-                    var uploadsFolder = "uploads";
-                    if(MyCustomFood.Image != null)
-                    {
-                        var oldImageFile = Path.GetFileName(MyCustomFood.Image);
-                        var oldImagePath = Path.Combine(_environment.ContentRootPath, "wwwroot", uploadsFolder, oldImageFile);
-                        if (System.IO.File.Exists(oldImagePath))
-                        {
-                            System.IO.File.Delete(oldImagePath);
-                        }
-                    }
-                    var imageFile = Guid.NewGuid() + Path.GetExtension(Upload.FileName);
-                    var imagePath = Path.Combine(_environment.ContentRootPath, "wwwroot", uploadsFolder, imageFile);
-                    using var fileStream = new FileStream(imagePath, FileMode.Create);
-                    await Upload.CopyToAsync(fileStream);
-
-                    MyCustomFood.Image = string.Format("/{0}/{1}", uploadsFolder, imageFile);
-                }
-
-
-                //MyDonation.User = await _userManager.GetUserAsync(HttpContext.User);
-                var user = await _userManager.GetUserAsync(HttpContext.User);
-                
-                MyDonation.CustomFood = MyCustomFood;
-                MyDonation.User = user;
-                
-                _donationService.UpdateDonation(MyDonation);
-                _customFoodService.UpdateCustomFood(MyCustomFood);
-
-                TempData["FlashMessage.Type"] = "success";
-                TempData["FlashMessage.Text"] = string.Format("Donation Offer {0} is successfully updated Of Food", MyCustomFood.Name);
-                return Redirect("/FoodSharing/Index");
+                var uploadFolder = "Uploads";
+                var imageFile = Guid.NewGuid() + Path.GetExtension(Image.FileName);
+                var imagePath = Path.Combine(_environment.ContentRootPath, "wwwroot", uploadFolder, imageFile);
+                using var fileStream = new FileStream(imagePath, FileMode.Create);
+                await Image.CopyToAsync(fileStream);
+                foodItem.ImageFilePath = string.Format("/{0}/{1}", uploadFolder, imageFile);
             }
-            return Page();
+
+            await _foodService.Update(foodItem);
+
+            return Redirect("/FoodSharing");
         }
     }
 }

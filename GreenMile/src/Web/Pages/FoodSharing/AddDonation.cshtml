@@ -1,0 +1,12 @@
+@page
+@model AddDonationModel
+
+<h1>Add Donation</h1>
+<form method="post">
+    <div class="form-group">
+        <label asp-for="FoodItemId"></label>
+        <span asp-validation-for="FoodItemId"></span>
+        <select asp-for="FoodItemId" asp-items="@Model.FoodItems" class="form-select"></select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
