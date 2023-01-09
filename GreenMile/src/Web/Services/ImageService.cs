@@ -1,4 +1,6 @@
-﻿using Web.Models;
+﻿using Microsoft.AspNetCore.Identity;
+
+using Web.Models;
 using Web.Utils;
 
 namespace Web.Services
@@ -8,16 +10,21 @@ namespace Web.Services
        public static readonly long UploadSize = 10 * 1024 * 1024;
         public static readonly string destinationFolder = "uploads";
         private readonly IWebHostEnvironment _env;
+        private readonly UserManager<User> _userManager;
        
-        public ImageService(IWebHostEnvironment env)
+        public ImageService(IWebHostEnvironment env, UserManager<User> userManager)
         {
             _env = env;
+            _userManager = userManager;
         }
 
        async Task<Result<string>> IImageService.RetrieveImage(User user)
         {
-
-            throw new NotImplementedException();
+            if(user is null)
+            {
+                return Result<string>.Failure("User cannot be null!");
+            }
+            return Result<string>.Success("Image successfullly retrieved!", string.IsNullOrEmpty(user.ImageURL) ? "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/2048px-Default_pfp.svg.png" : user.ImageURL);
         }
 
          async Task<Result<string>> IImageService.StoreImage(IFormFile image, User user)
@@ -36,6 +43,7 @@ namespace Web.Services
                 using var fileStream = new FileStream(imagePath, FileMode.Create);
                 await image.CopyToAsync(fileStream);
                 user.ImageURL = $"/{destinationFolder}/{imageFile}";
+            await _userManager.UpdateAsync(user);
                 return Result<string>.Success("Upload successful!", imagePath);
             
         }

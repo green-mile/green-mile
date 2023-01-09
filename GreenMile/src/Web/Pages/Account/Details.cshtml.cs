@@ -42,6 +42,7 @@ namespace Web.Pages.Account
             AccountUiState.LastName = user.LastName;
             AccountUiState.Username = user.UserName;
             AccountUiState.EmailAddress = user.Email;
+
             return Page();
         }
 
@@ -75,6 +76,11 @@ namespace Web.Pages.Account
                     user.LastName = AccountUiState.LastName;
                     user.UserName = AccountUiState.Username;
                     user.Email = AccountUiState.EmailAddress;
+                    if(AccountUiState.HasImageChanged && AccountUiState.Upload != null)
+                    {
+                        _imageService.StoreImage(AccountUiState.Upload, user);
+                    }
+                 
 
                     await _userManager.UpdateAsync(user);
                     TempData["success"] = "Changes have been saved"!;

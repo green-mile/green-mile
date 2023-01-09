@@ -24,6 +24,7 @@ namespace Web.UiState
 
         public IFormFile? Upload { get; set; }
 
+      
         public bool HasImageChanged { get; set; } = false;
 
 

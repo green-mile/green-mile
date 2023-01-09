@@ -4,13 +4,14 @@
 @using Web.Models;
 @inject UserManager<User> userManager;
 @inject IHouseholdService householdService;
+@inject IImageService imageService;
 @model Web.Pages.Account.DetailsModel
 @{
 
     User user = await userManager.GetUserAsync(HttpContext.User);
 
     Household household = (await householdService.RetrieveHouseholdDetails(user.HouseholdId ?? -1)).Value;
-
+  
 }
 <style>
     .all {
@@ -379,9 +380,9 @@
 <div class="profile-pic-wrapper">
   <div class="pic-holder">
     <!-- uploaded pic shown here -->
-    <img id="profilePic" class="pic" src="https://source.unsplash.com/random/150x150?person">
+                                                                <img id="profilePic"  class="pic"  src="@((await imageService.RetrieveImage(user)).Value)">
 
-    <Input class="uploadProfileInput" type="file" name="profile_pic" id="newProfilePhoto" accept="image/*" style="opacity: 0;" />
+    <Input class="uploadProfileInput" type="file" id="newProfilePhoto" asp-for="AccountUiState.Upload" accept="image/*" style="opacity: 0;" />
     <label for="newProfilePhoto" class="upload-file-block">
       <div class="text-center">
         <div class="mb-2">
@@ -394,8 +395,6 @@
     </label>
   </div>
 </div>
-
-
 
 
 
@@ -467,9 +466,9 @@
                                                         <div class="profile-pic-wrapper">
                                                             <div class="pic-holder">
                                                                 <!-- uploaded pic shown here -->
-                                                                <img id="profilePic" class="pic" src="https://source.unsplash.com/random/150x150?person">
-
-                                                                <Input class="uploadProfileInput" asp-for="AccountUiState.Upload" type="file" name="profile_pic" id="newProfilePhoto" accept="image/*" style="opacity: 0;" />
+                                                                <img id="profilePic"   class="pic" src="@((await imageService.RetrieveImage(user)).Value)">
+                                                                
+                                                                <Input class="uploadProfileInput" asp-for="AccountUiState.Upload" type="file" id="newProfilePhoto" accept="image/*" style="opacity: 0;" />
                                                                 <label for="newProfilePhoto" class="upload-file-block">
                                                                     <div class="text-center">
                                                                         <div class="mb-2">
@@ -541,7 +540,7 @@
 
                                                 <div class="cardss">
                                                     <div class="cover-photo">
-                                                        <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="profile">
+                                                        <img src="@((await imageService.RetrieveImage(user)).Value)" class="profile">
                                                     </div>
                                                     <h3 style="margin-right:20px; position: relative; right: 40px; margin-top:60px"class="profile-name">@user.UserName</h3>
                                                     <p style="margin-bottom: 30px; margin-top:20px" class="about">Household:<strong>  @household.Name</strong><br /> Date Joined: @user.CreatedAt</p>
@@ -587,7 +586,7 @@
 
                                                 <div class="cardss">
                                                     <div class="cover-photo">
-                                                        <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="profile">
+                                                        <img src="@((await imageService.RetrieveImage(user)).Value)" class="profile">
                                                     </div>
                                                     <h3 style="margin-right:20px; position: relative; right: 40px"class="profile-name">@user.UserName</h3>
                                                     <p class="about">Household:<strong>  @household.Name</strong><br /> Date Joined: @user.CreatedAt</p>
@@ -760,6 +759,7 @@
                                     <div class="wrapper">
                                         <div class="profile-card js-profile-card">
                                             <div class="profile-card__img">
+                                        
                                                 <img src="https://png.pngtree.com/element_our/sm/20180515/sm_5afb1035655ac.jpg" alt="profile card">
                                             </div>
 
