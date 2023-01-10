@@ -1,0 +1,78 @@
+﻿@page
+@model EditDonationInfoModel
+
+<main class="main">
+    <div class="page-header mt-30 mb-50">
+        <div class="container">
+            <div class="archive-header">
+                <div class="row align-items-center">
+                    <div class="col-xl-8">
+                        <h1 class="mb-15">Edit My Donation Information</h1>
+                        <div class="breadcrumb">
+                            <a href="/Index" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
+                            <span></span> Food Sharing <span></span> My Donation Info
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container mb-30">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <form class="mt-3" method="post" enctype="multipart/form-data">
+
+            <input type="hidden" asp-for="FoodItemId" value="@Model.FoodItemId">
+
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                <input asp-for="Name">
+                <span asp-validation-for="Name"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description"></label>
+                <input asp-for="Description">
+                <span asp-validation-for="Description"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Quantity"></label>
+                <input asp-for="Quantity">
+                <span asp-validation-for="Quantity"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExpiryDate"></label>
+                <input asp-for="ExpiryDate">
+                <span asp-validation-for="ExpiryDate"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Image"></label>
+                <input asp-for="Image">
+                <span asp-validation-for="Image"></span>
+            </div>
+
+            <div class="form-group mb-30">
+                <button type="submit" value="Update"
+                    class="btn btn-fill-out btn-block hover-up font-weight-bold">Edit</button>
+                <a class="btn btn-secondary ms-2" href="/FoodSharing/MyDonations">Cancel</a>
+            </div>
+
+        </form>
+    </div>
+</main>
+
+<script>
+    function showImgPreview(input) {
+        if (input.files[0]) {
+            var uploadimg = new FileReader();
+            uploadimg.onload = function (displayimg) {
+                $("#imgPreview").attr('src', displayimg.target.result);
+            }
+            uploadimg.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+
+@section Scripts {
+@{
+await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}

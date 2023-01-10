@@ -13,5 +13,6 @@ namespace Web.Models
         public int Quantity { get; set; }
         public string ImageFilePath { get; set; } = string.Empty;
         public ICollection<Category> Categories { get; set; } = new List<Category>();
+        public bool IsCustom { get; set; } = false;
     }
 }

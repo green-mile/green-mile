@@ -3942,6 +3942,8 @@ table .product-thumbnail img {
 .product-cart-wrap .product-img-action-wrap .product-action-1 {
   background-color: #fff;
   border-radius: 5px;
+
+
   border: 1px solid #BCE3C9;
 }
 
@@ -11525,7 +11527,7 @@ footer .hotline img {
     margin-left: 15px;
   }
   .product-cart-wrap .product-img-action-wrap .product-action-1 {
-    min-width: 111px;
+    min-width: 74px;
   }
   .custom-modal .modal-dialog {
     max-width: 720px !important;

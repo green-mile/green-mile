@@ -8,7 +8,6 @@ namespace Web.Data;
 public class DataContext : IdentityDbContext<User>
 {
     public DbSet<Category> Categories { get; set; }
-    public DbSet<CustomFood> CustomFoods { get; set; }
     public DbSet<Donation> Donations { get; set; }
     public DbSet<FoodItem> FoodItems { get; set; }
     public DbSet<FoodItemCategory> FoodItemCategories { get; set; }

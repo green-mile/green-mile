@@ -16,27 +16,29 @@ public class Donation
     /// <summary>
     /// The status of the donation offer, whether pending, active, complete, expired.
     /// </summary>
-    public string Status { get; set; } = string.Empty;
-
-    /// <summary>
-    /// The type of the donation offer, can be passive or active.
-    /// </summary>
-    public string Type { get; set; } = string.Empty;
+    public DonationStatus Status { get; set; }
 
     /// <summary>
     /// The date and time that the donation offer was created.
     /// </summary>
-    public DateTime Date { get; set; }
+    public DateTime Date { get; set; } = DateTime.Now;
 
     /// <summary>
     /// The user that created the donation offer.
     /// </summary>
+
     public User? User { get; set; }
 
-
     /// <summary>
-    /// Refer to the custom food class, means user not selecting food items from inventory
+    /// Refer to the food item class
     /// </summary>
-    public CustomFood? CustomFood { get; set; }
+    public FoodItem? FoodItem { get; set; }
+}
 
+public enum DonationStatus
+{
+    PENDING,
+    ACTIVE,
+    COMPLETE,
+    EXPIRED
 }
