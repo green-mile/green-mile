@@ -15,7 +15,7 @@ public class User : IdentityUser
     public DateTime? CreatedAt { get; set; } = DateTime.Now;
 
     [MaxLength(100)]
-    public string ImageURL { get; set; } 
+    public string? ImageURL { get; set; } 
 
 
 }

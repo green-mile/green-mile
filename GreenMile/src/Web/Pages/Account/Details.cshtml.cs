@@ -20,14 +20,15 @@ namespace Web.Pages.Account
         public IFormFile? Upload { get; set; }
         private readonly IHouseholdService _householdService;
         private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
         private readonly IImageService _imageService;
 
-        public DetailsModel(IHouseholdService householdService, UserManager<User> userManager, IImageService imageService)
+        public DetailsModel(IHouseholdService householdService, UserManager<User> userManager, IImageService imageService, SignInManager<User> signInManager)
         {
             _householdService = householdService;
             _userManager = userManager;
             _imageService = imageService;
-
+            _signInManager = signInManager;
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -103,7 +104,7 @@ namespace Web.Pages.Account
             {
                 TempData["error"] = "Form not filled properly!";
             }
-            return Page();
+            return Redirect("/account/details");
         }
 
         public async Task<IActionResult> OnPostDeleteAsync()
@@ -112,11 +113,11 @@ namespace Web.Pages.Account
             User user = await _userManager.GetUserAsync(HttpContext.User);
             if (!ModelState.IsValid && (user.UserName != AccountUiState.Username || !await _userManager.CheckPasswordAsync(user, AccountUiState.Password)))
             {
-                TempData["tab"] = "danger-zone";
-                TempData["error"] = "Username and/or password incorrect!";
+                //TempData["tab"] = "danger-zone";
+                TempData["error"] = "Account deleted";
 
-
-                return Redirect("/Account/Details");
+                await _signInManager.SignOutAsync();
+                return Redirect("/");
             }
             else
             {
