@@ -25,9 +25,11 @@ public class DataContext : IdentityDbContext<User>
     .HasOne(u => u.OwnerOf)
     .WithOne(h => h.Owner)
     .HasForeignKey<Household>(h => h.OwnerId).IsRequired(false);
+      
     }
 
     public DataContext(DbContextOptions options) : base(options)
     {
+        Database.EnsureCreatedAsync();
     }
 }
